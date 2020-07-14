@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/14 21:37:46 by abobas        ########   odam.nl         */
+/*   Updated: 2020/07/14 22:23:32 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int main()
 			std::cout << "array[last]: " << MyVector.back() << std::endl;
 			std::cout << "cap: " << MyVector.capacity() << std::endl;
 			std::cout << "size: " << MyVector.size() << std::endl;
+			std::cout << "max_size: " << MyVector.max_size() << std::endl;
 		}
 		catch(const std::exception& e)
 		{
@@ -60,6 +61,20 @@ int main()
 			ft::Vector<int> MyVector(6, 5);
 			MyVector.reserve(3385453);
 			std::cout << "cap: " << MyVector.capacity() << std::endl;
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}
+	}
+	std::cout << std::endl;
+	{
+		try
+		{
+			ft::Vector<int> MyVector(100, 5);
+			std::cout << "size: " << MyVector.size() << std::endl;
+			MyVector.resize(10);
+			std::cout << "size: " << MyVector.size() << std::endl;
 		}
 		catch(const std::exception& e)
 		{

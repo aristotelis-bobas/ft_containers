@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/14 21:35:36 by abobas        ########   odam.nl         */
+/*   Updated: 2020/07/14 22:24:30 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdexcept>
 #include <limits>
 
-#define BASE_CAP 128
+#define CAP 128
 
 namespace ft
 {
@@ -26,33 +26,45 @@ namespace ft
     {
         private:
             T *array;
-            uint32_t total;
-            uint32_t cap;
+            size_t total;
+            size_t cap;
         public:
             Vector()
             {
-            	this->array = new T[BASE_CAP];
+            	this->array = new T[CAP];
                	this->total = 0;
-              	this->cap = BASE_CAP;
+              	this->cap = CAP;
             }
-
-            Vector(uint32_t n, const T &val)
+			
+            Vector(size_t n, const T &val)
             {
-                this->array = new T[BASE_CAP];
-              	this->cap = BASE_CAP;
+                this->array = new T[CAP];
+              	this->cap = CAP;
                	this->total = 0;
-                for (uint32_t i = 0; i < n; i++)
+                for (size_t i = 0; i < n; i++)
                     this->push_back(val);
             }
 			
-            // Vector(IteratorFirst, IteratorLast)
+			/*
+			Vector(Vector<T>::iterator first, Vector<T>::iterator last)
+			{
+				this->array = new T[CAP];
+              	this->cap = CAP;
+               	this->total = 0;
+                while (first != last)
+				{
+                    this->push_back(*first);
+					first++;
+				}
+			}
+			*/
 			
             Vector(Vector<T> const &other)
             {
                 this->array = new T[other.cap];
                	this->total = 0;
               	this->cap = other.cap;
-                for (uint32_t i = 0; i < other.size(); i++)
+                for (size_t i = 0; i < other.size(); i++)
                     this->push_back(other[i]);
             }
 			
@@ -62,7 +74,7 @@ namespace ft
                 this->array = new T[other.cap];
               	this->cap = other.cap;
                	this->total = 0;
-                for (uint32_t i = 0; i < other.size(); i++)
+                for (size_t i = 0; i < other.size(); i++)
                     this->push_back(other[i]);
                 return (*this);
             }
@@ -70,8 +82,6 @@ namespace ft
             ~Vector()
             {
                 delete[] this->array;
-               	this->total = 0;
-              	this->cap = 0;
             }
 			
             /*
@@ -81,21 +91,21 @@ namespace ft
                 rend()
             */
 		   
-            uint32_t size() const
+            size_t size() const
             {
                 return (this->total);
             }
 			
-            uint32_t max_size() const
+            size_t max_size() const
 			{
-				return (std::numeric_limits<uint32_t>::max());
+				return (std::numeric_limits<size_t>::max());
 			}
 			
-            void resize(uint32_t n)
+            void resize(size_t n)
             {
                 T *temp = new T[n];
-                uint32_t temp_total = 0;
-                for (uint32_t i = 0; i < this->size() && i < n; i++)
+                size_t temp_total = 0;
+                for (size_t i = 0; i < this->size() && i < n; i++)
                 {
                     temp[i] = this->array[i];
                     temp_total++;
@@ -106,7 +116,7 @@ namespace ft
               	this->cap = n;
             }
 			
-            uint32_t capacity() const
+            size_t capacity() const
             {
                 return (this->cap);
             }
@@ -119,12 +129,13 @@ namespace ft
                     return (false);
             }
 
-            void reserve(uint32_t n)
+            void reserve(size_t n)
             {
-                this->resize(n);
+				if (n > this->capacity())
+                	this->resize(n);
             }
 			
-            T& operator[](uint32_t n)
+            T& operator[](size_t n)
             {
                 if (n >= this->total)
                     throw std::out_of_range("Vector out of range");
@@ -132,7 +143,7 @@ namespace ft
                     return (this->array[n]);
             }
 
-            const T& operator[](uint32_t n) const
+            const T& operator[](size_t n) const
             {
                 if (n >= this->total)
                     throw std::out_of_range("Vector out of range");
@@ -140,7 +151,7 @@ namespace ft
                     return (this->array[n]);
             }
 			
-            T& at(uint32_t n)
+            T& at(size_t n)
             {
                 if (n >= this->total)
                     throw std::out_of_range("Vector out of range");
@@ -148,7 +159,7 @@ namespace ft
                     return (this->array[n]);
             }
 
-            const T& at(uint32_t n) const
+            const T& at(size_t n) const
             {
                 if (n >= this->total)
                     throw std::out_of_range("Vector out of range");
@@ -211,7 +222,7 @@ namespace ft
 
             void clear()
             {
-                for (uint32_t i = this->size() - 1; i >= 0; i--)
+                for (size_t i = this->size() - 1; i >= 0; i--)
                     this->array[i] = 0;
                	this->total = 0;
             }
@@ -236,7 +247,7 @@ namespace ft
 	{
 		if (lhs.size() != rhs.size())
 			return (false);
-		for (uint32_t i = 0; i < lhs.size(); i++)
+		for (size_t i = 0; i < lhs.size(); i++)
 		{
 			if (lhs[i] != rhs[i])
 				return (false);
@@ -258,7 +269,7 @@ namespace ft
 	{
 		if (lhs == rhs)
 			return (false);
-		for (uint32_t i = 0; i < lhs.size() && i < rhs.size(); i++)
+		for (size_t i = 0; i < lhs.size() && i < rhs.size(); i++)
 		{
 			if (lhs[i] > rhs[i])
 				return (false);
@@ -273,7 +284,7 @@ namespace ft
 	{
 		if (lhs == rhs)
 			return (true);
-		for (uint32_t i = 0; i < lhs.size() && i < rhs.size(); i++)
+		for (size_t i = 0; i < lhs.size() && i < rhs.size(); i++)
 		{
 			if (lhs[i] > rhs[i])
 				return (false);
@@ -288,7 +299,7 @@ namespace ft
 	{
 		if (lhs == rhs)
 			return (false);
-		for (uint32_t i = 0; i < lhs.size() && i < rhs.size(); i++)
+		for (size_t i = 0; i < lhs.size() && i < rhs.size(); i++)
 		{
 			if (lhs[i] < rhs[i])
 				return (false);
@@ -303,7 +314,7 @@ namespace ft
 	{
 		if (lhs == rhs)
 			return (true);
-		for (uint32_t i = 0; i < lhs.size() && i < rhs.size(); i++)
+		for (size_t i = 0; i < lhs.size() && i < rhs.size(); i++)
 		{
 			if (lhs[i] < rhs[i])
 				return (false);
