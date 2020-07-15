@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/14 22:24:30 by abobas        ########   odam.nl         */
+/*   Updated: 2020/07/15 18:46:21 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 
 #include <cstdint>
 #include <stdexcept>
-#include <limits>
+#include <climits>
 
 #define CAP 128
+
+class AIterator;
+class Iterator;
 
 namespace ft
 {
@@ -25,17 +28,137 @@ namespace ft
     class Vector
     {
         private:
+		
             T *array;
             size_t total;
             size_t cap;
+			
         public:
+		
+			class AIterator
+			{
+				protected:
+			
+					T *array;
+					size_t pos;
+				
+				public:
+			
+					AIterator(T *array, size_t pos)
+					{
+						this->array = array;
+						this->pos = pos;
+					}
+						
+					virtual ~AIterator()
+					{
+					}
+						
+					T& operator*()
+					{
+						return (this->array[this->pos]);
+					}
+
+					bool operator==(AIterator const &other) const
+					{
+						if (this->array != other.array)
+							return (false);
+						if (this->pos != other.pos)
+							return (false);
+						return (true);
+					}
+
+					bool operator!=(AIterator const &other) const
+					{
+						if (*this == other)
+							return (false);
+						return (true);
+					}
+			};
+			
+			class Iterator: public AIterator
+			{
+				public:
+		
+					Iterator(T *array, size_t pos):
+						AIterator(array, pos)
+					{
+					}
+
+					virtual ~Iterator()
+					{
+					}
+
+					Iterator& operator++()
+					{
+						this->pos++;
+						return (*this);
+					}
+
+					Iterator& operator+=(size_t n)
+					{
+						this->pos += n;
+						return (*this);
+					}
+
+					Iterator& operator--()
+					{
+						this->pos--;
+						return (*this);
+					}
+
+					Iterator& operator-=(size_t n)
+					{
+						this->pos -= n;
+						return (*this);
+					}
+			};
+
+			class ReverseIterator: public AIterator
+			{
+				public:
+		
+					ReverseIterator(T *array, size_t pos):
+						AIterator(array, pos)
+					{
+					}
+
+					virtual ~ReverseIterator()
+					{
+					}
+
+					ReverseIterator& operator++()
+					{
+						this->pos--;
+						return (*this);
+					}
+
+					ReverseIterator& operator+=(size_t n)
+					{
+						this->pos -= n;
+						return (*this);
+					}
+
+					ReverseIterator& operator--()
+					{
+						this->pos++;
+						return (*this);
+					}
+
+					ReverseIterator& operator-=(size_t n)
+					{
+						this->pos += n;
+						return (*this);
+					}
+			};
+			
             Vector()
             {
             	this->array = new T[CAP];
                	this->total = 0;
               	this->cap = CAP;
             }
-			
+					
             Vector(size_t n, const T &val)
             {
                 this->array = new T[CAP];
@@ -84,13 +207,33 @@ namespace ft
                 delete[] this->array;
             }
 			
+			Iterator begin()
+			{
+				return (Iterator(this->array, 0));
+			}
+
+			Iterator end()
+			{
+				return (Iterator(this->array, this->size()));
+			}
+
+			ReverseIterator rbegin()
+			{
+				return (ReverseIterator(this->array, this->size() - 1));
+			}
+			
+			ReverseIterator rend()
+			{
+				return (ReverseIterator(this->array, SIZE_T_MAX));
+			}
+			
             /*
                 begin()
                 end()
                 rbegin()
                 rend()
             */
-		   
+
             size_t size() const
             {
                 return (this->total);
@@ -98,7 +241,7 @@ namespace ft
 			
             size_t max_size() const
 			{
-				return (std::numeric_limits<size_t>::max());
+				return (size_t(-1) / sizeof(T));
 			}
 			
             void resize(size_t n)
@@ -137,18 +280,12 @@ namespace ft
 			
             T& operator[](size_t n)
             {
-                if (n >= this->total)
-                    throw std::out_of_range("Vector out of range");
-                else
-                    return (this->array[n]);
+				return (this->array[n]);
             }
 
             const T& operator[](size_t n) const
             {
-                if (n >= this->total)
-                    throw std::out_of_range("Vector out of range");
-                else
-                    return (this->array[n]);
+				return (this->array[n]);
             }
 			
             T& at(size_t n)
@@ -169,34 +306,22 @@ namespace ft
 			
             T& front()
             {
-				if (this->total == 0)
-					throw std::out_of_range("Vector empty");
-				else
-                	return (this->array[0]);
+				return (this->array[0]);
             }
 
             const T& front() const
             {
-                if (this->total == 0)
-					throw std::out_of_range("Vector empty");
-				else
-                	return (this->array[0]);
+				return (this->array[0]);
             }
 			
             T& back()
             {
-				if (this->total == 0)
-					throw std::out_of_range("Vector empty");
-				else
-                	return (this->array[this->total - 1]);
+				return (this->array[this->total - 1]);
             }
 			
             const T& back() const
             {
-                if (this->total == 0)
-					throw std::out_of_range("Vector empty");
-				else
-                	return (this->array[this->total - 1]);
+				return (this->array[this->total - 1]);
             }
 
             void push_back(const T &val)
@@ -233,7 +358,7 @@ namespace ft
                 erase()
             */
     };
-	 
+	
     template <typename T>
     void swap(Vector<T> &first, Vector<T> &second)
     {

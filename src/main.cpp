@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/14 22:23:32 by abobas        ########   odam.nl         */
+/*   Updated: 2020/07/15 18:45:45 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int main()
 		try
 		{
 			ft::Vector<int> MyVector;
+			std::vector<int> bla;
 		
 			for (int i = 0; i < 300; i++)
 				MyVector.push_back((i * 99) + 1);
@@ -145,23 +146,16 @@ int main()
 	{
 		try
 		{
-			std::vector<int> MyVector1;
-			std::vector<int> MyVector2;
+			ft::Vector<int> MyVector1;
 
-			MyVector1.push_back(100);
-			MyVector1.push_back(44);
+			MyVector1.push_back(47);
+			MyVector1.push_back(573);
 			
-			MyVector2.push_back(100);
-			MyVector2.push_back(44);
+			for (ft::Vector<int>::Iterator it = MyVector1.begin(); it != MyVector1.end(); ++it)
+				std::cout << *it << std::endl;
 			
-			if (MyVector1 < MyVector2)
-				std::cout << "MyVector1 is smaller than MyVector2" << std::endl;
-			if (MyVector1 <= MyVector2)
-				std::cout << "MyVector1 is smaller than or equal to MyVector2" << std::endl;
-			if (MyVector1 > MyVector2)
-				std::cout << "MyVector1 is larger than MyVector2" << std::endl;
-			if (MyVector1 >= MyVector2)
-				std::cout << "MyVector1 is larger than or equal to MyVector2" << std::endl;
+			for (ft::Vector<int>::ReverseIterator rit = MyVector1.rbegin(); rit != MyVector1.rend(); ++rit)
+				std::cout << *rit << std::endl;
 		}
 		catch(const std::exception& e)
 		{
