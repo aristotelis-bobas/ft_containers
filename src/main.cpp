@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/15 18:45:45 by abobas        ########   odam.nl         */
+/*   Updated: 2020/07/15 22:28:18 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <cstdint>
 #include <iostream>
 #include <vector>
+#include <iterator>
 
 int main()
 {
@@ -148,13 +149,89 @@ int main()
 		{
 			ft::Vector<int> MyVector1;
 
-			MyVector1.push_back(47);
-			MyVector1.push_back(573);
+			MyVector1.push_back(10);
+			MyVector1.push_back(100);
+			MyVector1.push_back(1000);
 			
-			for (ft::Vector<int>::Iterator it = MyVector1.begin(); it != MyVector1.end(); ++it)
+			for (ft::Vector<int>::Iterator it = MyVector1.begin(); it != MyVector1.end(); it = it + 1)
 				std::cout << *it << std::endl;
 			
+			for (ft::Vector<int>::Iterator it = MyVector1.begin(); it != MyVector1.end(); it++)
+				std::cout << *it << std::endl;
+
+			for (ft::Vector<int>::Iterator it = MyVector1.begin(); it != MyVector1.end(); ++it)
+				std::cout << *it << std::endl;
+
+			for (ft::Vector<int>::Iterator it = MyVector1.begin(); it != MyVector1.end(); it += 1)
+				std::cout << *it << std::endl;
+			
+			std::cout << std::endl;
+
+			for (ft::Vector<int>::Iterator it = MyVector1.end() - 1; it != MyVector1.begin() -1; it = it - 1)
+				std::cout << *it << std::endl;
+			
+			for (ft::Vector<int>::Iterator it = MyVector1.end() - 1; it != MyVector1.begin() -1; it--)
+				std::cout << *it << std::endl;
+
+			for (ft::Vector<int>::Iterator it = MyVector1.end() - 1; it != MyVector1.begin() -1; --it)
+				std::cout << *it << std::endl;
+
+			for (ft::Vector<int>::Iterator it = MyVector1.end() - 1; it != MyVector1.begin() -1; it -= 1)
+				std::cout << *it << std::endl;
+
+			std::cout << std::endl;
+			
+			for (ft::Vector<int>::ReverseIterator rit = MyVector1.rbegin(); rit != MyVector1.rend(); rit = rit + 1)
+				std::cout << *rit << std::endl;
+			
+			for (ft::Vector<int>::ReverseIterator rit = MyVector1.rbegin(); rit != MyVector1.rend(); rit++)
+				std::cout << *rit << std::endl;
+
 			for (ft::Vector<int>::ReverseIterator rit = MyVector1.rbegin(); rit != MyVector1.rend(); ++rit)
+				std::cout << *rit << std::endl;
+
+			for (ft::Vector<int>::ReverseIterator rit = MyVector1.rbegin(); rit != MyVector1.rend(); rit += 1)
+				std::cout << *rit << std::endl;
+			
+			std::cout << std::endl;
+			
+			for (ft::Vector<int>::ReverseIterator rit = MyVector1.rend() - 1; rit != MyVector1.rbegin() - 1; rit = rit - 1)
+				std::cout << *rit << std::endl;
+			
+			for (ft::Vector<int>::ReverseIterator rit = MyVector1.rend() - 1; rit != MyVector1.rbegin() - 1; rit--)
+				std::cout << *rit << std::endl;
+
+			for (ft::Vector<int>::ReverseIterator rit = MyVector1.rend() - 1; rit != MyVector1.rbegin() - 1; --rit)
+				std::cout << *rit << std::endl;
+
+			for (ft::Vector<int>::ReverseIterator rit = MyVector1.rend() - 1; rit != MyVector1.rbegin() - 1; rit -= 1)
+				std::cout << *rit << std::endl;	
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}
+	}
+	/*
+	std::cout << std::endl;
+	{
+		try
+		{
+			std::vector<int> MyVector1;
+
+			MyVector1.push_back(47);
+			MyVector1.push_back(573);
+			MyVector1.push_back(22);
+			MyVector1.push_back(3);
+			MyVector1.push_back(98);
+			MyVector1.push_back(6583);
+
+			ft::Vector<int> MyVector2(MyVector1.begin(), MyVector1.end());
+			
+			for (ft::Vector<int>::Iterator it = MyVector2.begin(); it != MyVector2.end(); ++it)
+				std::cout << *it << std::endl;
+			
+			for (ft::Vector<int>::ReverseIterator rit = MyVector2.rbegin(); rit != MyVector2.rend(); ++rit)
 				std::cout << *rit << std::endl;
 		}
 		catch(const std::exception& e)
@@ -162,4 +239,5 @@ int main()
 			std::cerr << e.what() << '\n';
 		}
 	}
+	*/
 }

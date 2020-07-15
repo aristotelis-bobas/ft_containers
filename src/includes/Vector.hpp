@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/15 18:46:21 by abobas        ########   odam.nl         */
+/*   Updated: 2020/07/15 22:19:51 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <cstdint>
 #include <stdexcept>
 #include <climits>
+#include <iterator>
 
 #define CAP 128
 
@@ -58,22 +59,6 @@ namespace ft
 					{
 						return (this->array[this->pos]);
 					}
-
-					bool operator==(AIterator const &other) const
-					{
-						if (this->array != other.array)
-							return (false);
-						if (this->pos != other.pos)
-							return (false);
-						return (true);
-					}
-
-					bool operator!=(AIterator const &other) const
-					{
-						if (*this == other)
-							return (false);
-						return (true);
-					}
 			};
 			
 			class Iterator: public AIterator
@@ -89,9 +74,39 @@ namespace ft
 					{
 					}
 
+					bool operator==(Iterator const &other) const
+					{
+						if (this->array != other.array)
+							return (false);
+						if (this->pos != other.pos)
+							return (false);
+						return (true);
+					}
+
+					bool operator!=(Iterator const &other) const
+					{
+						if (*this == other)
+							return (false);
+						return (true);
+					}
+
 					Iterator& operator++()
 					{
 						this->pos++;
+						return (*this);
+					}
+
+					Iterator& operator++(int)
+					{
+						Iterator(*this);
+						this->pos++;
+						return (*this);
+					}
+					
+					Iterator& operator+(size_t n)
+					{
+						Iterator(*this);
+						this->pos += n;
 						return (*this);
 					}
 
@@ -104,6 +119,20 @@ namespace ft
 					Iterator& operator--()
 					{
 						this->pos--;
+						return (*this);
+					}
+
+					Iterator& operator--(int)
+					{
+						Iterator(*this);
+						this->pos--;
+						return (*this);
+					}
+					
+					Iterator& operator-(size_t n)
+					{
+						Iterator(*this);
+						this->pos -= n;
 						return (*this);
 					}
 
@@ -127,9 +156,39 @@ namespace ft
 					{
 					}
 
+					bool operator==(ReverseIterator const &other) const
+					{
+						if (this->array != other.array)
+							return (false);
+						if (this->pos != other.pos)
+							return (false);
+						return (true);
+					}
+
+					bool operator!=(ReverseIterator const &other) const
+					{
+						if (*this == other)
+							return (false);
+						return (true);
+					}
+					
 					ReverseIterator& operator++()
 					{
 						this->pos--;
+						return (*this);
+					}
+
+					ReverseIterator& operator++(int)
+					{
+						ReverseIterator(*this);
+						this->pos--;
+						return (*this);
+					}
+					
+					ReverseIterator& operator+(size_t n)
+					{
+						ReverseIterator(*this);
+						this->pos -= n;
 						return (*this);
 					}
 
@@ -142,6 +201,20 @@ namespace ft
 					ReverseIterator& operator--()
 					{
 						this->pos++;
+						return (*this);
+					}
+
+					ReverseIterator& operator--(int)
+					{
+						ReverseIterator(*this);
+						this->pos++;
+						return (*this);
+					}
+					
+					ReverseIterator& operator-(size_t n)
+					{
+						ReverseIterator(*this);
+						this->pos += n;
 						return (*this);
 					}
 
@@ -167,17 +240,22 @@ namespace ft
                 for (size_t i = 0; i < n; i++)
                     this->push_back(val);
             }
-			
+		
 			/*
-			Vector(Vector<T>::iterator first, Vector<T>::iterator last)
+
+			Does not work with integral types
+			https://stackoverflow.com/questions/45847787/how-to-differentiate-fill-constructor-and-range-constructor-in-c11
+			
+			template <class InputIterator>
+			Vector(InputIterator first, InputIterator last)
 			{
 				this->array = new T[CAP];
               	this->cap = CAP;
                	this->total = 0;
-                while (first != last)
+				while (first != last)
 				{
-                    this->push_back(*first);
-					first++;
+					this->push_back(*first);
+					++first;
 				}
 			}
 			*/
@@ -228,10 +306,10 @@ namespace ft
 			}
 			
             /*
-                begin()
-                end()
-                rbegin()
-                rend()
+                const begin()
+                const end()
+                const rbegin()
+                const rend()
             */
 
             size_t size() const
@@ -241,7 +319,7 @@ namespace ft
 			
             size_t max_size() const
 			{
-				return (size_t(-1) / sizeof(T));
+				return (SIZE_T_MAX / sizeof(T));
 			}
 			
             void resize(size_t n)
@@ -347,10 +425,30 @@ namespace ft
 
             void clear()
             {
-                for (size_t i = this->size() - 1; i >= 0; i--)
+                for (size_t i = 0; i < this->size(); i++)
                     this->array[i] = 0;
                	this->total = 0;
             }
+			
+			template <class InputIterator>
+			void assign(InputIterator first, InputIterator last)
+			{
+				this->clear();
+				while (first != last)
+				{
+					this->push_back(*first);
+					++first;
+				}
+			}
+
+			void assign(size_t n, const T &val)
+			{
+				this->clear();
+				for (size_t i = 0; i < n; i++)
+					this->push_back(val);
+			}
+
+			
 			
             /*
                 assign()
