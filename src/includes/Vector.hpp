@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/15 22:19:51 by abobas        ########   odam.nl         */
+/*   Updated: 2020/07/15 22:29:33 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,6 +306,8 @@ namespace ft
 			}
 			
             /*
+				CONST ITERATOR SYSTEM IMPLEMENTEREN
+				
                 const begin()
                 const end()
                 const rbegin()
@@ -448,9 +450,11 @@ namespace ft
 					this->push_back(val);
 			}
 
-			
-			
             /*
+				ASSIGN TESTEN
+				INSERT ITERATOR TYPE RESEARCHEN
+				ERASE PROTOTYPES CHECKEN
+				
                 assign()
                 insert()
                 erase()
