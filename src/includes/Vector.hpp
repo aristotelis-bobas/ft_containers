@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/15 22:29:33 by abobas        ########   odam.nl         */
+/*   Updated: 2020/07/16 20:07:58 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,8 @@
 #include <cstdint>
 #include <stdexcept>
 #include <climits>
-#include <iterator>
 
 #define CAP 128
-
-class AIterator;
-class Iterator;
 
 namespace ft
 {
@@ -36,6 +32,7 @@ namespace ft
 			
         public:
 		
+			// iterator (abstract class)
 			class AIterator
 			{
 				protected:
@@ -59,8 +56,15 @@ namespace ft
 					{
 						return (this->array[this->pos]);
 					}
+
+					size_t get_position()
+					{
+						return (this->pos);
+					}
+					
 			};
 			
+			// iterator (random access iterator)
 			class Iterator: public AIterator
 			{
 				public:
@@ -143,6 +147,7 @@ namespace ft
 					}
 			};
 
+			// reverse_iterator (random access iterator)
 			class ReverseIterator: public AIterator
 			{
 				public:
@@ -224,14 +229,214 @@ namespace ft
 						return (*this);
 					}
 			};
+
+			// const_iterator (abstract class)
+			class AConstIterator
+			{
+				protected:
 			
+					const T *array;
+					size_t pos;
+				
+				public:
+			
+					AConstIterator(T *array, size_t pos)
+					{
+						this->array = array;
+						this->pos = pos;
+					}
+						
+					virtual ~AConstIterator()
+					{
+					}
+						
+					const T& operator*() const
+					{
+						return (this->array[this->pos]);
+					}
+
+					size_t get_position()
+					{
+						return (this->pos);
+					}
+					
+			};
+
+			// const_iterator (random access iterator)
+			class ConstIterator: public AConstIterator
+			{
+				public:
+		
+					ConstIterator(T *array, size_t pos):
+						AConstIterator(array, pos)
+					{
+					}
+
+					virtual ~ConstIterator()
+					{
+					}
+
+					bool operator==(ConstIterator const &other) const
+					{
+						if (this->array != other.array)
+							return (false);
+						if (this->pos != other.pos)
+							return (false);
+						return (true);
+					}
+
+					bool operator!=(ConstIterator const &other) const
+					{
+						if (*this == other)
+							return (false);
+						return (true);
+					}
+
+					ConstIterator& operator++()
+					{
+						this->pos++;
+						return (*this);
+					}
+
+					ConstIterator& operator++(int)
+					{
+						ConstIterator(*this);
+						this->pos++;
+						return (*this);
+					}
+					
+					ConstIterator& operator+(size_t n)
+					{
+						ConstIterator(*this);
+						this->pos += n;
+						return (*this);
+					}
+
+					ConstIterator& operator+=(size_t n)
+					{
+						this->pos += n;
+						return (*this);
+					}
+
+					ConstIterator& operator--()
+					{
+						this->pos--;
+						return (*this);
+					}
+
+					ConstIterator& operator--(int)
+					{
+						ConstIterator(*this);
+						this->pos--;
+						return (*this);
+					}
+					
+					ConstIterator& operator-(size_t n)
+					{
+						ConstIterator(*this);
+						this->pos -= n;
+						return (*this);
+					}
+
+					ConstIterator& operator-=(size_t n)
+					{
+						this->pos -= n;
+						return (*this);
+					}
+			};
+			
+			// const_reverse_iterator (random access iterator)
+			class ConstReverseIterator: public AConstIterator
+			{
+				public:
+		
+					ConstReverseIterator(T *array, size_t pos):
+						AConstIterator(array, pos)
+					{
+					}
+
+					virtual ~ConstReverseIterator()
+					{
+					}
+
+					bool operator==(ConstReverseIterator const &other) const
+					{
+						if (this->array != other.array)
+							return (false);
+						if (this->pos != other.pos)
+							return (false);
+						return (true);
+					}
+
+					bool operator!=(ConstReverseIterator const &other) const
+					{
+						if (*this == other)
+							return (false);
+						return (true);
+					}
+					
+					ConstReverseIterator& operator++()
+					{
+						this->pos--;
+						return (*this);
+					}
+
+					ConstReverseIterator& operator++(int)
+					{
+						ConstReverseIterator(*this);
+						this->pos--;
+						return (*this);
+					}
+					
+					ConstReverseIterator& operator+(size_t n)
+					{
+						ConstReverseIterator(*this);
+						this->pos -= n;
+						return (*this);
+					}
+
+					ConstReverseIterator& operator+=(size_t n)
+					{
+						this->pos -= n;
+						return (*this);
+					}
+
+					ConstReverseIterator& operator--()
+					{
+						this->pos++;
+						return (*this);
+					}
+
+					ConstReverseIterator& operator--(int)
+					{
+						ConstReverseIterator(*this);
+						this->pos++;
+						return (*this);
+					}
+					
+					ConstReverseIterator& operator-(size_t n)
+					{
+						ConstReverseIterator(*this);
+						this->pos += n;
+						return (*this);
+					}
+
+					ConstReverseIterator& operator-=(size_t n)
+					{
+						this->pos += n;
+						return (*this);
+					}
+			};
+
+			// default constructor (1)
             Vector()
             {
             	this->array = new T[CAP];
                	this->total = 0;
               	this->cap = CAP;
             }
-					
+
+			// fill constructor (2)		
             Vector(size_t n, const T &val)
             {
                 this->array = new T[CAP];
@@ -241,11 +446,11 @@ namespace ft
                     this->push_back(val);
             }
 		
-			/*
-
-			Does not work with integral types
-			https://stackoverflow.com/questions/45847787/how-to-differentiate-fill-constructor-and-range-constructor-in-c11
+			/* 
+			//Does not work with integral types
+			//https://stackoverflow.com/questions/45847787/how-to-differentiate-fill-constructor-and-range-constructor-in-c11
 			
+			// range constructor (3)
 			template <class InputIterator>
 			Vector(InputIterator first, InputIterator last)
 			{
@@ -260,6 +465,7 @@ namespace ft
 			}
 			*/
 			
+			// copy constructor (4)
             Vector(Vector<T> const &other)
             {
                 this->array = new T[other.cap];
@@ -269,6 +475,7 @@ namespace ft
                     this->push_back(other[i]);
             }
 			
+			// assignment operator overload
             Vector& operator=(Vector<T> const &other)
             {
                 delete[] this->array;
@@ -280,6 +487,7 @@ namespace ft
                 return (*this);
             }
 
+			// destructor
             ~Vector()
             {
                 delete[] this->array;
@@ -290,30 +498,41 @@ namespace ft
 				return (Iterator(this->array, 0));
 			}
 
+			ConstIterator begin() const
+			{
+				return (ConstIterator(this->array, 0));
+			}
+
 			Iterator end()
 			{
 				return (Iterator(this->array, this->size()));
+			}
+
+			ConstIterator end() const
+			{
+				return (ConstIterator(this->array, this->size()));
 			}
 
 			ReverseIterator rbegin()
 			{
 				return (ReverseIterator(this->array, this->size() - 1));
 			}
+
+			ConstReverseIterator rbegin() const
+			{
+				return (ConstReverseIterator(this->array, this->size() - 1));
+			}
 			
 			ReverseIterator rend()
 			{
 				return (ReverseIterator(this->array, SIZE_T_MAX));
 			}
-			
-            /*
-				CONST ITERATOR SYSTEM IMPLEMENTEREN
-				
-                const begin()
-                const end()
-                const rbegin()
-                const rend()
-            */
 
+			ConstReverseIterator rend() const
+			{
+				return (ConstReverseIterator(this->array, SIZE_T_MAX));
+			}
+			
             size_t size() const
             {
                 return (this->total);
@@ -432,8 +651,8 @@ namespace ft
                	this->total = 0;
             }
 			
-			template <class InputIterator>
-			void assign(InputIterator first, InputIterator last)
+			template <class Iterator>
+			void assign(Iterator first, Iterator last)
 			{
 				this->clear();
 				while (first != last)
@@ -449,6 +668,20 @@ namespace ft
 				for (size_t i = 0; i < n; i++)
 					this->push_back(val);
 			}
+			
+			Iterator erase(Iterator pos)
+			{
+				size_t pos_save = pos.get_position();
+				while (pos != this->end())
+				{
+					Iterator temp(this->array, pos.get_position() + 1);
+					*pos = *temp;
+					pos++;
+				}
+				this->total -= 1;
+				return (Iterator(this->array, pos_save));
+			}
+			
 
             /*
 				ASSIGN TESTEN
