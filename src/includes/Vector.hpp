@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/16 20:07:58 by abobas        ########   odam.nl         */
+/*   Updated: 2020/07/16 21:52:09 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -646,11 +646,10 @@ namespace ft
 
             void clear()
             {
-                for (size_t i = 0; i < this->size(); i++)
-                    this->array[i] = 0;
                	this->total = 0;
             }
 			
+			// SAME FUKIN CRAP, CANT DISTINGUISH BETWEEN INT AND ITERATOR
 			template <class Iterator>
 			void assign(Iterator first, Iterator last)
 			{
@@ -662,6 +661,7 @@ namespace ft
 				}
 			}
 
+			// SAME FUKIN CRAP, CANT DISTINGUISH BETWEEN INT AND ITERATOR
 			void assign(size_t n, const T &val)
 			{
 				this->clear();
@@ -669,20 +669,36 @@ namespace ft
 					this->push_back(val);
 			}
 			
+			// NOT CORRECT, NEED BETTER ALGORITHM
 			Iterator erase(Iterator pos)
 			{
 				size_t pos_save = pos.get_position();
+				Iterator temp(this->array, pos.get_position());
 				while (pos != this->end())
 				{
-					Iterator temp(this->array, pos.get_position() + 1);
+					temp++;
 					*pos = *temp;
 					pos++;
 				}
 				this->total -= 1;
 				return (Iterator(this->array, pos_save));
 			}
-			
 
+			// NOT CORRECT, NEED BETTER ALGORITHM
+			Iterator erase(Iterator first, Iterator last)
+			{
+				size_t first_save = first.get_position();
+				size_t last_save = last.get_position();
+				while (first.get_position() != last_save) 
+				{
+					*first = *last;
+					first++;
+					last++;
+					this->total -= 1;
+				}
+				return (Iterator(this->array, first_save));
+			}
+			
             /*
 				ASSIGN TESTEN
 				INSERT ITERATOR TYPE RESEARCHEN

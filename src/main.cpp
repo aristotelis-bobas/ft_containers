@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/16 19:41:52 by abobas        ########   odam.nl         */
+/*   Updated: 2020/07/16 21:50:35 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <cstdint>
 #include <iostream>
 #include <vector>
+#include <string>
 #include <iterator>
 
 using namespace ft;
@@ -286,6 +287,75 @@ int main()
 			MyVector1.erase(it2);
 			std::cout << *it2 << std::endl;
 			std::cout << std::endl;
+
+			for (size_t i  = 0; i < MyVector1.size(); ++i)
+				std::cout << MyVector1[i] << std::endl;
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}
+	}
+	std::cout << std::endl;
+	{
+		try
+		{
+			Vector<int> MyVector1;
+
+			for (size_t i = 1; i < 11; i++)
+				MyVector1.push_back(i * 50);
+
+			Vector<int>::Iterator it1 = MyVector1.begin();
+			it1 += 7;
+
+			Vector<int>::Iterator it2 = MyVector1.begin();
+			it2 += 8;
+
+			MyVector1.erase(it1, it2);
+
+			for (size_t i  = 0; i < MyVector1.size(); ++i)
+				std::cout << MyVector1[i] << std::endl;
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}
+	}
+	std::cout << std::endl;
+	{
+		try
+		{
+			std::vector<int> MyVector1;
+
+			for (size_t i = 1; i < 11; i++)
+				MyVector1.push_back(i * 50);
+
+			std::vector<int>::iterator it1 = MyVector1.begin();
+			it1 += 7;
+
+			std::vector<int>::iterator it2 = MyVector1.begin();
+			it2 += 8;
+
+			MyVector1.erase(it1, it2);
+
+			for (size_t i  = 0; i < MyVector1.size(); ++i)
+				std::cout << MyVector1[i] << std::endl;
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}
+	}
+	std::cout << std::endl;
+	{
+		try
+		{
+			Vector<std::string> MyVector1;
+
+			for (size_t i = 1; i < 11; i++)
+				MyVector1.push_back("bla");
+
+			MyVector1.assign(20, "haha");
 
 			for (size_t i  = 0; i < MyVector1.size(); ++i)
 				std::cout << MyVector1[i] << std::endl;
