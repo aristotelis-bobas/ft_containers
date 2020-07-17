@@ -6,7 +6,7 @@
 #    By: abobas <abobas@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/07/13 17:19:37 by abobas        #+#    #+#                  #
-#    Updated: 2020/07/13 17:21:37 by abobas        ########   odam.nl          #
+#    Updated: 2020/07/17 18:17:07 by abobas        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRC_DIR	=		./src/
 
 SRC :=			$(SRC:%=$(SRC_DIR)%)
 
-INCLUDE =		Vector.hpp
+INCLUDE =		Vector.hpp \
+				VectorIterators.hpp
 
 INCLUDE_DIR =	./src/includes/
 			

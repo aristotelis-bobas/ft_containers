@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/16 21:50:35 by abobas        ########   odam.nl         */
+/*   Updated: 2020/07/17 19:14:59 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,58 +156,58 @@ int main()
 			MyVector1.push_back(100);
 			MyVector1.push_back(1000);
 			
-			for (Vector<int>::Iterator it = MyVector1.begin(); it != MyVector1.end(); it = it + 1)
+			for (Vector<int>::iterator it = MyVector1.begin(); it != MyVector1.end(); it = it + 1)
 				std::cout << *it << std::endl;
 			
-			for (Vector<int>::Iterator it = MyVector1.begin(); it != MyVector1.end(); it++)
+			for (Vector<int>::iterator it = MyVector1.begin(); it != MyVector1.end(); it++)
 				std::cout << *it << std::endl;
 
-			for (Vector<int>::Iterator it = MyVector1.begin(); it != MyVector1.end(); ++it)
+			for (Vector<int>::iterator it = MyVector1.begin(); it != MyVector1.end(); ++it)
 				std::cout << *it << std::endl;
 
-			for (Vector<int>::Iterator it = MyVector1.begin(); it != MyVector1.end(); it += 1)
+			for (Vector<int>::iterator it = MyVector1.begin(); it != MyVector1.end(); it += 1)
 				std::cout << *it << std::endl;
 			
 			std::cout << std::endl;
 
-			for (Vector<int>::Iterator it = MyVector1.end() - 1; it != MyVector1.begin() -1; it = it - 1)
+			for (Vector<int>::iterator it = MyVector1.end() - 1; it != MyVector1.begin() -1; it = it - 1)
 				std::cout << *it << std::endl;
 			
-			for (Vector<int>::Iterator it = MyVector1.end() - 1; it != MyVector1.begin() -1; it--)
+			for (Vector<int>::iterator it = MyVector1.end() - 1; it != MyVector1.begin() -1; it--)
 				std::cout << *it << std::endl;
 
-			for (Vector<int>::Iterator it = MyVector1.end() - 1; it != MyVector1.begin() -1; --it)
+			for (Vector<int>::iterator it = MyVector1.end() - 1; it != MyVector1.begin() -1; --it)
 				std::cout << *it << std::endl;
 
-			for (Vector<int>::Iterator it = MyVector1.end() - 1; it != MyVector1.begin() -1; it -= 1)
+			for (Vector<int>::iterator it = MyVector1.end() - 1; it != MyVector1.begin() -1; it -= 1)
 				std::cout << *it << std::endl;
 
 			std::cout << std::endl;
 			
-			for (Vector<int>::ReverseIterator rit = MyVector1.rbegin(); rit != MyVector1.rend(); rit = rit + 1)
+			for (Vector<int>::reverse_iterator rit = MyVector1.rbegin(); rit != MyVector1.rend(); rit = rit + 1)
 				std::cout << *rit << std::endl;
 			
-			for (Vector<int>::ReverseIterator rit = MyVector1.rbegin(); rit != MyVector1.rend(); rit++)
+			for (Vector<int>::reverse_iterator rit = MyVector1.rbegin(); rit != MyVector1.rend(); rit++)
 				std::cout << *rit << std::endl;
 
-			for (Vector<int>::ReverseIterator rit = MyVector1.rbegin(); rit != MyVector1.rend(); ++rit)
+			for (Vector<int>::reverse_iterator rit = MyVector1.rbegin(); rit != MyVector1.rend(); ++rit)
 				std::cout << *rit << std::endl;
 
-			for (Vector<int>::ReverseIterator rit = MyVector1.rbegin(); rit != MyVector1.rend(); rit += 1)
+			for (Vector<int>::reverse_iterator rit = MyVector1.rbegin(); rit != MyVector1.rend(); rit += 1)
 				std::cout << *rit << std::endl;
 			
 			std::cout << std::endl;
 			
-			for (Vector<int>::ReverseIterator rit = MyVector1.rend() - 1; rit != MyVector1.rbegin() - 1; rit = rit - 1)
+			for (Vector<int>::reverse_iterator rit = MyVector1.rend() - 1; rit != MyVector1.rbegin() - 1; rit = rit - 1)
 				std::cout << *rit << std::endl;
 			
-			for (Vector<int>::ReverseIterator rit = MyVector1.rend() - 1; rit != MyVector1.rbegin() - 1; rit--)
+			for (Vector<int>::reverse_iterator rit = MyVector1.rend() - 1; rit != MyVector1.rbegin() - 1; rit--)
 				std::cout << *rit << std::endl;
 
-			for (Vector<int>::ReverseIterator rit = MyVector1.rend() - 1; rit != MyVector1.rbegin() - 1; --rit)
+			for (Vector<int>::reverse_iterator rit = MyVector1.rend() - 1; rit != MyVector1.rbegin() - 1; --rit)
 				std::cout << *rit << std::endl;
 
-			for (Vector<int>::ReverseIterator rit = MyVector1.rend() - 1; rit != MyVector1.rbegin() - 1; rit -= 1)
+			for (Vector<int>::reverse_iterator rit = MyVector1.rend() - 1; rit != MyVector1.rbegin() - 1; rit -= 1)
 				std::cout << *rit << std::endl;	
 		}
 		catch(const std::exception& e)
@@ -221,22 +221,22 @@ int main()
 		{
 			const Vector<int> MyVector1(3, 10);
 
-			for (Vector<int>::ConstIterator it = MyVector1.begin(); it != MyVector1.end(); ++it)
+			for (Vector<int>::const_iterator it = MyVector1.begin(); it != MyVector1.end(); ++it)
 				std::cout << *it << std::endl;
 
 			std::cout << std::endl;
 
-			for (Vector<int>::ConstIterator it = MyVector1.end() - 1; it != MyVector1.begin() -1; --it)
+			for (Vector<int>::const_iterator it = MyVector1.end() - 1; it != MyVector1.begin() -1; --it)
 				std::cout << *it << std::endl;
 
 			std::cout << std::endl;
 
-			for (Vector<int>::ConstReverseIterator rit = MyVector1.rbegin(); rit != MyVector1.rend(); ++rit)
+			for (Vector<int>::const_reverse_iterator rit = MyVector1.rbegin(); rit != MyVector1.rend(); ++rit)
 				std::cout << *rit << std::endl;
 			
 			std::cout << std::endl;
 
-			for (Vector<int>::ConstReverseIterator rit = MyVector1.rend() - 1; rit != MyVector1.rbegin() - 1; --rit)
+			for (Vector<int>::const_reverse_iterator rit = MyVector1.rend() - 1; rit != MyVector1.rbegin() - 1; --rit)
 				std::cout << *rit << std::endl;
 		}
 		catch(const std::exception& e)
@@ -244,6 +244,7 @@ int main()
 			std::cerr << e.what() << '\n';
 		}
 	}
+	/* 
 	std::cout << std::endl;
 	{
 		try
@@ -365,4 +366,5 @@ int main()
 			std::cerr << e.what() << '\n';
 		}
 	}
+	*/
 }
