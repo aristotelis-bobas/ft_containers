@@ -1,37 +1,68 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   VectorIterators.hpp                                :+:    :+:            */
+/*   OldIterator.hpp                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/17 17:03:06 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/17 19:44:45 by abobas        ########   odam.nl         */
+/*   Updated: 2020/07/27 20:41:12 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VECTORITERATORS_HPP
-#define VECTORITERATORS_HPP
+#ifndef ITERATOR_HPP
+#define ITERATOR_HPP
 
-#include <cstdint>
-#include <iterator>
+#include <stddef.h>
+
+namespace ft
+{
+
+class random_access_iterator_tag
+{
+};
+
+class bidirectional_iterator_tag
+{
+};
+class forward_iterator_tag
+{
+};
+class input_iterator_tag
+{
+};
+
+class output_iterator_tag
+{
+};
 
 template <typename T>
-class Iterator
+class iterator
 {
 public:
 	typedef T value_type;
 	typedef T &reference;
 	typedef const T &const_reference;
+	typedef T *pointer;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
-	typedef std::random_access_iterator_tag iterator_category;
-	typedef Iterator self_type;
+	typedef random_access_iterator_tag iterator_category;
+	typedef iterator self_type;
 
-	Iterator(value_type *array, size_type pos)
+	iterator(value_type *array, size_type pos)
 	{
 		this->array = array;
 		this->pos = pos;
+	}
+
+	iterator(iterator const &other)
+	{
+		this->array = other.array;
+		this->pos = other.pos;
+	}
+
+	iterator &operator=(iterator const &other)
+	{
 	}
 
 	reference operator*()
@@ -108,7 +139,7 @@ public:
 	}
 
 private:
-	value_type *array;
+	pointer array;
 	size_type pos;
 };
 
@@ -119,9 +150,10 @@ public:
 	typedef T value_type;
 	typedef T &reference;
 	typedef const T &const_reference;
+	typedef T *pointer;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
-	typedef std::random_access_iterator_tag iterator_category;
+	typedef random_access_iterator_tag iterator_category;
 	typedef ReverseIterator self_type;
 
 	ReverseIterator(value_type *array, size_type pos)
@@ -217,7 +249,7 @@ public:
 	typedef const T &const_reference;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
-	typedef std::random_access_iterator_tag iterator_category;
+	typedef random_access_iterator_tag iterator_category;
 	typedef ConstIterator self_type;
 
 	ConstIterator(value_type *array, size_type pos)
@@ -313,7 +345,7 @@ public:
 	typedef const T &const_reference;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
-	typedef std::random_access_iterator_tag iterator_category;
+	typedef random_access_iterator_tag iterator_category;
 	typedef ConstReverseIterator self_type;
 
 	ConstReverseIterator(value_type *array, size_type pos)
@@ -399,5 +431,7 @@ private:
 	value_type *array;
 	size_type pos;
 };
+
+} // namespace ft
 
 #endif

@@ -6,15 +6,15 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/17 19:51:09 by abobas        ########   odam.nl         */
+/*   Updated: 2020/07/27 22:34:59 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-#include "VectorIterators.hpp"
-#include <cstdint>
+#include "Iterator.hpp"
+#include "Traits.hpp"
 #include <stdexcept>
 #include <climits>
 
@@ -22,27 +22,34 @@
 
 namespace ft
 {
+
 template <typename T>
-class Vector
+class vector
 {
 public:
 	typedef T value_type;
-	typedef T &reference;
-	typedef const T &const_reference;
+	typedef value_type &reference;
+	typedef const value_type &const_reference;
+	typedef value_type *pointer;
+	typedef const value_type *const_pointer;
 	typedef size_t size_type;
-	typedef Iterator<T> iterator;
+	
+	typedef random_access_iterator<value_type, pointer, reference> iterator;
+	typedef random_access_iterator<value_type, const_pointer, const_reference> const_iterator;
+	/* 
 	typedef ConstIterator<T> const_iterator;
 	typedef ReverseIterator<T> reverse_iterator;
 	typedef ConstReverseIterator<T> const_reverse_iterator;
+	*/
 
-	explicit Vector()
+	explicit vector()
 	{
-		this->array = new T[BASE_CAP];
+		this->array = new value_type[BASE_CAP];
 		this->total = 0;
 		this->cap = BASE_CAP;
 	}
 
-	explicit Vector(size_type n, const value_type &val)
+	explicit vector(size_type n, const value_type &val = value_type())
 	{
 		this->array = new value_type[BASE_CAP];
 		this->cap = BASE_CAP;
@@ -51,10 +58,21 @@ public:
 			this->push_back(val);
 	}
 
-	//	template <class InputIterator>
-	//	Vector(InputIterator first, InputIterator last);
+	template <class InputIterator>
+	vector(InputIterator first, InputIterator last,
+		   typename enable_if<is_iterator<typename InputIterator::iterator_category>::value, InputIterator>::type * = nullptr)
+	{
+		this->array = new value_type[BASE_CAP];
+		this->cap = BASE_CAP;
+		this->total = 0;
+		while (first != last)
+		{
+			this->push_back(*first);
+			first++;
+		}
+	}
 
-	Vector(const Vector<T> &other)
+	vector(const vector<T> &other)
 	{
 		this->array = new value_type[other.cap];
 		this->total = 0;
@@ -63,12 +81,12 @@ public:
 			this->push_back(other[i]);
 	}
 
-	~Vector()
+	~vector()
 	{
 		delete[] this->array;
 	}
 
-	Vector &operator=(const Vector<T> &other)
+	vector &operator=(const vector<T> &other)
 	{
 		delete[] this->array;
 		this->array = new value_type[other.cap];
@@ -84,14 +102,14 @@ public:
 		return (iterator(this->array, 0));
 	}
 
-	const_iterator begin() const
-	{
-		return (const_iterator(this->array, 0));
-	}
-
 	iterator end()
 	{
 		return (iterator(this->array, this->size()));
+	}
+
+	const_iterator begin() const
+	{
+		return (const_iterator(this->array, 0));
 	}
 
 	const_iterator end() const
@@ -99,25 +117,28 @@ public:
 		return (const_iterator(this->array, this->size()));
 	}
 
+	/*
 	reverse_iterator rbegin()
 	{
 		return (reverse_iterator(this->array, this->size() - 1));
 	}
+	
+	reverse_iterator rend()
+	{
+		return (reverse_iterator(this->array, SIZE_T_MAX));
+	}
+
 
 	const_reverse_iterator rbegin() const
 	{
 		return (const_reverse_iterator(this->array, this->size() - 1));
 	}
 
-	reverse_iterator rend()
-	{
-		return (reverse_iterator(this->array, SIZE_T_MAX));
-	}
-
 	const_reverse_iterator rend() const
 	{
 		return (const_reverse_iterator(this->array, SIZE_T_MAX));
 	}
+	*/
 
 	size_type size() const
 	{
@@ -176,7 +197,7 @@ public:
 	reference at(size_type n)
 	{
 		if (n >= this->total)
-			throw std::out_of_range("Vector out of range");
+			throw std::out_of_range("vector out of range");
 		else
 			return (this->array[n]);
 	}
@@ -184,7 +205,7 @@ public:
 	const_reference at(size_type n) const
 	{
 		if (n >= this->total)
-			throw std::out_of_range("Vector out of range");
+			throw std::out_of_range("vector out of range");
 		else
 			return (this->array[n]);
 	}
@@ -244,9 +265,9 @@ public:
 
 	iterator erase(iterator first, iterator last);
 
-	void swap(Vector<T> &other)
+	void swap(vector<T> &other)
 	{
-		Vector<T> temp(other);
+		vector<T> temp(other);
 		other = *this;
 		*this = temp;
 	}
@@ -257,21 +278,21 @@ public:
 	}
 
 private:
-	value_type *array;
+	pointer array;
 	size_type total;
 	size_type cap;
 };
 
 template <typename T>
-void swap(Vector<T> &first, Vector<T> &second)
+void swap(vector<T> &first, vector<T> &second)
 {
-	Vector<T> temp(second);
+	vector<T> temp(second);
 	second = first;
 	first = temp;
 }
 
 template <typename T>
-bool operator==(const Vector<T> &lhs, const Vector<T> &rhs)
+bool operator==(const vector<T> &lhs, const vector<T> &rhs)
 {
 	if (lhs.size() != rhs.size())
 		return (false);
@@ -284,7 +305,7 @@ bool operator==(const Vector<T> &lhs, const Vector<T> &rhs)
 }
 
 template <typename T>
-bool operator!=(const Vector<T> &lhs, const Vector<T> &rhs)
+bool operator!=(const vector<T> &lhs, const vector<T> &rhs)
 {
 	if (lhs == rhs)
 		return (false);
@@ -293,64 +314,61 @@ bool operator!=(const Vector<T> &lhs, const Vector<T> &rhs)
 }
 
 template <typename T>
-bool operator<(const Vector<T> &lhs, const Vector<T> &rhs)
+bool operator<(const vector<T> &lhs, const vector<T> &rhs)
 {
-	if (lhs == rhs)
+	if (lhs == rhs || lhs.size() > rhs.size())
 		return (false);
 	for (size_t i = 0; i < lhs.size() && i < rhs.size(); i++)
 	{
 		if (lhs[i] > rhs[i])
 			return (false);
 	}
-	if (lhs.size() > rhs.size())
-		return (false);
 	return (true);
 }
 
 template <typename T>
-bool operator<=(const Vector<T> &lhs, const Vector<T> &rhs)
+bool operator<=(const vector<T> &lhs, const vector<T> &rhs)
 {
 	if (lhs == rhs)
 		return (true);
+	if (lhs.size() > rhs.size())
+		return (false);
 	for (size_t i = 0; i < lhs.size() && i < rhs.size(); i++)
 	{
 		if (lhs[i] > rhs[i])
 			return (false);
 	}
-	if (lhs.size() > rhs.size())
-		return (false);
 	return (true);
 }
 
 template <typename T>
-bool operator>(const Vector<T> &lhs, const Vector<T> &rhs)
+bool operator>(const vector<T> &lhs, const vector<T> &rhs)
 {
-	if (lhs == rhs)
+	if (lhs == rhs || lhs.size() < rhs.size())
 		return (false);
 	for (size_t i = 0; i < lhs.size() && i < rhs.size(); i++)
 	{
 		if (lhs[i] < rhs[i])
 			return (false);
 	}
-	if (lhs.size() < rhs.size())
-		return (false);
 	return (true);
 }
 
 template <typename T>
-bool operator>=(const Vector<T> &lhs, const Vector<T> &rhs)
+bool operator>=(const vector<T> &lhs, const vector<T> &rhs)
 {
 	if (lhs == rhs)
 		return (true);
+	if (lhs.size() < rhs.size())
+		return (false);
 	for (size_t i = 0; i < lhs.size() && i < rhs.size(); i++)
 	{
 		if (lhs[i] < rhs[i])
 			return (false);
 	}
-	if (lhs.size() < rhs.size())
-		return (false);
 	return (true);
 }
+
 } // namespace ft
 
 #endif
