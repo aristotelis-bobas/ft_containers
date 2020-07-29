@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/27 22:34:59 by abobas        ########   odam.nl         */
+/*   Updated: 2020/07/29 19:46:49 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,11 @@ public:
 	typedef value_type *pointer;
 	typedef const value_type *const_pointer;
 	typedef size_t size_type;
-	
+	typedef ptrdiff_t difference_type;
 	typedef random_access_iterator<value_type, pointer, reference> iterator;
 	typedef random_access_iterator<value_type, const_pointer, const_reference> const_iterator;
-	/* 
-	typedef ConstIterator<T> const_iterator;
-	typedef ReverseIterator<T> reverse_iterator;
-	typedef ConstReverseIterator<T> const_reverse_iterator;
-	*/
+	typedef reverse_random_access_iterator<value_type, pointer, reference> reverse_iterator;
+	typedef reverse_random_access_iterator<value_type, const_pointer, const_reference> const_reverse_iterator;
 
 	explicit vector()
 	{
@@ -72,7 +69,7 @@ public:
 		}
 	}
 
-	vector(const vector<T> &other)
+	vector(const vector &other)
 	{
 		this->array = new value_type[other.cap];
 		this->total = 0;
@@ -86,7 +83,7 @@ public:
 		delete[] this->array;
 	}
 
-	vector &operator=(const vector<T> &other)
+	vector &operator=(const vector &other)
 	{
 		delete[] this->array;
 		this->array = new value_type[other.cap];
@@ -117,17 +114,15 @@ public:
 		return (const_iterator(this->array, this->size()));
 	}
 
-	/*
 	reverse_iterator rbegin()
 	{
 		return (reverse_iterator(this->array, this->size() - 1));
 	}
-	
+
 	reverse_iterator rend()
 	{
 		return (reverse_iterator(this->array, SIZE_T_MAX));
 	}
-
 
 	const_reverse_iterator rbegin() const
 	{
@@ -138,7 +133,6 @@ public:
 	{
 		return (const_reverse_iterator(this->array, SIZE_T_MAX));
 	}
-	*/
 
 	size_type size() const
 	{
@@ -150,13 +144,16 @@ public:
 		return (SIZE_T_MAX / sizeof(value_type));
 	}
 
-	void resize(size_type n)
+	void resize(size_type n, value_type val = value_type())
 	{
 		value_type *temp = new value_type[n];
 		size_type temp_total = 0;
 		for (size_type i = 0; i < this->size() && i < n; i++)
 		{
-			temp[i] = this->array[i];
+			if (i >= this->total)
+				temp[i] = val;
+			else
+				temp[i] = this->array[i];
 			temp_total++;
 		}
 		delete[] this->array;
@@ -231,7 +228,16 @@ public:
 	}
 
 	template <class InputIterator>
-	void assign(InputIterator first, InputIterator last);
+	void assign(InputIterator first, InputIterator last,
+				typename enable_if<is_iterator<typename InputIterator::iterator_category>::value, InputIterator>::type * = nullptr)
+	{
+		this->clear();
+		while (first != last)
+		{
+			this->push_back(*first);
+			first++;
+		}
+	}
 
 	void assign(size_type n, const value_type &val)
 	{
@@ -250,24 +256,80 @@ public:
 
 	void pop_back()
 	{
-		this->array[this->total - 1] = 0;
 		this->total--;
 	}
 
-	iterator insert(iterator position, const value_type &val);
+	iterator insert(iterator position, const value_type &val)
+	{
+		iterator it = this->end() - 1;
+		this->push_back(*it);
+		while (it != position)
+		{
+			reference tmp = *it;
+			it--;
+			tmp = *it;
+		}
+		*it = val;
+		return (it);
+	}
 
-	void insert(iterator position, size_type n, const value_type &val);
+	void insert(iterator position, size_type n, const value_type &val)
+	{
+		iterator it = this->end() - n;
+		for (size_type i = 0; i < n; i++)
+		{
+			this->push_back(*it);
+			it++;
+		}
+		it++;
+		while (it != position)
+		{
+			iterator tmp = it;
+			tmp -= n;
+			*it = *tmp;
+			it--;
+		}
+		for (size_type i = 0; i < n; i++)
+		{
+			*position = val;
+			position++;
+		}
+	}
 
 	template <class InputIterator>
-	void insert(iterator position, InputIterator first, InputIterator last);
+	void insert(iterator position, InputIterator first, InputIterator last,
+				typename enable_if<is_iterator<typename InputIterator::iterator_category>::value, InputIterator>::type * = nullptr)
+	{
+		difference_type n = last - first;
+		iterator it = this->end() - n;
+		for (difference_type i = 0; i < n; i++)
+		{
+			this->push_back(*it);
+			it++;
+		}
+		it++;
+		while (it != position)
+		{
+			iterator tmp = it;
+			tmp -= n;
+			*it = *tmp;
+			it--;
+		}
+		for (difference_type i = 0; i < n; i++)
+		{
+			*position = *first;
+			first++;
+			position++;
+		}
+	}
 
 	iterator erase(iterator position);
 
 	iterator erase(iterator first, iterator last);
 
-	void swap(vector<T> &other)
+	void swap(vector &other)
 	{
-		vector<T> temp(other);
+		vector temp(other);
 		other = *this;
 		*this = temp;
 	}
