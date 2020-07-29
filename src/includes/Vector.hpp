@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/29 19:46:49 by abobas        ########   odam.nl         */
+/*   Updated: 2020/07/29 21:03:40 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 #include <climits>
 
 #define BASE_CAP 128
+
+// TESTING
+#include <iostream>
 
 namespace ft
 {
@@ -69,13 +72,13 @@ public:
 		}
 	}
 
-	vector(const vector &other)
+	vector(const vector &x)
 	{
-		this->array = new value_type[other.cap];
+		this->array = new value_type[x.cap];
 		this->total = 0;
-		this->cap = other.cap;
-		for (size_type i = 0; i < other.size(); i++)
-			this->push_back(other[i]);
+		this->cap = x.cap;
+		for (size_type i = 0; i < x.size(); i++)
+			this->push_back(x[i]);
 	}
 
 	~vector()
@@ -83,14 +86,14 @@ public:
 		delete[] this->array;
 	}
 
-	vector &operator=(const vector &other)
+	vector &operator=(const vector &x)
 	{
 		delete[] this->array;
-		this->array = new value_type[other.cap];
-		this->cap = other.cap;
+		this->array = new value_type[x.cap];
+		this->cap = x.cap;
 		this->total = 0;
-		for (size_type i = 0; i < other.size(); i++)
-			this->push_back(other[i]);
+		for (size_type i = 0; i < x.size(); i++)
+			this->push_back(x[i]);
 		return (*this);
 	}
 
@@ -323,14 +326,34 @@ public:
 		}
 	}
 
-	iterator erase(iterator position);
+	iterator erase(iterator position)
+	{	
+		for (iterator it = position; it != this->end() - 1; it++)
+		{
+			iterator tmp = it;
+			tmp++;
+			*it = *tmp;
+		}
+		this->total -= 1;
+		return (position);
+	}
 
-	iterator erase(iterator first, iterator last);
-
-	void swap(vector &other)
+	iterator erase(iterator first, iterator last)
 	{
-		vector temp(other);
-		other = *this;
+		difference_type n = last - first;
+		for (iterator it = last; it != this->end(); it++)
+		{
+			*first = *it;
+			first++;
+		}
+		this->total -= n;
+		return (last);
+	}
+
+	void swap(vector &x)
+	{
+		vector temp(x);
+		x = *this;
 		*this = temp;
 	}
 
@@ -346,11 +369,11 @@ private:
 };
 
 template <typename T>
-void swap(vector<T> &first, vector<T> &second)
+void swap(vector<T> &x, vector<T> &y)
 {
-	vector<T> temp(second);
-	second = first;
-	first = temp;
+	vector<T> temp(y);
+	y = x;
+	x = temp;
 }
 
 template <typename T>

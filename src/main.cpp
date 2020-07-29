@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/29 19:52:17 by abobas        ########   odam.nl         */
+/*   Updated: 2020/07/29 21:01:57 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -480,6 +480,36 @@ int main()
 		MyVector1.push_back(99999);
 		MyVector1.push_back(999999);
 		MyVector1.insert(MyVector1.begin(), Range.begin(), Range.end());
+
+		for (size_t i = 0; i < MyVector1.size(); ++i)
+			std::cout << MyVector1[i] << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		ft::vector<int> MyVector1;
+
+		MyVector1.push_back(9);
+		MyVector1.push_back(99);
+		MyVector1.push_back(999);
+		MyVector1.push_back(9999);
+		MyVector1.push_back(99999);
+		MyVector1.push_back(999999);
+		MyVector1.erase(MyVector1.begin());
+
+		for (size_t i = 0; i < MyVector1.size(); ++i)
+			std::cout << MyVector1[i] << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		ft::vector<int> MyVector1;
+
+		MyVector1.push_back(9);
+		MyVector1.push_back(99);
+		MyVector1.push_back(999);
+		MyVector1.push_back(9999);
+		MyVector1.push_back(99999);
+		MyVector1.push_back(999999);
+		MyVector1.erase(MyVector1.begin() + 1, MyVector1.begin() + 2);
 
 		for (size_t i = 0; i < MyVector1.size(); ++i)
 			std::cout << MyVector1[i] << std::endl;
