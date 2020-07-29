@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/29 21:03:40 by abobas        ########   odam.nl         */
+/*   Updated: 2020/07/29 21:06:07 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@
 #include <climits>
 
 #define BASE_CAP 128
-
-// TESTING
-#include <iostream>
 
 namespace ft
 {
