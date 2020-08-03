@@ -24,13 +24,9 @@ public:
     typedef const value_type *const_pointer;
     typedef node<T> element;
     typedef node<T> *element_pointer;
-    typedef const node<T> *const_element_pointer;
     typedef size_t size_type;
     typedef ptrdiff_t difference_type;
-    typedef random_access_iterator<value_type, element_pointer, reference> iterator;
-    typedef random_access_iterator<value_type, const_element_pointer, const_reference> const_iterator;
-    typedef reverse_random_access_iterator<value_type, pointer, reference> reverse_iterator;
-    typedef reverse_random_access_iterator<value_type, const_pointer, const_reference> const_reverse_iterator;
+    typedef random_access_iterator<value_type, element, reference> iterator;
 
     explicit list()
     {
@@ -46,29 +42,14 @@ public:
             this->push_back(val);
     }
 
+    iterator begin()
+    {
+        return (iterator(*this->head));
+    }
+
     ~list()
     {
     }
-
-    iterator begin()
-	{
-		return (iterator(this->head->next));
-	}
-
-	iterator end()
-	{
-		return (iterator(nullptr));
-	}
-
-    size_type size() const
-	{
-		return (this->total);
-	}
-
-	size_type max_size() const
-	{
-		return (SIZE_T_MAX / sizeof(value_type));
-	}
 
     bool empty() const
 	{
@@ -102,10 +83,7 @@ private:
 
     void create_head(const value_type &val = value_type())
     {
-        this->head = new element;
-        this->head->next = nullptr;
-        this->head->previous = nullptr;
-        this->head->data = val;
+        this->head = new element(val);
         this->total++;
     }
 };

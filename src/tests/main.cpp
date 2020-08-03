@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/03 17:06:53 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/03 18:20:03 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,17 @@ int main()
 {
 	std::cout << std::endl;
 	{
-		ft::list<int> MyVector1(10, 10);
-		ft::list<int>::iterator it = MyVector1.begin();
+		ft::list<int> MyList;
+		MyList.push_back(10);
+		MyList.push_back(20);
+		MyList.push_back(30);
+
+		ft::list<int>::iterator it = MyList.begin();
+		std::cout << *it << std::endl;
+		it++;
+		std::cout << *it << std::endl;
+		it--;
+		it += 2;
 		std::cout << *it << std::endl;
 	}
 	std::cout << std::endl;
