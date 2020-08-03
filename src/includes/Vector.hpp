@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/03 14:46:48 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/03 21:43:55 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ public:
 	{
 		this->array = new value_type[BASE_CAP];
 		this->cap = BASE_CAP;
-		this->total = 0;
-		for (size_type i = 0; i < n; i++)
-			this->push_back(val);
+		this->assign(n, val);
 	}
 
 	template <class InputIterator>
@@ -62,21 +60,13 @@ public:
 	{
 		this->array = new value_type[BASE_CAP];
 		this->cap = BASE_CAP;
-		this->total = 0;
-		while (first != last)
-		{
-			this->push_back(*first);
-			first++;
-		}
+		this->assign(first, last);
 	}
 
 	vector(const vector &x)
 	{
 		this->array = new value_type[x.cap];
-		this->total = 0;
-		this->cap = x.cap;
-		for (size_type i = 0; i < x.size(); i++)
-			this->push_back(x[i]);
+		this->assign(x.begin(), x.end());
 	}
 
 	~vector()
@@ -89,9 +79,7 @@ public:
 		delete[] this->array;
 		this->array = new value_type[x.cap];
 		this->cap = x.cap;
-		this->total = 0;
-		for (size_type i = 0; i < x.size(); i++)
-			this->push_back(x[i]);
+		this->assign(x.begin(), x.end());
 		return (*this);
 	}
 

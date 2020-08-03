@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/03 15:03:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/03 18:19:07 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/03 21:30:38 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ class node
 public:
     typedef T value_type;
     typedef T &reference;
-    typedef node<T> self_type;
     typedef ptrdiff_t difference_type;
 
     value_type data;
@@ -43,6 +42,18 @@ public:
         this->previous = other.previous;
     }
 
+    ~node()
+    {
+    }
+
+    void insert_before(value_type val = value_type())
+    {
+        node *insert = new node(val);
+        insert->previous = this->previous;
+        insert->next = this;
+        this->previous = insert;
+    }
+
     node &operator=(const node &other)
     {
         this->data = other.data;
@@ -51,24 +62,42 @@ public:
         return (*this);
     }
 
+	bool operator==(const node &other) const
+	{
+		if (this->data != other.data)
+			return (false);
+        if (this->next != other.next)
+            return (false);
+        if (this->previous != other.previous)
+            return (false);
+		return (true);
+	}
+
+	bool operator!=(const node &other) const
+	{
+		if (*this == other)
+			return (false);
+		return (true);
+	}
+
     reference operator*()
     {
         return (this->data);
     }
 
-    self_type &operator++()
+    node &operator++()
     {
         *this = *this->next;
         return (*this);
     }
 
-    self_type &operator++(int)
+    node &operator++(int)
     {
         *this = *this->next;
         return (*this);
     }
 
-    self_type &operator+(difference_type n)
+    node &operator+(difference_type n)
     {
         while (n > 0)
         {
@@ -78,7 +107,7 @@ public:
         return (*this);
     }
 
-    self_type &operator+=(difference_type n)
+    node &operator+=(difference_type n)
     {
         while (n > 0)
         {
@@ -89,19 +118,19 @@ public:
         return (*this);
     }
 
-    self_type &operator--(int)
+    node &operator--(int)
     {
         *this = *this->previous;
         return (*this);
     }
 
-    self_type &operator--()
+    node &operator--()
     {
         *this = *this->previous;
         return (*this);
     }
 
-    self_type &operator-(difference_type n)
+    node &operator-(difference_type n)
     {
         while (n > 0)
         {
@@ -111,7 +140,7 @@ public:
         return (*this);
     }
 
-    self_type &operator-=(difference_type n)
+    node &operator-=(difference_type n)
     {
         while (n > 0)
         {
