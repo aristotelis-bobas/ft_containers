@@ -186,7 +186,23 @@ public:
         this->total--;
     }
 
-    iterator insert(iterator position, const value_type &val);
+    iterator insert(iterator position, const value_type &val)
+    {
+        iterator it = this->begin();
+        element *insert = new element(val);
+        element *traverser = this->head->next;
+        while (it != position)
+        {
+            it++;
+            traverser = traverser->next;
+        }
+        insert->previous = traverser->previous;
+        insert->next = traverser;
+        insert->previous->next = insert;
+        traverser->previous = insert;
+        this->total++;
+        return (position);
+    }
 
     void insert(iterator position, size_type n, const value_type &val);
 
