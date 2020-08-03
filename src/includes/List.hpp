@@ -190,26 +190,49 @@ public:
     iterator insert(iterator position, const value_type &val)
     {
         iterator it = this->begin();
-        element *insert = new element(val);
         element *traverser = this->head->next;
         while (it != position)
         {
             it++;
             traverser = traverser->next;
         }
-        insert->previous = traverser->previous;
-        insert->next = traverser;
-        insert->previous->next = insert;
-        traverser->previous = insert;
-        this->total++;
+        this->insert(traverser, val);
         return (position);
     }
 
-    void insert(iterator position, size_type n, const value_type &val);
+    void insert(iterator position, size_type n, const value_type &val)
+    {
+        iterator it = this->begin();
+        element *traverser = this->head->next;
+        while (it != position)
+        {
+            it++;
+            traverser = traverser->next;
+        }
+        while (n > 0)
+        {
+            this->insert(traverser, val);
+            n--;
+        }
+    }
 
     template <class InputIterator>
     void insert(iterator position, InputIterator first, InputIterator last,
-                typename enable_if<is_iterator<typename InputIterator::iterator_category>::value, InputIterator>::type * = nullptr);
+                typename enable_if<is_iterator<typename InputIterator::iterator_category>::value, InputIterator>::type * = nullptr)
+    {
+        iterator it = this->begin();
+        element *traverser = this->head->next;
+        while (it != position)
+        {
+            it++;
+            traverser = traverser->next;
+        }
+        while (first != last)
+        {
+            this->insert(traverser, *first);
+            first++;
+        }
+    }
 
     iterator erase(iterator position);
 
@@ -261,6 +284,16 @@ private:
     {
         this->delete_boundaries();
         this->create_boundaries();
+    }
+
+    void insert(element *position, value_type val = value_type())
+    {
+        element *insert = new element(val);
+        insert->previous = position->previous;
+        insert->next = position;
+        insert->previous->next = insert;
+        position->previous = insert;
+        this->total++;
     }
 };
 
