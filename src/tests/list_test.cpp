@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.cpp                                           :+:    :+:            */
+/*   list_test.cpp                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/03 23:17:57 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/03 23:14:54 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/List.hpp"
-#include <vector>
 #include <list>
-#include <iterator>
-#include <string>
 #include <iostream>
-#include <cstddef>
 
 int main()
 {

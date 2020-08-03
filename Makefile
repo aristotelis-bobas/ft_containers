@@ -6,18 +6,9 @@
 #    By: abobas <abobas@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/07/13 17:19:37 by abobas        #+#    #+#                  #
-#    Updated: 2020/08/03 14:44:27 by abobas        ########   odam.nl          #
+#    Updated: 2020/08/03 23:13:20 by abobas        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
-
-INCLUDE =		Vector.hpp \
-				List.hpp \
-				Iterator.hpp \
-				Traits.hpp
-
-INCLUDE_DIR =	./src/includes/
-			
-INCLUDE :=		$(INCLUDE:%=$(INCLUDE_DIR)%)
 
 FLAGS =			-Wall -Werror -Wextra -std=c++98 -pedantic
 

@@ -6,14 +6,14 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/27 20:18:21 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/03 22:42:14 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/03 23:15:44 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_HPP
 #define ITERATOR_HPP
 
-#include <stddef.h>
+#include <cstddef>
 
 namespace ft
 {

@@ -6,12 +6,14 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/03 15:03:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/03 22:06:02 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/03 23:15:48 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NODE_HPP
 #define NODE_HPP
+
+#include <cstddef>
 
 namespace ft
 {
