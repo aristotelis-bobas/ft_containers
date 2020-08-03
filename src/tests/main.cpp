@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   Utilities.hpp                                      :+:    :+:            */
+/*   main.cpp                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/07/27 18:32:14 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/27 18:36:25 by abobas        ########   odam.nl         */
+/*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
+/*   Updated: 2020/08/03 17:06:53 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILITIES_HPP
-#define UTILITIES_HPP
+#include "../includes/Vector.hpp"
+#include "../includes/List.hpp"
 
-namespace ft
+#include <vector>
+#include <list>
+
+#include <cstdint>
+#include <iostream>
+#include <string>
+#include <iterator>
+
+int main()
 {
-const class nullptr_t
-{
-public:
-	template <class T>
-	operator T *() const
+	std::cout << std::endl;
 	{
-		return 0;
+		ft::list<int> MyVector1(10, 10);
+		ft::list<int>::iterator it = MyVector1.begin();
+		std::cout << *it << std::endl;
 	}
-
-	template <class C, class T>
-	operator T C::*() const
-	{
-		return 0;
-	}
-
-private:
-	void operator&() const;
-
-} ft_nullptr = {};
-} // namespace ft
-
-#endif
+	std::cout << std::endl;
+}

@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/29 21:06:07 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/03 14:46:48 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "Iterator.hpp"
 #include "Traits.hpp"
+#include "Algorithms.hpp"
 #include <stdexcept>
 #include <climits>
 
@@ -96,42 +97,42 @@ public:
 
 	iterator begin()
 	{
-		return (iterator(this->array, 0));
+		return (iterator(this->array));
 	}
 
 	iterator end()
 	{
-		return (iterator(this->array, this->size()));
+		return (iterator(&(this->array[this->size()])));
 	}
 
 	const_iterator begin() const
 	{
-		return (const_iterator(this->array, 0));
+		return (const_iterator(this->array));
 	}
 
 	const_iterator end() const
 	{
-		return (const_iterator(this->array, this->size()));
+		return (const_iterator(&(this->array[this->size()])));
 	}
 
 	reverse_iterator rbegin()
 	{
-		return (reverse_iterator(this->array, this->size() - 1));
+		return (reverse_iterator(&(this->array[this->size() - 1])));
 	}
 
 	reverse_iterator rend()
 	{
-		return (reverse_iterator(this->array, SIZE_T_MAX));
+		return (reverse_iterator(&(this->array[SIZE_T_MAX])));
 	}
 
 	const_reverse_iterator rbegin() const
 	{
-		return (const_reverse_iterator(this->array, this->size() - 1));
+		return (const_reverse_iterator(&(this->array[this->size() - 1])));
 	}
 
 	const_reverse_iterator rend() const
 	{
-		return (const_reverse_iterator(this->array, SIZE_T_MAX));
+		return (const_reverse_iterator(&(this->array[SIZE_T_MAX])));
 	}
 
 	size_type size() const
@@ -300,7 +301,7 @@ public:
 	void insert(iterator position, InputIterator first, InputIterator last,
 				typename enable_if<is_iterator<typename InputIterator::iterator_category>::value, InputIterator>::type * = nullptr)
 	{
-		difference_type n = last - first;
+		difference_type n = distance(first, last);
 		iterator it = this->end() - n;
 		for (difference_type i = 0; i < n; i++)
 		{
@@ -324,7 +325,7 @@ public:
 	}
 
 	iterator erase(iterator position)
-	{	
+	{
 		for (iterator it = position; it != this->end() - 1; it++)
 		{
 			iterator tmp = it;
@@ -337,7 +338,7 @@ public:
 
 	iterator erase(iterator first, iterator last)
 	{
-		difference_type n = last - first;
+		difference_type n = distance(first, last);
 		for (iterator it = last; it != this->end(); it++)
 		{
 			*first = *it;

@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/27 20:18:21 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/29 19:48:33 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/03 16:31:18 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,14 @@ public:
 	typedef random_access_iterator_tag iterator_category;
 	typedef random_access_iterator self_type;
 
-	random_access_iterator(pointer array, size_type pos)
+	random_access_iterator(pointer elements)
 	{
-		this->array = array;
-		this->pos = pos;
+		this->elements = elements;
 	}
 
 	random_access_iterator(self_type const &other)
 	{
-		this->array = other.array;
-		this->pos = other.pos;
+		this->elements = other.elements;
 	}
 
 	~random_access_iterator()
@@ -66,21 +64,18 @@ public:
 
 	random_access_iterator &operator=(self_type const &other)
 	{
-		this->array = other.array;
-		this->pos = other.pos;
+		this->elements = other.elements;
 		return (*this);
 	}
 
 	reference operator*()
 	{
-		return (this->array[this->pos]);
+		return (*this->elements);
 	}
 
 	bool operator==(self_type const &other) const
 	{
-		if (this->array != other.array)
-			return (false);
-		if (this->pos != other.pos)
+		if (this->elements != other.elements)
 			return (false);
 		return (true);
 	}
@@ -94,79 +89,55 @@ public:
 
 	self_type &operator++()
 	{
-		this->pos++;
+		this->elements++;
 		return (*this);
 	}
 
 	self_type &operator++(int)
 	{
-		self_type(*this);
-		this->pos++;
+		this->elements++;
 		return (*this);
 	}
 
 	self_type &operator+(difference_type n)
 	{
-		self_type(*this);
-		this->pos += n;
+		this->elements += n;
 		return (*this);
 	}
 
 	self_type &operator+=(difference_type n)
 	{
-		this->pos += n;
+		this->elements += n;
 		return (*this);
 	}
 
 	self_type &operator--()
 	{
-		this->pos--;
+		this->elements--;
 		return (*this);
 	}
 
 	self_type &operator--(int)
 	{
-		self_type(*this);
-		this->pos--;
+		this->elements--;
 		return (*this);
 	}
 
 	self_type &operator-(difference_type n)
 	{
-		self_type(*this);
-		this->pos -= n;
+		this->elements -= n;
 		return (*this);
 	}
 
 	self_type &operator-=(difference_type n)
 	{
-		this->pos -= n;
+		this->elements -= n;
 		return (*this);
 	}
 
-	difference_type position() const
-	{
-		return (this->pos);
-	}
-
 private:
-	pointer array;
-	size_type pos;
+	pointer elements;
 };
-
-template <typename T, typename T_pointer, typename T_reference>
-ptrdiff_t operator-(const random_access_iterator<T, T_pointer, T_reference> &lhs,
-					const random_access_iterator<T, T_pointer, T_reference> &rhs)
-{
-	return (lhs.position() - rhs.position());
-}
-
-template <typename T, typename T_pointer, typename T_reference>
-ptrdiff_t operator+(const random_access_iterator<T, T_pointer, T_reference> &lhs,
-					const random_access_iterator<T, T_pointer, T_reference> &rhs)
-{
-	return (lhs.position() + rhs.position());
-}
 
 template <typename T, typename T_pointer, typename T_reference>
 class reverse_random_access_iterator
@@ -180,16 +151,14 @@ public:
 	typedef random_access_iterator_tag iterator_category;
 	typedef reverse_random_access_iterator self_type;
 
-	reverse_random_access_iterator(pointer array, size_type pos)
+	reverse_random_access_iterator(pointer elements)
 	{
-		this->array = array;
-		this->pos = pos;
+		this->elements = elements;
 	}
 
 	reverse_random_access_iterator(self_type const &other)
 	{
-		this->array = other.array;
-		this->pos = other.pos;
+		this->elements = other.elements;
 	}
 
 	~reverse_random_access_iterator()
@@ -198,21 +167,18 @@ public:
 
 	reverse_random_access_iterator &operator=(self_type const &other)
 	{
-		this->array = other.array;
-		this->pos = other.pos;
+		this->elements = other.elements;
 		return (*this);
 	}
 
 	reference operator*()
 	{
-		return (this->array[this->pos]);
+		return (*this->elements);
 	}
 
 	bool operator==(self_type const &other) const
 	{
-		if (this->array != other.array)
-			return (false);
-		if (this->pos != other.pos)
+		if (this->elements != other.elements)
 			return (false);
 		return (true);
 	}
@@ -226,75 +192,59 @@ public:
 
 	self_type &operator++()
 	{
-		this->pos--;
+		this->elements--;
 		return (*this);
 	}
 
 	self_type &operator++(int)
 	{
 		self_type(*this);
-		this->pos--;
+		this->elements--;
 		return (*this);
 	}
 
 	self_type &operator+(difference_type n)
 	{
 		self_type(*this);
-		this->pos -= n;
+		this->elements -= n;
 		return (*this);
 	}
 
 	self_type &operator+=(difference_type n)
 	{
-		this->pos -= n;
+		this->elements -= n;
 		return (*this);
 	}
 
 	self_type &operator--()
 	{
-		this->pos++;
+		this->elements++;
 		return (*this);
 	}
 
 	self_type &operator--(int)
 	{
 		self_type(*this);
-		this->pos++;
+		this->elements++;
 		return (*this);
 	}
 
 	self_type &operator-(difference_type n)
 	{
 		self_type(*this);
-		this->pos += n;
+		this->elements += n;
 		return (*this);
 	}
 
 	self_type &operator-=(difference_type n)
 	{
-		this->pos += n;
+		this->elements += n;
 		return (*this);
 	}
 
 private:
-	pointer array;
-	size_type pos;
+	pointer elements;
 };
-
-template <typename T, typename T_pointer, typename T_reference>
-ptrdiff_t operator-(const reverse_random_access_iterator<T, T_pointer, T_reference> &lhs,
-					const reverse_random_access_iterator<T, T_pointer, T_reference> &rhs)
-{
-	return (lhs.position() - rhs.position());
-}
-
-template <typename T, typename T_pointer, typename T_reference>
-ptrdiff_t operator+(const reverse_random_access_iterator<T, T_pointer,
-														 T_reference> &lhs,
-					const reverse_random_access_iterator<T, T_pointer, T_reference> &rhs)
-{
-	return (lhs.position() + rhs.position());
-}
 
 } // namespace ft
 

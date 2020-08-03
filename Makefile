@@ -6,17 +6,12 @@
 #    By: abobas <abobas@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/07/13 17:19:37 by abobas        #+#    #+#                  #
-#    Updated: 2020/07/27 20:09:24 by abobas        ########   odam.nl          #
+#    Updated: 2020/08/03 14:44:27 by abobas        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = 			main.cpp
-
-SRC_DIR	=		./src/
-
-SRC :=			$(SRC:%=$(SRC_DIR)%)
-
 INCLUDE =		Vector.hpp \
+				List.hpp \
 				Iterator.hpp \
 				Traits.hpp
 
@@ -24,21 +19,24 @@ INCLUDE_DIR =	./src/includes/
 			
 INCLUDE :=		$(INCLUDE:%=$(INCLUDE_DIR)%)
 
-NAME = 			containers
-
 FLAGS =			-Wall -Werror -Wextra -std=c++98 -pedantic
 
 CC =			clang++
 
-all: 			$(NAME)
+test:
+				rm -rf main_test
+				$(CC) $(FLAGS) src/tests/main.cpp -o main_test
+				./main_test
 
-$(NAME):		$(SRC) $(INCLUDE)
-				$(CC) $(FLAGS) $(SRC) -o $(NAME)
+vector:			
+				rm -rf vector_test
+				$(CC) $(FLAGS) src/tests/vector_test.cpp -o vector_test
+				./vector_test
+
+list:			
+				rm -rf list_test
+				$(CC) $(FLAGS) src/tests/list_test.cpp -o list_test
+				./list_test	
 
 clean:
-				rm -rf *.o
-
-fclean:			clean
-				rm -rf $(NAME)
-
-re:				fclean all
+				rm -rf main_test vector_test list_test
