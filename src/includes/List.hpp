@@ -27,12 +27,10 @@ public:
     typedef const element const_element;
     typedef size_t size_type;
     typedef ptrdiff_t difference_type;
-
-    // BIDIRECTIONAL ITERATOR
-    typedef random_access_iterator<value_type, element, reference> iterator;
-    typedef random_access_iterator<value_type, const_element, const_reference> const_iterator;
-    typedef reverse_random_access_iterator<value_type, element, reference> reverse_iterator;
-    typedef reverse_random_access_iterator<value_type, const_element, const_reference> const_reverse_iterator;
+    typedef bidirectional_iterator<value_type, element, reference> iterator;
+    typedef bidirectional_iterator<value_type, const_element, const_reference> const_iterator;
+    typedef reverse_bidirectional_iterator<value_type, element, reference> reverse_iterator;
+    typedef reverse_bidirectional_iterator<value_type, const_element, const_reference> const_reverse_iterator;
 
     explicit list()
     {
@@ -353,7 +351,8 @@ public:
     template <class BinaryPredicate>
     void unique(BinaryPredicate binary_pred)
     {
-        iterator it = this->begin() + 1;
+        iterator it = this->begin();
+        it++;
         size_t n = this->size();
         while (n > 1)
         {

@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/03 15:03:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/04 16:57:49 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/04 19:54:11 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,61 +100,23 @@ public:
         return (*this);
     }
 
-    self_type &operator++(int)
+    self_type operator++(int)
     {
+        self_type tmp(*this);
         *this = *this->next;
-        return (*this);
+        return (tmp);
     }
-
-    self_type &operator+(difference_type n)
+    
+    self_type operator--(int)
     {
-        while (n > 0)
-        {
-            *this = *this->next;
-            n--;
-        }
-        return (*this);
-    }
-
-    self_type &operator+=(difference_type n)
-    {
-        while (n > 0)
-        {
-            *this = *this->next;
-            n--;
-        }
-        return (*this);
-    }
-
-    self_type &operator--(int)
-    {
+        self_type tmp(*this);
         *this = *this->previous;
-        return (*this);
+        return (tmp);
     }
 
     self_type &operator--()
     {
         *this = *this->previous;
-        return (*this);
-    }
-
-    self_type &operator-(difference_type n)
-    {
-        while (n > 0)
-        {
-            *this = *this->previous;
-            n--;
-        }
-        return (*this);
-    }
-
-    self_type &operator-=(difference_type n)
-    {
-        while (n > 0)
-        {
-            *this = *this->previous;
-            n--;
-        }
         return (*this);
     }
 };
