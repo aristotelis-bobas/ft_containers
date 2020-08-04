@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/04 22:10:13 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/04 22:44:24 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,10 +158,7 @@ public:
 
 	bool empty() const
 	{
-		if (this->total == 0)
-			return (true);
-		else
-			return (false);
+		return (!this->size());
 	}
 
 	void reserve(size_type n)

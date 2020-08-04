@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/03 14:30:06 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/03 23:15:59 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/04 22:37:39 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 namespace ft
 {
-template <class InputIterator>
-ptrdiff_t distance(InputIterator first, InputIterator last,
-                   typename enable_if<is_iterator<typename InputIterator::iterator_category>::value, InputIterator>::type * = nullptr)
+template <class Iterator>
+ptrdiff_t distance(Iterator first, Iterator last,
+                   typename enable_if<is_iterator<typename Iterator::iterator_category>::value, Iterator>::type * = nullptr)
 {
     ptrdiff_t n = 0;
     while (first != last)

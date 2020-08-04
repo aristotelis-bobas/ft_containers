@@ -113,10 +113,7 @@ public:
 
     bool empty() const
     {
-        if (this->total == 0)
-            return (true);
-        else
-            return (false);
+        return (!this->size());
     }
 
     size_type size() const
