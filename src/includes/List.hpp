@@ -244,7 +244,7 @@ public:
             traverser = traverser->next;
         }
         erase(traverser);
-        return (position);
+        return (it);
     }
 
     iterator erase(iterator first, iterator last)
@@ -316,17 +316,55 @@ public:
         {
             traverser = traverser->next;
             if (traverser->previous->data == val)
-                erase(traverser->previous);
+                this->erase(traverser->previous);
             n--;
         }
     }
 
     template <class Predicate>
-    void remove_if(Predicate pred);
+    void remove_if(Predicate pred)
+    {
+        iterator it = this->begin();
+        element *traverser = this->head->next;
+        size_t n = this->size();
+        while (n > 0)
+        {
+            traverser = traverser->next;
+            if (pred(*it))
+                this->erase(traverser->previous);
+            it++;
+            n--;
+        }
+    }
 
-    void unique();
+    void unique()
+    {
+        element *traverser = this->head->next;
+        size_t n = this->size();
+        while (n > 0)
+        {
+            traverser = traverser->next;
+            if (traverser->previous->data == traverser->data)
+                this->erase(traverser->previous);
+            n--;
+        }
+    }
+
     template <class BinaryPredicate>
-    void unique(BinaryPredicate binary_pred);
+    void unique(BinaryPredicate binary_pred)
+    {
+        iterator it = this->begin() + 1;
+        size_t n = this->size();
+        while (n > 1)
+        {
+            iterator tmp = it;
+            tmp--;
+            if (binary_pred(*it, *tmp))
+                this->erase(tmp);
+            it++;
+            n--;
+        }
+    }
 
     void merge(list &x);
     template <class Compare>
@@ -349,7 +387,7 @@ public:
         }
         while (m > 0)
         {
-            pop_front();
+            this->pop_front();
             m--;
         }
     }

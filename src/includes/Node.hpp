@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/03 15:03:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/03 23:15:48 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/04 16:57:49 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ public:
             *this = *this->next;
             n--;
         }
-        return (*this);
         return (*this);
     }
 
