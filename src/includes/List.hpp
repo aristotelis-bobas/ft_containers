@@ -8,9 +8,6 @@
 #include <climits>
 #include <cstddef>
 
-// TESTING
-#include <iostream>
-
 namespace ft
 {
 
