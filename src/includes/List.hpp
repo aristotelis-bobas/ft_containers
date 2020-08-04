@@ -234,9 +234,38 @@ public:
         }
     }
 
-    iterator erase(iterator position);
+    iterator erase(iterator position)
+    {
+        iterator it = this->begin();
+        element *traverser = this->head->next;
+        while (it != position)
+        {
+            it++;
+            traverser = traverser->next;
+        }
+        erase(traverser);
+        return (position);
+    }
 
-    iterator erase(iterator first, iterator last);
+    iterator erase(iterator first, iterator last)
+    {
+        iterator it = this->begin();
+        element *traverser = this->head->next;
+        while (it != first)
+        {
+            it++;
+            traverser = traverser->next;
+        }
+        difference_type n = distance(first, last);
+        while (n > 0)
+        {
+            traverser = traverser->next;
+            erase(traverser->previous);
+            n--;
+            it++;
+        }
+        return (it);
+    }
 
     void swap(list &x)
     {
@@ -260,6 +289,29 @@ public:
         while (this->size() > 0)
             this->pop_back();
     }
+
+    void splice(iterator position, list &x);
+    void splice(iterator position, list &x, iterator i);
+    void splice(iterator position, list &x, iterator first, iterator last);
+
+    void remove(const value_type &val);
+
+    template <class Predicate>
+    void remove_if(Predicate pred);
+
+    void unique();
+    template <class BinaryPredicate>
+    void unique(BinaryPredicate binary_pred);
+
+    void merge(list &x);
+    template <class Compare>
+    void merge(list &x, Compare comp);
+
+    void sort();
+    template <class Compare>
+    void sort(Compare comp);
+
+    void reverse();
 
 private:
     element *head;
@@ -294,6 +346,14 @@ private:
         insert->previous->next = insert;
         position->previous = insert;
         this->total++;
+    }
+
+    void erase(element *position)
+    {
+        position->previous->next = position->next;
+        position->next->previous = position->previous;
+        delete position;
+        this->total--;
     }
 };
 

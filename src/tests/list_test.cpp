@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/03 23:30:26 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/04 15:17:17 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,28 @@ int main()
 		ft::list<int> MyList(10, 3);
 		ft::list<int> MyRange(4, 5);
         MyList.insert(MyList.begin() + 1, MyRange.begin(), MyRange.end());
+		for (ft::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
+			std::cout << *it << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		ft::list<int> MyList;
+		MyList.push_back(4);
+		MyList.push_back(44);
+		MyList.push_back(444);
+		MyList.push_back(4444);
+        MyList.erase(MyList.begin() + 1);
+		for (ft::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
+			std::cout << *it << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		ft::list<int> MyList;
+		MyList.push_back(4);
+		MyList.push_back(44);
+		MyList.push_back(444);
+		MyList.push_back(4444);
+        MyList.erase(MyList.begin(), MyList.begin() + 1);
 		for (ft::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
 			std::cout << *it << std::endl;
 	}
