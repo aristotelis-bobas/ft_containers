@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/04 21:01:47 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/04 22:30:47 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <iostream>
 
 #ifndef MODE
-	#define MODE ft
+#define MODE ft
 #endif
 
 bool test(int a)
@@ -301,4 +301,93 @@ int main()
 			std::cout << *it << std::endl;
 	}
 	std::cout << std::endl;
+	{
+		MODE::list<int> MyList;
+		MyList.push_back(1);
+		MyList.push_back(35);
+		MyList.push_back(576);
+		MyList.push_back(45);
+		MyList.push_back(17);
+		MyList.sort();
+		MODE::list<int> MyList2;
+		MyList2.push_back(5);
+		MyList2.push_back(9);
+		MyList2.push_back(34);
+		MyList2.push_back(6);
+		MyList2.push_back(99);
+		MyList2.sort();
+		MyList.merge(MyList2);
+
+		for (MODE::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
+			std::cout << *it << std::endl;
+		for (MODE::list<int>::iterator it = MyList2.begin(); it != MyList2.end(); ++it)
+			std::cout << *it << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		MODE::list<int> MyList;
+		MyList.push_back(1);
+		MyList.push_back(35);
+		MyList.push_back(576);
+		MyList.push_back(45);
+		MyList.push_back(17);
+		MyList.sort();
+		MODE::list<int> MyList2;
+		MyList2.push_back(5);
+		MyList2.push_back(9);
+		MyList2.push_back(34);
+		MyList2.push_back(6);
+		MyList2.push_back(99);
+		MyList2.sort();
+		MyList.merge(MyList2, *test3<int>);
+
+		for (MODE::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
+			std::cout << *it << std::endl;
+		for (MODE::list<int>::iterator it = MyList2.begin(); it != MyList2.end(); ++it)
+			std::cout << *it << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		MODE::list<int> MyList(33, 664);
+		MODE::list<int> MyList2(5, 53);
+		for (MODE::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
+			std::cout << *it << std::endl;
+		for (MODE::list<int>::iterator it = MyList2.begin(); it != MyList2.end(); ++it)
+			std::cout << *it << std::endl;
+		MyList.swap(MyList2);
+		for (MODE::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
+			std::cout << *it << std::endl;
+		for (MODE::list<int>::iterator it = MyList2.begin(); it != MyList2.end(); ++it)
+			std::cout << *it << std::endl;
+	}
+	{
+		MODE::list<int> MyList1;
+		MODE::list<int> MyList2;
+
+		MyList1.push_back(100);
+		MyList1.push_back(44);
+
+		MyList2.push_back(100);
+		MyList2.push_back(44);
+
+		if (MyList1 == MyList2)
+			std::cout << "MyList1 is equal to MyList2" << std::endl;
+		if (MyList1 < MyList2)
+			std::cout << "MyList1 is smaller than MyList2" << std::endl;
+		if (MyList1 <= MyList2)
+			std::cout << "MyList1 is smaller than or equal to MyList2" << std::endl;
+		if (MyList1 > MyList2)
+			std::cout << "MyList1 is larger than MyList2" << std::endl;
+		if (MyList1 >= MyList2)
+			std::cout << "MyList1 is larger than or equal to MyList2" << std::endl;
+		MyList1.swap(MyList2);
+		if (MyList1 < MyList2)
+			std::cout << "MyList1 is smaller than MyList2" << std::endl;
+		if (MyList1 <= MyList2)
+			std::cout << "MyList1 is smaller than or equal to MyList2" << std::endl;
+		if (MyList1 > MyList2)
+			std::cout << "MyList1 is larger than MyList2" << std::endl;
+		if (MyList1 >= MyList2)
+			std::cout << "MyList1 is larger than or equal to MyList2" << std::endl;
+	}
 }

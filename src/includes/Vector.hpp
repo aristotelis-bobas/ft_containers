@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/03 21:43:55 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/04 22:10:13 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,9 +357,9 @@ private:
 template <typename T>
 void swap(vector<T> &x, vector<T> &y)
 {
-	vector<T> temp(y);
+	vector<T> tmp(y);
 	y = x;
-	x = temp;
+	x = tmp;
 }
 
 template <typename T>

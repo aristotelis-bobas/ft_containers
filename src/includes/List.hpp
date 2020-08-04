@@ -387,9 +387,52 @@ public:
         }
     }
 
-    void merge(list &x);
+    void merge(list &x)
+    {
+        element *traverser = this->head->next;
+        element *x_traverser = x.head->next;
+        size_t n = this->size();
+        size_t m = x.size();
+        while (n > 0 && m > 0)
+        {
+            if (traverser->data < x_traverser->data)
+            {
+                traverser = traverser->next;
+                n--;
+            }
+            else
+            {
+                this->insert(traverser, x_traverser->data);
+                x_traverser = x_traverser->next;
+                x.pop_front();
+                m--;
+            }
+        }
+    }
+
     template <class Compare>
-    void merge(list &x, Compare comp);
+    void merge(list &x, Compare comp)
+    {
+        element *traverser = this->head->next;
+        element *x_traverser = x.head->next;
+        size_t n = this->size();
+        size_t m = x.size();
+        while (n > 0 && m > 0)
+        {
+            if (comp(traverser->data, x_traverser->data))
+            {
+                traverser = traverser->next;
+                n--;
+            }
+            else
+            {
+                this->insert(traverser, x_traverser->data);
+                x_traverser = x_traverser->next;
+                x.pop_front();
+                m--;
+            }
+        }
+    }
 
     void sort()
     {
@@ -403,7 +446,7 @@ public:
                 this->swap(traverser->previous, traverser);
                 n = this->size() - 1;
                 traverser = this->head->next;
-                continue ;
+                continue;
             }
             n--;
         }
@@ -422,7 +465,7 @@ public:
                 this->swap(traverser->previous, traverser);
                 n = this->size() - 1;
                 traverser = this->head->next;
-                continue ;
+                continue;
             }
             n--;
         }
@@ -496,6 +539,117 @@ private:
         second->data = tmp;
     }
 };
+
+template <class T>
+void swap(list<T> &x, list<T> &y)
+{
+    list<T> tmp(y);
+    y = x;
+    x = tmp;
+}
+
+template <typename T>
+bool operator==(const list<T> &lhs, const list<T> &rhs)
+{
+    typename list<T>::const_iterator rhs_it = rhs.begin();
+    typename list<T>::const_iterator lhs_it = lhs.begin();
+
+    if (lhs.size() != rhs.size())
+        return (false);
+    while (lhs_it != lhs.end())
+    {
+        if (*lhs_it != *rhs_it)
+            return (false);
+        lhs_it++;
+        rhs_it++;
+    }
+    return (true);
+}
+
+template <typename T>
+bool operator!=(const list<T> &lhs, const list<T> &rhs)
+{
+    if (lhs == rhs)
+        return (false);
+    else
+        return (true);
+}
+
+template <typename T>
+bool operator<(const list<T> &lhs, const list<T> &rhs)
+{
+    typename list<T>::const_iterator rhs_it = rhs.begin();
+    typename list<T>::const_iterator lhs_it = lhs.begin();
+
+    if (lhs == rhs || lhs.size() > rhs.size())
+        return (false);
+    while (lhs_it != lhs.end() && rhs_it != rhs.end())
+    {
+        if (*lhs_it > *rhs_it)
+            return (false);
+        lhs_it++;
+        rhs_it++;
+    }
+    return (true);
+}
+
+template <typename T>
+bool operator<=(const list<T> &lhs, const list<T> &rhs)
+{
+    typename list<T>::const_iterator rhs_it = rhs.begin();
+    typename list<T>::const_iterator lhs_it = lhs.begin();
+
+    if (lhs == rhs)
+        return (true);
+    if (lhs.size() > rhs.size())
+        return (false);
+    while (lhs_it != lhs.end() && rhs_it != rhs.end())
+    {
+        if (*lhs_it > *rhs_it)
+            return (false);
+        lhs_it++;
+        rhs_it++;
+    }
+    return (true);
+}
+
+template <typename T>
+bool operator>(const list<T> &lhs, const list<T> &rhs)
+{
+    typename list<T>::const_iterator rhs_it = rhs.begin();
+    typename list<T>::const_iterator lhs_it = lhs.begin();
+
+    if (lhs == rhs || lhs.size() < rhs.size())
+        return (false);
+    while (lhs_it != lhs.end() && rhs_it != rhs.end())
+    {
+        if (*lhs_it < *rhs_it)
+            return (false);
+        lhs_it++;
+        rhs_it++;
+    }
+    return (true);
+}
+
+template <typename T>
+bool operator>=(const list<T> &lhs, const list<T> &rhs)
+{
+    typename list<T>::const_iterator rhs_it = rhs.begin();
+    typename list<T>::const_iterator lhs_it = lhs.begin();
+
+    if (lhs == rhs)
+        return (true);
+    if (lhs.size() < rhs.size())
+        return (false);
+    while (lhs_it != lhs.end() && rhs_it != rhs.end())
+    {
+        if (*lhs_it < *rhs_it)
+            return (false);
+        lhs_it++;
+        rhs_it++;
+    }
+    return (true);
+}
 
 } // namespace ft
 

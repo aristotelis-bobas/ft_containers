@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/04 20:07:29 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/04 22:30:45 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <iterator>
 
 #ifndef MODE
-	#define MODE ft
+#define MODE ft
 #endif
 
 int main()
