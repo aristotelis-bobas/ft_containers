@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/04 19:59:51 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/04 21:01:47 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ bool test(int a)
 bool test2(int a, int b)
 {
 	if (a == b)
+		return true;
+	return false;
+}
+
+template <typename T>
+bool test3(T a, T b)
+{
+	if (a < b)
 		return true;
 	return false;
 }
@@ -233,6 +241,63 @@ int main()
 		MyList.push_back(1);
 		MyList.unique(*test2);
 		for (MODE::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
+			std::cout << *it << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		MODE::list<int> MyList;
+
+		MyList.push_back(5);
+		MyList.push_back(5);
+		MyList.push_back(4);
+		MyList.push_back(4);
+		MyList.push_back(3);
+		MyList.push_back(3);
+		MyList.push_back(2);
+		MyList.push_back(2);
+		MyList.push_back(1);
+		MyList.push_back(1);
+		MyList.reverse();
+		MyList.sort();
+		for (MODE::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
+			std::cout << *it << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		MODE::list<int> MyList;
+
+		MyList.push_back(5);
+		MyList.push_back(5);
+		MyList.push_back(4);
+		MyList.push_back(4);
+		MyList.push_back(3);
+		MyList.push_back(3);
+		MyList.push_back(2);
+		MyList.push_back(2);
+		MyList.push_back(1);
+		MyList.push_back(1);
+		MyList.reverse();
+		MyList.sort(*test3<int>);
+		for (MODE::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
+			std::cout << *it << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		const MODE::list<int> MyList(10, 50);
+
+		for (MODE::list<int>::const_iterator it = MyList.begin(); it != MyList.end(); ++it)
+			std::cout << *it << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		MODE::list<int> MyList;
+		MyList.push_back(5);
+		MyList.push_back(4);
+		MyList.push_back(3);
+		MyList.push_back(2);
+		MyList.push_back(1);
+
+		for (MODE::list<int>::reverse_iterator it = MyList.rbegin(); it != MyList.rend(); ++it)
 			std::cout << *it << std::endl;
 	}
 	std::cout << std::endl;

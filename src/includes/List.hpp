@@ -24,13 +24,12 @@ public:
     typedef value_type *pointer;
     typedef const value_type *const_pointer;
     typedef node<T> element;
-    typedef const element const_element;
     typedef size_t size_type;
     typedef ptrdiff_t difference_type;
     typedef bidirectional_iterator<value_type, element, reference> iterator;
-    typedef bidirectional_iterator<value_type, const_element, const_reference> const_iterator;
+    typedef bidirectional_iterator<value_type, element, const_reference> const_iterator;
     typedef reverse_bidirectional_iterator<value_type, element, reference> reverse_iterator;
-    typedef reverse_bidirectional_iterator<value_type, const_element, const_reference> const_reverse_iterator;
+    typedef reverse_bidirectional_iterator<value_type, element, const_reference> const_reverse_iterator;
 
     explicit list()
     {
@@ -85,12 +84,35 @@ public:
         return (iterator(*this->tail));
     }
 
-    const_iterator begin() const;
-    const_iterator end() const;
-    reverse_iterator rbegin();
-    reverse_iterator rend();
-    const_reverse_iterator rbegin() const;
-    const_reverse_iterator rend() const;
+    const_iterator begin() const
+    {
+        return (const_iterator(*this->head->next));
+    }
+
+    const_iterator end() const
+    {
+        return (const_iterator(*this->tail));
+    }
+
+    reverse_iterator rbegin()
+    {
+        return (reverse_iterator(*this->tail->previous));
+    }
+
+    reverse_iterator rend()
+    {
+        return (reverse_iterator(*this->head));
+    }
+
+    const_reverse_iterator rbegin() const
+    {
+        return (const_reverse_iterator(*this->tail->previous));
+    }
+
+    const_reverse_iterator rend() const
+    {
+        return (const_reverse_iterator(*this->head));
+    }
 
     bool empty() const
     {
@@ -369,9 +391,42 @@ public:
     template <class Compare>
     void merge(list &x, Compare comp);
 
-    void sort();
+    void sort()
+    {
+        element *traverser = this->head->next;
+        size_t n = this->size() - 1;
+        while (n > 0)
+        {
+            traverser = traverser->next;
+            if (traverser->data < traverser->previous->data)
+            {
+                this->swap(traverser->previous, traverser);
+                n = this->size() - 1;
+                traverser = this->head->next;
+                continue ;
+            }
+            n--;
+        }
+    }
+
     template <class Compare>
-    void sort(Compare comp);
+    void sort(Compare comp)
+    {
+        element *traverser = this->head->next;
+        size_t n = this->size() - 1;
+        while (n > 0)
+        {
+            traverser = traverser->next;
+            if (comp(traverser->data, traverser->previous->data))
+            {
+                this->swap(traverser->previous, traverser);
+                n = this->size() - 1;
+                traverser = this->head->next;
+                continue ;
+            }
+            n--;
+        }
+    }
 
     void reverse()
     {
@@ -432,6 +487,13 @@ private:
         position->next->previous = position->previous;
         delete position;
         this->total--;
+    }
+
+    void swap(element *first, element *second)
+    {
+        value_type tmp = first->data;
+        first->data = second->data;
+        second->data = tmp;
     }
 };
 
