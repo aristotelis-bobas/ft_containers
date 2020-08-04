@@ -290,11 +290,36 @@ public:
             this->pop_back();
     }
 
-    void splice(iterator position, list &x);
-    void splice(iterator position, list &x, iterator i);
-    void splice(iterator position, list &x, iterator first, iterator last);
+    void splice(iterator position, list &x)
+    {
+        this->insert(position, x.begin(), x.end());
+        x.clear();
+    }
 
-    void remove(const value_type &val);
+    void splice(iterator position, list &x, iterator i)
+    {
+        this->insert(position, *i);
+        x.erase(i);
+    }
+
+    void splice(iterator position, list &x, iterator first, iterator last)
+    {
+        this->insert(position, first, last);
+        x.erase(first, last);
+    }
+
+    void remove(const value_type &val)
+    {
+        size_t n = this->size();
+        element *traverser = this->head->next;
+        while (n > 0)
+        {
+            traverser = traverser->next;
+            if (traverser->previous->data == val)
+                erase(traverser->previous);
+            n--;
+        }
+    }
 
     template <class Predicate>
     void remove_if(Predicate pred);
@@ -311,7 +336,23 @@ public:
     template <class Compare>
     void sort(Compare comp);
 
-    void reverse();
+    void reverse()
+    {
+        size_t n = this->size();
+        size_t m = n;
+        element *traverser = this->tail->previous;
+        while (n > 0)
+        {
+            this->push_back(traverser->data);
+            traverser = traverser->previous;
+            n--;
+        }
+        while (m > 0)
+        {
+            pop_front();
+            m--;
+        }
+    }
 
 private:
     element *head;

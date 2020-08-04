@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/04 15:17:17 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/04 15:45:46 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,72 @@ int main()
 		MyList.push_back(444);
 		MyList.push_back(4444);
         MyList.erase(MyList.begin(), MyList.begin() + 1);
+		for (ft::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
+			std::cout << *it << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		ft::list<int> MyList;
+		MyList.push_back(5);
+		MyList.push_back(4);
+		MyList.push_back(3);
+		MyList.push_back(2);
+		MyList.push_back(1);
+		for (ft::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
+			std::cout << *it << std::endl;
+		std::cout << std::endl;
+        MyList.reverse();
+		for (ft::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
+			std::cout << *it << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		ft::list<int> MyList;
+		MyList.push_back(5);
+		MyList.push_back(4);
+		MyList.push_back(3);
+		MyList.push_back(2);
+		MyList.push_back(1);
+        MyList.remove(3);
+		for (ft::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
+			std::cout << *it << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		ft::list<int> MyList;
+		ft::list<int> Filler(5, 66);
+		MyList.push_back(5);
+		MyList.push_back(4);
+		MyList.push_back(3);
+		MyList.push_back(2);
+		MyList.push_back(1);
+        MyList.splice(MyList.begin() + 1, Filler);
+		for (ft::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
+			std::cout << *it << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		ft::list<int> MyList;
+		ft::list<int> Filler(5, 66);
+		MyList.push_back(5);
+		MyList.push_back(4);
+		MyList.push_back(3);
+		MyList.push_back(2);
+		MyList.push_back(1);
+        MyList.splice(MyList.begin() + 1, Filler, Filler.begin() + 2);
+		for (ft::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
+			std::cout << *it << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		ft::list<int> MyList;
+		ft::list<int> Filler(5, 66);
+		MyList.push_back(5);
+		MyList.push_back(4);
+		MyList.push_back(3);
+		MyList.push_back(2);
+		MyList.push_back(1);
+        MyList.splice(MyList.begin() + 1, Filler, Filler.begin() + 1, Filler.end() - 1);
 		for (ft::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
 			std::cout << *it << std::endl;
 	}
