@@ -6,7 +6,7 @@
 #    By: abobas <abobas@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/07/13 17:19:37 by abobas        #+#    #+#                  #
-#    Updated: 2020/08/06 17:41:05 by abobas        ########   odam.nl          #
+#    Updated: 2020/08/06 18:19:22 by abobas        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,6 @@ FLAGS =			-Wall -Werror -Wextra -std=c++98 -pedantic
 STD =			-D MODE=std
 
 FT =			-D MODE=ft
-
-STACK =			-D CONTAINER=stack
 
 CC =			clang++
 
@@ -41,12 +39,20 @@ list:			clean
 				diff -s result_ft result_std > result_diff
 
 stack:			clean
-				$(CC) $(FLAGS) $(FT) $(STACK) src/tests/adaptor_test.cpp -o adaptor_test
-				./adaptor_test	> result_ft
-				rm -rf adaptor_test
-				$(CC) $(FLAGS) $(STD) $(STACK) src/tests/adaptor_test.cpp -o adaptor_test
-				./adaptor_test	> result_std
+				$(CC) $(FLAGS) $(FT) src/tests/stack_test.cpp -o stack_test
+				./stack_test > result_ft
+				rm -rf stack_test
+				$(CC) $(FLAGS) $(STD) src/tests/stack_test.cpp -o stack_test
+				./stack_test > result_std
 				diff -s result_ft result_std > result_diff
+
+queue:			clean
+				$(CC) $(FLAGS) $(FT) src/tests/queue_test.cpp -o queue_test
+				./queue_test > result_ft
+				rm -rf queue_test
+				$(CC) $(FLAGS) $(STD) src/tests/queue_test.cpp -o queue_test
+				./queue_test > result_std
+				diff -s result_ft result_std > result_diff				
 				
 clean:
 				rm -rf *test result*

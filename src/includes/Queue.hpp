@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   Stack.hpp                                          :+:    :+:            */
+/*   Queue.hpp                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/06 16:49:33 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/06 18:19:53 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/06 18:19:41 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STACK_HPP
-#define STACK_HPP
+#ifndef QUEUE_HPP
+#define QUEUE_HPP
 
 #include "List.hpp"
 
 namespace ft
 {
 template <class T, class Container = list<T> >
-class stack
+class queue
 {
 public:
     typedef T value_type;
     typedef Container container_type;
     typedef size_t size_type;
 
-    explicit stack(const container_type &cntr = container_type())
+    explicit queue(const container_type &cntr = container_type())
     {
         this->container = cntr;
     }
@@ -40,12 +40,22 @@ public:
         return (this->container.size());
     }
 
-    value_type &top()
+    value_type &front()
+    {
+        return (this->container.front());
+    }
+
+    const value_type &front() const
+    {
+        return (this->container.front());
+    }
+
+    value_type &back()
     {
         return (this->container.back());
     }
 
-    const value_type &top() const
+    const value_type &back() const
     {
         return (this->container.back());
     }
@@ -57,7 +67,7 @@ public:
 
     void pop()
     {
-        this->container.pop_back();
+        this->container.pop_front();
     }
 
 private:
@@ -65,37 +75,37 @@ private:
 };
 
 template <class T, class Container>
-bool operator==(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+bool operator==(const queue<T, Container> &lhs, const queue<T, Container> &rhs)
 {
     return (lhs == rhs);
 }
 
 template <class T, class Container>
-bool operator!=(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+bool operator!=(const queue<T, Container> &lhs, const queue<T, Container> &rhs)
 {
     return (lhs != rhs);
 }
 
 template <class T, class Container>
-bool operator<(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+bool operator<(const queue<T, Container> &lhs, const queue<T, Container> &rhs)
 {
     return (lhs < rhs);
 }
 
 template <class T, class Container>
-bool operator<=(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+bool operator<=(const queue<T, Container> &lhs, const queue<T, Container> &rhs)
 {
     return (lhs <= rhs);
 }
 
 template <class T, class Container>
-bool operator>(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+bool operator>(const queue<T, Container> &lhs, const queue<T, Container> &rhs)
 {
     return (lhs > rhs);
 }
 
 template <class T, class Container>
-bool operator>=(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
+bool operator>=(const queue<T, Container> &lhs, const queue<T, Container> &rhs)
 {
     return (lhs >= rhs);
 }
