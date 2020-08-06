@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/06 19:58:35 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/06 22:23:48 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int main()
 		MyList.push_back(44);
 		MyList.push_back(444);
 		MyList.push_back(4444);
-		MyList.erase(MyList.begin());
+		std::cout << *(MyList.erase(MyList.begin())) << std::endl;
 		for (MODE::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
 			std::cout << *it << std::endl;
 	}
@@ -127,7 +127,7 @@ int main()
 		MyList.push_back(44);
 		MyList.push_back(444);
 		MyList.push_back(4444);
-		MyList.erase(MyList.begin(), MyList.begin());
+		std::cout << *(MyList.erase(MyList.begin(), MyList.end())) << std::endl;
 		for (MODE::list<int>::iterator it = MyList.begin(); it != MyList.end(); ++it)
 			std::cout << *it << std::endl;
 	}

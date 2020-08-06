@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/06 22:00:27 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/06 22:04:33 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@
 
 int main()
 {
+	std::cout << std::endl;
+	{
+		MODE::vector<int> MyVector;
+		std::cout << MyVector.capacity() << std::endl;
+		std::cout << MyVector.size() << std::endl;
+	}
 	std::cout << std::endl;
 	{
 		MODE::vector<int> Range(10, 10);

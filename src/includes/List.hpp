@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/06 17:46:00 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/06 18:37:35 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/06 22:24:04 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,29 +215,16 @@ public:
 
     iterator insert(iterator position, const value_type &val)
     {
-        iterator it = this->begin();
-        element *traverser = this->head->next;
-        while (it != position)
-        {
-            it++;
-            traverser = traverser->next;
-        }
-        this->insert(traverser, val);
+        this->insert(this->find(position), val);
         return (position);
     }
 
     void insert(iterator position, size_type n, const value_type &val)
     {
-        iterator it = this->begin();
-        element *traverser = this->head->next;
-        while (it != position)
-        {
-            it++;
-            traverser = traverser->next;
-        }
+        element *pos = this->find(position);
         while (n > 0)
         {
-            this->insert(traverser, val);
+            this->insert(pos, val);
             n--;
         }
     }
@@ -246,58 +233,40 @@ public:
     void insert(iterator position, InputIterator first, InputIterator last,
                 typename enable_if<is_iterator<typename InputIterator::iterator_category>::value, InputIterator>::type * = nullptr)
     {
-        iterator it = this->begin();
-        element *traverser = this->head->next;
-        while (it != position)
-        {
-            it++;
-            traverser = traverser->next;
-        }
+        element *pos = this->find(position);
         while (first != last)
         {
-            this->insert(traverser, *first);
+            this->insert(pos, *first);
             first++;
         }
     }
 
     iterator erase(iterator position)
     {
-        iterator it = this->begin();
-        element *traverser = this->head->next;
-        while (it != position)
-        {
-            it++;
-            traverser = traverser->next;
-        }
-        erase(traverser);
-        return (it);
+        element *pos = this->find(position);
+        position++;
+        this->erase(pos);
+        return (position);
     }
 
     iterator erase(iterator first, iterator last)
     {
-        iterator it = this->begin();
-        element *traverser = this->head->next;
-        while (it != first)
-        {
-            it++;
-            traverser = traverser->next;
-        }
+        element *pos = this->find(first);
         difference_type n = distance(first, last);
         while (n > 0)
         {
-            traverser = traverser->next;
-            erase(traverser->previous);
+            pos = pos->next;
+            this->erase(pos->previous);
             n--;
-            it++;
         }
-        return (it);
+        return (last);
     }
 
     void swap(list &x)
     {
-        list temp(x);
+        list tmp(x);
         x = *this;
-        *this = temp;
+        *this = tmp;
     }
 
     void resize(size_type n, value_type val = value_type())
@@ -518,6 +487,18 @@ private:
     {
         this->delete_boundaries();
         this->create_boundaries();
+    }
+
+    element *find(iterator position)
+    {
+        iterator it = this->begin();
+        element *traverser = this->head->next;
+        while (it != position)
+        {
+            it++;
+            traverser = traverser->next;
+        }
+        return (traverser);
     }
 
     void insert(element *position, value_type val = value_type())
