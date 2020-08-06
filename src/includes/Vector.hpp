@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/04 22:44:24 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/06 17:11:51 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 namespace ft
 {
 
-template <typename T>
+template <class T>
 class vector
 {
 public:

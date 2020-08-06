@@ -6,9 +6,12 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/03 14:30:06 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/04 22:37:39 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/06 17:42:01 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef ALGORITHMS_HPP
+#define ALGORITHMS_HPP
 
 #include "Traits.hpp"
 #include "Iterator.hpp"
@@ -29,4 +32,8 @@ ptrdiff_t distance(Iterator first, Iterator last,
     }
     return (n);
 }
+
 } // namespace ft
+
+#endif
+
