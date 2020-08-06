@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/06 17:11:51 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/06 21:54:48 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 #include "Algorithms.hpp"
 #include <stdexcept>
 #include <climits>
-
-#define BASE_CAP 128
 
 namespace ft
 {
@@ -42,15 +40,15 @@ public:
 
 	explicit vector()
 	{
-		this->array = new value_type[BASE_CAP];
+		this->array = nullptr;
+		this->cap = 0;
 		this->total = 0;
-		this->cap = BASE_CAP;
 	}
 
 	explicit vector(size_type n, const value_type &val = value_type())
 	{
-		this->array = new value_type[BASE_CAP];
-		this->cap = BASE_CAP;
+		this->array = new value_type[n];
+		this->cap = n;
 		this->assign(n, val);
 	}
 
@@ -58,14 +56,16 @@ public:
 	vector(InputIterator first, InputIterator last,
 		   typename enable_if<is_iterator<typename InputIterator::iterator_category>::value, InputIterator>::type * = nullptr)
 	{
-		this->array = new value_type[BASE_CAP];
-		this->cap = BASE_CAP;
+		size_t n = ft::distance(first, last);
+		this->array = new value_type[n];
+		this->cap = n;
 		this->assign(first, last);
 	}
 
 	vector(const vector &x)
 	{
 		this->array = new value_type[x.cap];
+		this->cap = x.cap;
 		this->assign(x.begin(), x.end());
 	}
 
@@ -135,19 +135,19 @@ public:
 
 	void resize(size_type n, value_type val = value_type())
 	{
-		value_type *temp = new value_type[n];
-		size_type temp_total = 0;
+		value_type *tmp = new value_type[n];
+		size_type tmp_total = 0;
 		for (size_type i = 0; i < this->size() && i < n; i++)
 		{
 			if (i >= this->total)
-				temp[i] = val;
+				tmp[i] = val;
 			else
-				temp[i] = this->array[i];
-			temp_total++;
+				tmp[i] = this->array[i];
+			tmp_total++;
 		}
 		delete[] this->array;
-		this->array = temp;
-		this->total = temp_total;
+		this->array = tmp;
+		this->total = tmp_total;
 		this->cap = n;
 	}
 
@@ -234,6 +234,11 @@ public:
 
 	void push_back(const value_type &val)
 	{
+		if (this->array == nullptr)
+		{
+			this->array = new value_type[1];
+			this->cap = 1;
+		}
 		if (this->total == this->cap)
 			this->resize(this->cap * 2);
 		this->array[this->total] = val;
@@ -247,13 +252,13 @@ public:
 
 	iterator insert(iterator position, const value_type &val)
 	{
+		size_t n = distance(position, this->end()) - 1;
+		this->push_back(this->back());
 		iterator it = this->end() - 1;
-		this->push_back(*it);
-		while (it != position)
+		for (size_type i = 0; i < n; i++)
 		{
-			reference tmp = *it;
+			*it = *(it - 1);
 			it--;
-			tmp = *it;
 		}
 		*it = val;
 		return (it);
@@ -261,24 +266,19 @@ public:
 
 	void insert(iterator position, size_type n, const value_type &val)
 	{
-		iterator it = this->end() - n;
+		size_t m = distance(position, this->end()) + n - 1;
 		for (size_type i = 0; i < n; i++)
+			this->push_back(this->array[this->total - (i + 1)]);
+		iterator it = this->end() - 1;
+		for (size_type i = 0; i < m; i++)
 		{
-			this->push_back(*it);
-			it++;
-		}
-		it++;
-		while (it != position)
-		{
-			iterator tmp = it;
-			tmp -= n;
-			*it = *tmp;
+			*it = *(it - n);
 			it--;
 		}
 		for (size_type i = 0; i < n; i++)
 		{
-			*position = val;
-			position++;
+			*it = val;
+			it++;
 		}
 	}
 
@@ -286,37 +286,28 @@ public:
 	void insert(iterator position, InputIterator first, InputIterator last,
 				typename enable_if<is_iterator<typename InputIterator::iterator_category>::value, InputIterator>::type * = nullptr)
 	{
-		difference_type n = distance(first, last);
-		iterator it = this->end() - n;
-		for (difference_type i = 0; i < n; i++)
+		size_type n = distance(first, last);
+		size_t m = distance(position, this->end()) + n - 1;
+		for (size_type i = 0; i < n; i++)
+			this->push_back(this->array[this->total - (i + 1)]);
+		iterator it = this->end() - 1;
+		for (size_type i = 0; i < m; i++)
 		{
-			this->push_back(*it);
-			it++;
-		}
-		it++;
-		while (it != position)
-		{
-			iterator tmp = it;
-			tmp -= n;
-			*it = *tmp;
+			*it = *(it - n);
 			it--;
 		}
-		for (difference_type i = 0; i < n; i++)
+		for (size_type i = 0; i < n; i++)
 		{
-			*position = *first;
+			*it = *first;
 			first++;
-			position++;
+			it++;
 		}
 	}
 
 	iterator erase(iterator position)
 	{
 		for (iterator it = position; it != this->end() - 1; it++)
-		{
-			iterator tmp = it;
-			tmp++;
-			*it = *tmp;
-		}
+			*it = *(it + 1);
 		this->total -= 1;
 		return (position);
 	}
@@ -345,6 +336,12 @@ public:
 		this->total = 0;
 	}
 
+	template <class U>
+    friend bool operator==(const vector<U> &lhs, const vector<U> &rhs);
+
+    template <class U>
+    friend bool operator<(const vector<U> &lhs, const vector<U> &rhs);
+
 private:
 	pointer array;
 	size_type total;
@@ -362,79 +359,37 @@ void swap(vector<T> &x, vector<T> &y)
 template <typename T>
 bool operator==(const vector<T> &lhs, const vector<T> &rhs)
 {
-	if (lhs.size() != rhs.size())
-		return (false);
-	for (size_t i = 0; i < lhs.size(); i++)
-	{
-		if (lhs[i] != rhs[i])
-			return (false);
-	}
-	return (true);
+	return (lhs.array == rhs.array) && lhs.size() == rhs.size();
 }
 
 template <typename T>
 bool operator!=(const vector<T> &lhs, const vector<T> &rhs)
 {
-	if (lhs == rhs)
-		return (false);
-	else
-		return (true);
+	return (!(lhs == rhs));
 }
 
 template <typename T>
 bool operator<(const vector<T> &lhs, const vector<T> &rhs)
 {
-	if (lhs == rhs || lhs.size() > rhs.size())
-		return (false);
-	for (size_t i = 0; i < lhs.size() && i < rhs.size(); i++)
-	{
-		if (lhs[i] > rhs[i])
-			return (false);
-	}
-	return (true);
+	return (lhs.array < rhs.array && lhs.size() < rhs.size());
 }
 
 template <typename T>
 bool operator<=(const vector<T> &lhs, const vector<T> &rhs)
 {
-	if (lhs == rhs)
-		return (true);
-	if (lhs.size() > rhs.size())
-		return (false);
-	for (size_t i = 0; i < lhs.size() && i < rhs.size(); i++)
-	{
-		if (lhs[i] > rhs[i])
-			return (false);
-	}
-	return (true);
+	return (!(lhs > rhs));
 }
 
 template <typename T>
 bool operator>(const vector<T> &lhs, const vector<T> &rhs)
 {
-	if (lhs == rhs || lhs.size() < rhs.size())
-		return (false);
-	for (size_t i = 0; i < lhs.size() && i < rhs.size(); i++)
-	{
-		if (lhs[i] < rhs[i])
-			return (false);
-	}
-	return (true);
+	return (rhs < lhs);
 }
 
 template <typename T>
 bool operator>=(const vector<T> &lhs, const vector<T> &rhs)
 {
-	if (lhs == rhs)
-		return (true);
-	if (lhs.size() < rhs.size())
-		return (false);
-	for (size_t i = 0; i < lhs.size() && i < rhs.size(); i++)
-	{
-		if (lhs[i] < rhs[i])
-			return (false);
-	}
-	return (true);
+	return (!(lhs < rhs));
 }
 
 } // namespace ft

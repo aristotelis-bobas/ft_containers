@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/06 17:46:00 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/06 17:46:05 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/06 18:37:35 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -575,10 +575,7 @@ bool operator==(const list<T> &lhs, const list<T> &rhs)
 template <typename T>
 bool operator!=(const list<T> &lhs, const list<T> &rhs)
 {
-    if (lhs == rhs)
-        return (false);
-    else
-        return (true);
+    return (!(lhs == rhs));
 }
 
 template <typename T>
@@ -602,59 +599,19 @@ bool operator<(const list<T> &lhs, const list<T> &rhs)
 template <typename T>
 bool operator<=(const list<T> &lhs, const list<T> &rhs)
 {
-    typename list<T>::const_iterator rhs_it = rhs.begin();
-    typename list<T>::const_iterator lhs_it = lhs.begin();
-
-    if (lhs == rhs)
-        return (true);
-    if (lhs.size() > rhs.size())
-        return (false);
-    while (lhs_it != lhs.end() && rhs_it != rhs.end())
-    {
-        if (*lhs_it > *rhs_it)
-            return (false);
-        lhs_it++;
-        rhs_it++;
-    }
-    return (true);
+    return (!(rhs < lhs));
 }
 
 template <typename T>
 bool operator>(const list<T> &lhs, const list<T> &rhs)
 {
-    typename list<T>::const_iterator rhs_it = rhs.begin();
-    typename list<T>::const_iterator lhs_it = lhs.begin();
-
-    if (lhs == rhs || lhs.size() < rhs.size())
-        return (false);
-    while (lhs_it != lhs.end() && rhs_it != rhs.end())
-    {
-        if (*lhs_it < *rhs_it)
-            return (false);
-        lhs_it++;
-        rhs_it++;
-    }
-    return (true);
+    return (rhs < lhs);
 }
 
 template <typename T>
 bool operator>=(const list<T> &lhs, const list<T> &rhs)
 {
-    typename list<T>::const_iterator rhs_it = rhs.begin();
-    typename list<T>::const_iterator lhs_it = lhs.begin();
-
-    if (lhs == rhs)
-        return (true);
-    if (lhs.size() < rhs.size())
-        return (false);
-    while (lhs_it != lhs.end() && rhs_it != rhs.end())
-    {
-        if (*lhs_it < *rhs_it)
-            return (false);
-        lhs_it++;
-        rhs_it++;
-    }
-    return (true);
+    return (!(lhs < rhs));
 }
 
 } // namespace ft

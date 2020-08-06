@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/06 16:49:33 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/06 18:19:53 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/06 20:13:40 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ public:
         this->container.pop_back();
     }
 
+    template <class U, class Cont>
+    friend bool operator==(const stack<U, Cont> &lhs, const stack<U, Cont> &rhs);
+
+    template <class U, class Cont>
+    friend bool operator<(const stack<U, Cont> &lhs, const stack<U, Cont> &rhs);
+
 private:
     container_type container;
 };
@@ -67,37 +73,37 @@ private:
 template <class T, class Container>
 bool operator==(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
 {
-    return (lhs == rhs);
+    return (lhs.container == rhs.container);
 }
 
 template <class T, class Container>
 bool operator!=(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
 {
-    return (lhs != rhs);
+	return (!(lhs == rhs));
 }
 
 template <class T, class Container>
 bool operator<(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
 {
-    return (lhs < rhs);
+    return (lhs.container < rhs.container);
 }
 
 template <class T, class Container>
 bool operator<=(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
 {
-    return (lhs <= rhs);
+	return (!(lhs > rhs));
 }
 
 template <class T, class Container>
 bool operator>(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
 {
-    return (lhs > rhs);
+	return (rhs < lhs);
 }
 
 template <class T, class Container>
 bool operator>=(const stack<T, Container> &lhs, const stack<T, Container> &rhs)
 {
-    return (lhs >= rhs);
+	return (!(lhs < rhs));
 }
 
 } // namespace ft

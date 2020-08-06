@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/04 22:30:45 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/06 22:00:27 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,22 @@ int main()
 {
 	std::cout << std::endl;
 	{
+		MODE::vector<int> Range(10, 10);
+		MODE::vector<int> MyVector(Range.begin(), Range.end());
+		std::cout << MyVector.capacity() << std::endl;
+		std::cout << MyVector.size() << std::endl;
+	}
+	std::cout << std::endl;
+	{
 		MODE::vector<int> MyVector((char)10, (char)10);
 
 		for (size_t i = 0; i < MyVector.size(); i++)
 			std::cout << MyVector[i] << std::endl;
 	}
+	
 	std::cout << std::endl;
 	{
-		std::vector<int> test(10, 10);
+		MODE::vector<int> test(10, 10);
 		MODE::vector<int> MyVector(test.begin(), test.end());
 
 		for (size_t i = 0; i < MyVector.size(); i++)
@@ -126,9 +134,7 @@ int main()
 		const MODE::vector<int> MyVector1(3, 10);
 
 		for (MODE::vector<int>::const_iterator it = MyVector1.begin(); it != MyVector1.end(); ++it)
-		{
 			std::cout << *it << std::endl;
-		}
 
 		std::cout << std::endl;
 
@@ -299,6 +305,7 @@ int main()
 
 		MODE::vector<int> MyVector1;
 
+		MyVector1.push_back(1);
 		MyVector1.push_back(10);
 		MyVector1.push_back(100);
 		MyVector1.push_back(1000);
@@ -307,16 +314,18 @@ int main()
 		for (size_t i = 0; i < MyVector1.size(); ++i)
 			std::cout << MyVector1[i] << std::endl;
 	}
+	
 	std::cout << std::endl;
 	{
 
 		MODE::vector<int> MyVector1;
 
+		MyVector1.push_back(1);
 		MyVector1.push_back(10);
 		MyVector1.push_back(100);
 		MyVector1.push_back(1000);
 		MyVector1.push_back(10000);
-		MyVector1.insert(MyVector1.begin(), 2, 1);
+		MyVector1.insert(MyVector1.begin(), 5, 1);
 
 		for (size_t i = 0; i < MyVector1.size(); ++i)
 			std::cout << MyVector1[i] << std::endl;
@@ -330,7 +339,7 @@ int main()
 		MyVector1.push_back(999);
 		MyVector1.push_back(9999);
 		MyVector1.push_back(99999);
-		MyVector1.insert(MyVector1.begin() + 1, 4, 1);
+		MyVector1.insert(MyVector1.begin() + 1, 64, 1);
 
 		for (size_t i = 0; i < MyVector1.size(); ++i)
 			std::cout << MyVector1[i] << std::endl;
@@ -382,6 +391,7 @@ int main()
 		for (size_t i = 0; i < MyVector1.size(); ++i)
 			std::cout << MyVector1[i] << std::endl;
 	}
+	
 	std::cout << std::endl;
 	{
 		MODE::vector<int> MyVector1;

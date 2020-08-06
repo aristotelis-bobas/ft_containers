@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/27 17:18:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/07/27 20:13:11 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/06 21:59:26 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #define TRAITS_HPP
 
 #include "Iterator.hpp"
-#include <iterator>
 
 namespace ft
 {
@@ -39,30 +38,6 @@ struct iterator_result
 
 template <typename>
 struct iterator_check : public iterator_result<false, bool>
-{
-};
-
-template <>
-struct iterator_check<std::random_access_iterator_tag>
-	: public iterator_result<true, std::random_access_iterator_tag>
-{
-};
-
-template <>
-struct iterator_check<std::bidirectional_iterator_tag>
-	: public iterator_result<true, std::bidirectional_iterator_tag>
-{
-};
-
-template <>
-struct iterator_check<std::forward_iterator_tag>
-	: public iterator_result<true, std::forward_iterator_tag>
-{
-};
-
-template <>
-struct iterator_check<std::input_iterator_tag>
-	: public iterator_result<true, std::input_iterator_tag>
 {
 };
 
