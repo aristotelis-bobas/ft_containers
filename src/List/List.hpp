@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/06 17:46:00 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/06 22:24:04 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/17 18:28:54 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #define LIST_HPP
 
 #include "Node.hpp"
-#include "Iterator.hpp"
-#include "Traits.hpp"
-#include "Algorithms.hpp"
+#include "../includes/Iterator.hpp"
+#include "../includes/Traits.hpp"
+#include "../includes/Algorithms.hpp"
 #include <climits>
 #include <cstddef>
 

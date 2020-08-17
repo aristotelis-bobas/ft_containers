@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/03 15:03:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/04 19:54:11 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/17 18:01:06 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,6 @@ public:
 
     ~node()
     {
-    }
-
-    void insert_before(value_type val = value_type())
-    {
-        self_type *insert = new self_type(val);
-        insert->previous = this->previous;
-        insert->next = this;
-        this->previous = insert;
     }
 
     self_type &operator=(const self_type &other)

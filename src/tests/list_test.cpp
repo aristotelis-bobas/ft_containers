@@ -6,11 +6,11 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/06 22:23:48 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/17 18:53:14 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/List.hpp"
+#include "../List/List.hpp"
 #include <list>
 #include <iostream>
 
@@ -292,6 +292,7 @@ int main()
 
 		for (MODE::list<int>::const_iterator it = MyList.begin(); it != MyList.end(); ++it)
 			std::cout << *it << std::endl;
+		
 	}
 	std::cout << std::endl;
 	{

@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/27 17:18:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/06 21:59:26 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/17 20:08:33 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,14 @@ struct iterator_check<input_iterator_tag>
 template <typename T>
 struct is_iterator : public iterator_check<T>
 {
+};
+
+template <class Arg1, class Arg2, class Result>
+struct binary_function
+{
+    typedef Arg1 first_argument_type;
+    typedef Arg2 second_argument_type;
+    typedef Result result_type;
 };
 
 } // namespace ft

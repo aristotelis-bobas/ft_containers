@@ -6,11 +6,11 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/06 17:34:46 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/06 20:13:11 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/17 18:51:13 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/Stack.hpp"
+#include "../Stack/Stack.hpp"
 #include <stack>
 #include <iostream>
 

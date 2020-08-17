@@ -6,14 +6,14 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/06 16:49:33 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/06 20:13:40 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/17 18:11:30 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STACK_HPP
 #define STACK_HPP
 
-#include "List.hpp"
+#include "../List/List.hpp"
 
 namespace ft
 {

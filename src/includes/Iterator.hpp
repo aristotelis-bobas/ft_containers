@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/27 20:18:21 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/04 19:52:54 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/17 20:08:43 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ class random_access_iterator_tag
 class bidirectional_iterator_tag
 {
 };
+
 class forward_iterator_tag
 {
 };
+
 class input_iterator_tag
 {
 };

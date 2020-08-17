@@ -6,16 +6,16 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/06 21:54:48 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/17 19:55:19 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-#include "Iterator.hpp"
-#include "Traits.hpp"
-#include "Algorithms.hpp"
+#include "../includes/Iterator.hpp"
+#include "../includes/Traits.hpp"
+#include "../includes/Algorithms.hpp"
 #include <stdexcept>
 #include <climits>
 
@@ -326,9 +326,9 @@ public:
 
 	void swap(vector &x)
 	{
-		vector temp(x);
+		vector tmp(x);
 		x = *this;
-		*this = temp;
+		*this = tmp;
 	}
 
 	void clear()

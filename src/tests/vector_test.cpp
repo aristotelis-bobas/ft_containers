@@ -6,11 +6,11 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/06 22:04:33 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/17 18:10:33 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/Vector.hpp"
+#include "../Vector/Vector.hpp"
 #include <cstdint>
 #include <iostream>
 #include <vector>
