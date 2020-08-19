@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 19:38:27 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/19 15:53:51 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/19 22:43:32 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,12 @@ public:
     }
 
     template <class U, class V>
-    pair(const pair<U, V> &pr)
+    pair(const pair<U, V> &pr): first(pr.first), second(pr.second)
     {
-        this->first = pr.first;
-        this->second = pr.second;
     }
 
-    pair(const first_type &a, const second_type &b)
+    pair(const first_type &a, const second_type &b): first(a), second(b)
     {
-        this->first = a;
-        this->second = b;
     }
 
     pair &operator=(const pair &pr)

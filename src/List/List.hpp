@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/06 17:46:00 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/19 17:34:19 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/19 21:16:42 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,14 @@ public:
         return (iterator(*this->head->next));
     }
 
+	const_iterator begin() const
+    {
+        return (const_iterator(*this->head->next));
+    }
+
     iterator end()
     {
         return (iterator(*this->tail));
-    }
-
-    const_iterator begin() const
-    {
-        return (const_iterator(*this->head->next));
     }
 
     const_iterator end() const
@@ -106,14 +106,14 @@ public:
         return (reverse_iterator(*this->tail->previous));
     }
 
+	const_reverse_iterator rbegin() const
+    {
+        return (const_reverse_iterator(*this->tail->previous));
+    }
+
     reverse_iterator rend()
     {
         return (reverse_iterator(*this->head));
-    }
-
-    const_reverse_iterator rbegin() const
-    {
-        return (const_reverse_iterator(*this->tail->previous));
     }
 
     const_reverse_iterator rend() const

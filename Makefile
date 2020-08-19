@@ -6,7 +6,7 @@
 #    By: abobas <abobas@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/07/13 17:19:37 by abobas        #+#    #+#                  #
-#    Updated: 2020/08/17 18:53:10 by abobas        ########   odam.nl          #
+#    Updated: 2020/08/19 22:35:23 by abobas        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,14 @@ list:			clean
 				rm -rf list_test
 				$(CC) $(FLAGS) $(STD) src/tests/list_test.cpp -o list_test
 				./list_test	> result_std
+				diff -s result_ft result_std > result_diff
+
+map:			clean
+				$(CC) $(FLAGS) $(FT) src/tests/map_test.cpp -o map_test
+				./map_test	> result_ft
+				rm -rf map_test
+				$(CC) $(FLAGS) $(STD) src/tests/map_test.cpp -o map_test
+				./map_test	> result_std
 				diff -s result_ft result_std > result_diff
 
 stack:			clean

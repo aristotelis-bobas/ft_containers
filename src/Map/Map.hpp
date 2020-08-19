@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 17:40:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/19 18:06:07 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/19 22:28:40 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "MapNode.hpp"
 #include "Pair.hpp"
+#include "../includes/Iterator.hpp"
 #include "../includes/Algorithms.hpp"
 #include "../includes/Traits.hpp"
 #include <climits>
@@ -36,6 +37,10 @@ public:
 	typedef node<key_type, mapped_type, key_compare> element;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
+	 typedef bidirectional_iterator<value_type, element, reference> iterator;
+    typedef bidirectional_iterator<value_type, element, const_reference> const_iterator;
+    typedef reverse_bidirectional_iterator<value_type, element, reference> reverse_iterator;
+    typedef reverse_bidirectional_iterator<value_type, element, const_reference> const_reverse_iterator;
 	class value_compare : binary_function<value_type, value_type, bool>
 	{
 	public:
@@ -71,18 +76,46 @@ public:
 
 	map &operator=(const map &x);
 
-	/*
 	
-	iterator begin();
-	const_iterator begin() const;
-	iterator end();
-	const_iterator end() const;
-	reverse_iterator rbegin();
-	const_reverse_iterator rbegin() const;
-	reverse_iterator rend();
-	const_reverse_iterator rend() const;
+	iterator begin()
+	{
+		return (iterator(*this->lower->parent));
+	}
 	
-	*/
+	const_iterator begin() const
+	{
+		return (const_iterator(*this->lower->parent));
+	}
+
+	iterator end()
+	{
+		return (iterator(*this->upper));
+	}
+	
+	const_iterator end() const
+	{
+		return (const_iterator(*this->upper));
+	}
+	
+	reverse_iterator rbegin()
+	{
+		return (reverse_iterator(*this->upper->parent));
+	}
+	
+	const_reverse_iterator rbegin() const
+	{
+		return (const_reverse_iterator(*this->upper->parent));
+	}
+	
+	reverse_iterator rend()
+	{
+		return (reverse_iterator(*this->lower));	
+	}
+
+	const_reverse_iterator rend() const
+	{
+		return (const_reverse_iterator(*this->lower));	
+	}
 
     bool empty() const
     {
@@ -101,44 +134,37 @@ public:
 
 	mapped_type &operator[](const key_type &k);
 
-	/* 
-			10
-		4
-	*/
-
-
-	bool insert (const value_type &val)
+	pair<iterator, bool> insert(const value_type &val)
 	{
 		if (this->total == 0)
 		{
 			this->create_root(val);
-			return (true);
+			return (pair<iterator, bool>(iterator(*this->root), true));
 		}
 		element *traverser = this->root;
-		while (traverser->left_child || traverser->right_child)
+		while (traverser->left || traverser->right)
 		{
-			if (traverser.first == val.first)
-				return (false);
-			if (value_comp()(traverser, val))
+			if (traverser->data.first == val.first)
+				return (pair<iterator, bool>(iterator(*traverser), false));
+			if (value_comp()(traverser->data, val))
 			{
-				if (traverser->left_child)
-					traverser = traverser->left_child;
+				if (traverser->left && traverser->left != this->lower)
+					traverser = traverser->left;
 				else
 					break ;
 			}
 			else
 			{
-				if (traverser->right_child)
-					traverser = traverser->right_child;
+				if (traverser->right && traverser->right != this->upper)
+					traverser = traverser->right;
 				else
 					break ;				
 			}
 		}
-		if (value_comp()(traverser, val))
-			this->insert_left_child(traverser, val);
+		if (value_comp()(traverser->data, val))
+			return (pair<iterator, bool>(iterator(*(this->insert_left(traverser, val))), true));
 		else
-			this->insert_right_child(traverser, val);
-		return (true);
+			return (pair<iterator, bool>(iterator(*(this->insert_right(traverser, val))), true));
 	}
 
 	/* 
@@ -205,29 +231,64 @@ private:
 	key_compare comp;
 	size_type total;
 	element *root;
+	element *lower;
+	element *upper;
 	
-	void create_root(value_type val = value_type());
+	void create_root(value_type val = value_type())
 	{
 		this->root = new element(val);
+		this->create_boundaries();
 		this->total++;
 	}
 
-	void insert_left_child(element *position, value_type val = value_type())
+	void create_boundaries()
 	{
+		this->lower = new element;
+		this->upper = new element;
+		this->set_boundaries();
+	}
+
+	void unset_boundaries()
+	{
+		this->lower->parent->left = nullptr;
+		this->upper->parent->right = nullptr;
+	}
+
+	void set_boundaries()
+	{
+		element *traverser = this->root;
+		while (traverser->left)
+			traverser = traverser->left;
+		traverser->left = this->lower;
+		this->lower->parent = traverser;
+		traverser = this->root;
+		while (traverser->right)
+			traverser = traverser->right;
+		traverser->right = this->upper;
+		this->upper->parent = traverser;
+	}
+
+	element *insert_left(element *position, value_type val = value_type())
+	{
+		this->unset_boundaries();
 		element *insert = new element(val);
 		insert->parent = position;
-		position->left_child = insert;
+		position->left = insert;
 		this->total++;
+		this->set_boundaries();
+		return (insert);
 	}
 
-	void insert_right_child(element *position, value_type val = value_type())
+	element *insert_right(element *position, value_type val = value_type())
 	{
+		this->unset_boundaries();
 		element *insert = new element(val);
 		insert->parent = position;
-		position->right_child = insert;
+		position->right = insert;
 		this->total++;
+		this->set_boundaries();
+		return (insert);
 	}
-
 };
 
 } // namespace ft
