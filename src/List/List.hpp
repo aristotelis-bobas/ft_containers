@@ -6,14 +6,14 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/06 17:46:00 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/17 18:28:54 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/19 17:34:19 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIST_HPP
 #define LIST_HPP
 
-#include "Node.hpp"
+#include "ListNode.hpp"
 #include "../includes/Iterator.hpp"
 #include "../includes/Traits.hpp"
 #include "../includes/Algorithms.hpp"
@@ -30,9 +30,7 @@ public:
     typedef T value_type;
     typedef value_type &reference;
     typedef const value_type &const_reference;
-    typedef value_type *pointer;
-    typedef const value_type *const_pointer;
-    typedef node<T> element;
+    typedef node<value_type> element;
     typedef size_t size_type;
     typedef ptrdiff_t difference_type;
     typedef bidirectional_iterator<value_type, element, reference> iterator;

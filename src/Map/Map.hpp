@@ -6,16 +6,19 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 17:40:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/17 20:31:44 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/19 18:06:07 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP
 #define MAP_HPP
 
+#include "MapNode.hpp"
+#include "Pair.hpp"
 #include "../includes/Algorithms.hpp"
 #include "../includes/Traits.hpp"
-#include "Pair.hpp"
+#include <climits>
+#include <cstddef>
 
 namespace ft
 {
@@ -30,11 +33,9 @@ public:
 	typedef Compare key_compare;
 	typedef value_type &reference;
 	typedef const value_type &const_reference;
-	typedef value_type *pointer;
-	typedef const value_type *const_pointer;
+	typedef node<key_type, mapped_type, key_compare> element;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
-
 	class value_compare : binary_function<value_type, value_type, bool>
 	{
 	public:
@@ -55,6 +56,7 @@ public:
 	explicit map(const key_compare &comp = key_compare())
 	{
 		this->comp = comp;
+		this->total = 0;
 	}
 
 	template <class InputIterator>
@@ -65,7 +67,6 @@ public:
 
 	~map()
 	{
-		
 	}
 
 	map &operator=(const map &x);
@@ -83,17 +84,64 @@ public:
 	
 	*/
 
-	bool empty() const;
+    bool empty() const
+    {
+        return (!this->size());
+    }
 
-	size_type size() const;
+    size_type size() const
+    {
+        return (this->total);
+    }
 
-	size_type max_size() const;
+	size_type max_size() const
+    {
+        return (SIZE_T_MAX / sizeof(element));
+    }
 
 	mapped_type &operator[](const key_type &k);
 
 	/* 
-	pair<iterator, bool> insert (const value_type &val);
+			10
+		4
+	*/
 
+
+	bool insert (const value_type &val)
+	{
+		if (this->total == 0)
+		{
+			this->create_root(val);
+			return (true);
+		}
+		element *traverser = this->root;
+		while (traverser->left_child || traverser->right_child)
+		{
+			if (traverser.first == val.first)
+				return (false);
+			if (value_comp()(traverser, val))
+			{
+				if (traverser->left_child)
+					traverser = traverser->left_child;
+				else
+					break ;
+			}
+			else
+			{
+				if (traverser->right_child)
+					traverser = traverser->right_child;
+				else
+					break ;				
+			}
+		}
+		if (value_comp()(traverser, val))
+			this->insert_left_child(traverser, val);
+		else
+			this->insert_right_child(traverser, val);
+		return (true);
+	}
+
+	/* 
 	iterator insert(iterator position, const value_type &val);
 
 	template <class InputIterator>
@@ -155,6 +203,31 @@ public:
 
 private:
 	key_compare comp;
+	size_type total;
+	element *root;
+	
+	void create_root(value_type val = value_type());
+	{
+		this->root = new element(val);
+		this->total++;
+	}
+
+	void insert_left_child(element *position, value_type val = value_type())
+	{
+		element *insert = new element(val);
+		insert->parent = position;
+		position->left_child = insert;
+		this->total++;
+	}
+
+	void insert_right_child(element *position, value_type val = value_type())
+	{
+		element *insert = new element(val);
+		insert->parent = position;
+		position->right_child = insert;
+		this->total++;
+	}
+
 };
 
 } // namespace ft

@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 19:38:27 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/17 20:08:54 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/19 15:53:51 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,37 +56,37 @@ public:
 template <class T1, class T2>
 bool operator==(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs)
 {
-    return lhs.first == rhs.first && lhs.second == rhs.second;
+    return (lhs.first == rhs.first && lhs.second == rhs.second);
 }
 
 template <class T1, class T2>
 bool operator!=(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs)
 {
-    return !(lhs == rhs);
+    return (!(lhs == rhs));
 }
 
 template <class T1, class T2>
 bool operator<(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs)
 {
-    return lhs.first < rhs.first || (!(rhs.first < lhs.first) && lhs.second < rhs.second);
+    return (lhs.first < rhs.first || (!(rhs.first < lhs.first) && lhs.second < rhs.second));
 }
 
 template <class T1, class T2>
 bool operator<=(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs)
 {
-    return !(rhs < lhs);
+    return (!(rhs < lhs));
 }
 
 template <class T1, class T2>
 bool operator>(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs)
 {
-    return rhs < lhs;
+    return (rhs < lhs);
 }
 
 template <class T1, class T2>
 bool operator>=(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs)
 {
-    return !(lhs < rhs);
+    return (!(lhs < rhs));
 }
 
 } // namespace ft

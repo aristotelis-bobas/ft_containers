@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   Node.hpp                                           :+:    :+:            */
+/*   ListNode.hpp                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/03 15:03:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/17 18:01:06 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/19 16:20:08 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef NODE_HPP
-#define NODE_HPP
+#ifndef LISTNODE_HPP
+#define LISTNODE_HPP
 
 #include <cstddef>
 
@@ -25,7 +25,6 @@ public:
     typedef T value_type;
     typedef T &reference;
     typedef const T& const_reference;
-    typedef ptrdiff_t difference_type;
     typedef node self_type;
 
     value_type data;
@@ -71,9 +70,7 @@ public:
 
 	bool operator!=(const self_type &other) const
 	{
-		if (*this == other)
-			return (false);
-		return (true);
+        return (!(*this == other));
 	}
 
     reference operator*()
