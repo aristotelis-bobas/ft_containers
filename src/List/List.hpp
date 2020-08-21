@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/06 17:46:00 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/19 21:16:42 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 17:32:42 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define LIST_HPP
 
 #include "ListNode.hpp"
-#include "../includes/Iterator.hpp"
+#include "../includes/BidirectionalIterator.hpp"
 #include "../includes/Traits.hpp"
 #include "../includes/Algorithms.hpp"
 #include <climits>
@@ -30,13 +30,13 @@ public:
     typedef T value_type;
     typedef value_type &reference;
     typedef const value_type &const_reference;
-    typedef node<value_type> element;
+    typedef node<value_type> node;
     typedef size_t size_type;
     typedef ptrdiff_t difference_type;
-    typedef bidirectional_iterator<value_type, element, reference> iterator;
-    typedef bidirectional_iterator<value_type, element, const_reference> const_iterator;
-    typedef reverse_bidirectional_iterator<value_type, element, reference> reverse_iterator;
-    typedef reverse_bidirectional_iterator<value_type, element, const_reference> const_reverse_iterator;
+    typedef bidirectional_iterator<value_type, node> iterator;
+    typedef bidirectional_iterator<value_type, node> const_iterator;
+    typedef reverse_bidirectional_iterator<value_type, node> reverse_iterator;
+    typedef reverse_bidirectional_iterator<value_type, node> const_reverse_iterator;
 
     explicit list()
     {
@@ -133,7 +133,7 @@ public:
 
     size_type max_size() const
     {
-        return (SIZE_T_MAX / sizeof(element));
+        return (SIZE_T_MAX / sizeof(node));
     }
 
     reference front()
@@ -177,7 +177,7 @@ public:
 
     void push_front(const value_type &val)
     {
-        element *insert = new element(val);
+        node *insert = new node(val);
         insert->previous = this->head;
         insert->next = this->head->next;
         this->head->next->previous = insert;
@@ -195,7 +195,7 @@ public:
 
     void push_back(const value_type &val)
     {
-        element *insert = new element(val);
+        node *insert = new node(val);
         insert->previous = this->tail->previous;
         insert->next = this->tail;
         this->tail->previous->next = insert;
@@ -219,7 +219,7 @@ public:
 
     void insert(iterator position, size_type n, const value_type &val)
     {
-        element *pos = this->find(position);
+        node *pos = this->find(position);
         while (n > 0)
         {
             this->insert(pos, val);
@@ -231,7 +231,7 @@ public:
     void insert(iterator position, InputIterator first, InputIterator last,
                 typename enable_if<is_iterator<typename InputIterator::iterator_category>::value, InputIterator>::type * = nullptr)
     {
-        element *pos = this->find(position);
+        node *pos = this->find(position);
         while (first != last)
         {
             this->insert(pos, *first);
@@ -241,7 +241,7 @@ public:
 
     iterator erase(iterator position)
     {
-        element *pos = this->find(position);
+        node *pos = this->find(position);
         position++;
         this->erase(pos);
         return (position);
@@ -249,7 +249,7 @@ public:
 
     iterator erase(iterator first, iterator last)
     {
-        element *pos = this->find(first);
+        node *pos = this->find(first);
         difference_type n = distance(first, last);
         while (n > 0)
         {
@@ -304,7 +304,7 @@ public:
     void remove(const value_type &val)
     {
         size_t n = this->size();
-        element *traverser = this->head->next;
+        node *traverser = this->head->next;
         while (n > 0)
         {
             traverser = traverser->next;
@@ -318,7 +318,7 @@ public:
     void remove_if(Predicate pred)
     {
         iterator it = this->begin();
-        element *traverser = this->head->next;
+        node *traverser = this->head->next;
         size_t n = this->size();
         while (n > 0)
         {
@@ -332,7 +332,7 @@ public:
 
     void unique()
     {
-        element *traverser = this->head->next;
+        node *traverser = this->head->next;
         size_t n = this->size();
         while (n > 0)
         {
@@ -362,8 +362,8 @@ public:
 
     void merge(list &x)
     {
-        element *traverser = this->head->next;
-        element *x_traverser = x.head->next;
+        node *traverser = this->head->next;
+        node *x_traverser = x.head->next;
         size_t n = this->size();
         size_t m = x.size();
         while (n > 0 && m > 0)
@@ -386,8 +386,8 @@ public:
     template <class Compare>
     void merge(list &x, Compare comp)
     {
-        element *traverser = this->head->next;
-        element *x_traverser = x.head->next;
+        node *traverser = this->head->next;
+        node *x_traverser = x.head->next;
         size_t n = this->size();
         size_t m = x.size();
         while (n > 0 && m > 0)
@@ -409,7 +409,7 @@ public:
 
     void sort()
     {
-        element *traverser = this->head->next;
+        node *traverser = this->head->next;
         size_t n = this->size() - 1;
         while (n > 0)
         {
@@ -428,7 +428,7 @@ public:
     template <class Compare>
     void sort(Compare comp)
     {
-        element *traverser = this->head->next;
+        node *traverser = this->head->next;
         size_t n = this->size() - 1;
         while (n > 0)
         {
@@ -448,7 +448,7 @@ public:
     {
         size_t n = this->size();
         size_t m = n;
-        element *traverser = this->tail->previous;
+        node *traverser = this->tail->previous;
         while (n > 0)
         {
             this->push_back(traverser->data);
@@ -463,14 +463,14 @@ public:
     }
 
 private:
-    element *head;
-    element *tail;
+    node *head;
+    node *tail;
     size_type total;
 
     void create_boundaries()
     {
-        this->head = new element;
-        this->tail = new element;
+        this->head = new node;
+        this->tail = new node;
         this->head->next = this->tail;
         this->tail->previous = this->head;
     }
@@ -487,10 +487,10 @@ private:
         this->create_boundaries();
     }
 
-    element *find(iterator position)
+    node *find(iterator position)
     {
         iterator it = this->begin();
-        element *traverser = this->head->next;
+        node *traverser = this->head->next;
         while (it != position)
         {
             it++;
@@ -499,9 +499,9 @@ private:
         return (traverser);
     }
 
-    void insert(element *position, value_type val = value_type())
+    void insert(node *position, value_type val = value_type())
     {
-        element *insert = new element(val);
+        node *insert = new node(val);
         insert->previous = position->previous;
         insert->next = position;
         insert->previous->next = insert;
@@ -509,7 +509,7 @@ private:
         this->total++;
     }
 
-    void erase(element *position)
+    void erase(node *position)
     {
         position->previous->next = position->next;
         position->next->previous = position->previous;
@@ -517,7 +517,7 @@ private:
         this->total--;
     }
 
-    void swap(element *first, element *second)
+    void swap(node *first, node *second)
     {
         value_type tmp = first->data;
         first->data = second->data;

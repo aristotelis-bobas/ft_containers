@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   VectorIterator.hpp                                 :+:    :+:            */
+/*   RandomAccessIterator.hpp                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/21 17:16:35 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 17:22:41 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 17:25:43 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VECTORITERATOR_HPP
-#define VECTORITERATOR_HPP
+#ifndef RANDOMACCESSITERATOR_HPP
+#define RANDOMACCESSITERATOR_HPP
 
-#include "../includes/Traits.hpp"
+#include "Traits.hpp"
 #include <cstddef>
 
 namespace ft

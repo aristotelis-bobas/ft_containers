@@ -1,45 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   Iterator.hpp                                       :+:    :+:            */
+/*   BidirectionalIterator.hpp                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/27 20:18:21 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 17:19:40 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 17:33:54 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ITERATOR_HPP
-#define ITERATOR_HPP
+#ifndef BIDIRECTIONALITERATOR_HPP
+#define BIDIRECTIONALITERATOR_HPP
 
 #include "Traits.hpp"
 #include <cstddef>
 
-
 namespace ft
 {
 
-template <typename T, typename T_pointer, typename T_reference>
+template <typename T, typename N>
 class bidirectional_iterator
 {
 public:
 	typedef T value_type;
-	typedef T_reference reference;
-	typedef T_pointer pointer;
+	typedef value_type &reference;
+	typedef const value_type &const_reference;
+	typedef value_type *pointer;
+	typedef const value_type *const_pointer;
+	typedef N node;
+	typedef N *node_pointer;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
 	typedef bidirectional_iterator_tag iterator_category;
 	typedef bidirectional_iterator self_type;
 
-	bidirectional_iterator(pointer elements)
+	bidirectional_iterator(node element)
 	{
-		this->elements = elements;
+		this->element = element;
 	}
 
 	bidirectional_iterator(self_type const &other)
 	{
-		this->elements = other.elements;
+		this->element = other.element;
 	}
 
 	~bidirectional_iterator()
@@ -48,18 +51,18 @@ public:
 
 	bidirectional_iterator &operator=(self_type const &other)
 	{
-		this->elements = other.elements;
+		this->element = other.element;
 		return (*this);
 	}
 
 	reference operator*()
 	{
-		return (*this->elements);
+		return (*this->element);
 	}
 
 	bool operator==(self_type const &other) const
 	{
-		if (this->elements != other.elements)
+		if (this->element != other.element)
 			return (false);
 		return (true);
 	}
@@ -73,54 +76,58 @@ public:
 
 	self_type &operator++()
 	{
-		this->elements++;
+		this->element++;
 		return (*this);
 	}
 
 	self_type operator++(int)
 	{
 		self_type tmp(*this);
-		this->elements++;
+		this->element++;
 		return (tmp);
 	}
 
 	self_type &operator--()
 	{
-		this->elements--;
+		this->element--;
 		return (*this);
 	}
 
 	self_type operator--(int)
 	{
 		self_type tmp(*this);
-		this->elements--;
+		this->element--;
 		return (tmp);
 	}
 
 private:
-	pointer elements;
+	node element;
 };
 
-template <typename T, typename T_pointer, typename T_reference>
+template <typename T, typename N>
 class reverse_bidirectional_iterator
 {
 public:
 	typedef T value_type;
-	typedef T_reference reference;
-	typedef T_pointer pointer;
+	typedef value_type &reference;
+	typedef const value_type &const_reference;
+	typedef value_type *pointer;
+	typedef const value_type *const_pointer;
+	typedef N node;
+	typedef N *node_pointer;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
 	typedef bidirectional_iterator_tag iterator_category;
 	typedef reverse_bidirectional_iterator self_type;
 
-	reverse_bidirectional_iterator(pointer elements)
+	reverse_bidirectional_iterator(node element)
 	{
-		this->elements = elements;
+		this->element = element;
 	}
 
 	reverse_bidirectional_iterator(self_type const &other)
 	{
-		this->elements = other.elements;
+		this->element = other.element;
 	}
 
 	~reverse_bidirectional_iterator()
@@ -129,18 +136,18 @@ public:
 
 	reverse_bidirectional_iterator &operator=(self_type const &other)
 	{
-		this->elements = other.elements;
+		this->element = other.element;
 		return (*this);
 	}
 
 	reference operator*()
 	{
-		return (*this->elements);
+		return (*this->element);
 	}
 
 	bool operator==(self_type const &other) const
 	{
-		if (this->elements != other.elements)
+		if (this->element != other.element)
 			return (false);
 		return (true);
 	}
@@ -154,32 +161,32 @@ public:
 
 	self_type &operator++()
 	{
-		this->elements--;
+		this->element--;
 		return (*this);
 	}
 
 	self_type operator++(int)
 	{
 		self_type tmp(*this);
-		this->elements--;
+		this->element--;
 		return (tmp);
 	}
 
 	self_type &operator--()
 	{
-		this->elements++;
+		this->element++;
 		return (*this);
 	}
 
 	self_type operator--(int)
 	{
 		self_type tmp(*this);
-		this->elements++;
+		this->element++;
 		return (tmp);
 	}
 
 private:
-	pointer elements;
+	node element;
 };
 
 } // namespace ft
