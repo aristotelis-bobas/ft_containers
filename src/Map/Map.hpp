@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 17:40:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 20:30:15 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 21:58:01 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ public:
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
 	typedef bidirectional_iterator<value_type, node> iterator;
-    typedef bidirectional_iterator<value_type, node> const_iterator;
-    typedef reverse_bidirectional_iterator<value_type, node> reverse_iterator;
-    typedef reverse_bidirectional_iterator<value_type, node> const_reverse_iterator;
+	typedef bidirectional_iterator<value_type, node> const_iterator;
+	typedef reverse_bidirectional_iterator<value_type, node> reverse_iterator;
+	typedef reverse_bidirectional_iterator<value_type, node> const_reverse_iterator;
 	class value_compare : binary_function<value_type, value_type, bool>
 	{
 	public:
@@ -65,6 +65,8 @@ public:
 	{
 		this->comp = comp;
 		this->total = 0;
+		this->root = nullptr;
+		this->create_boundaries();
 	}
 
 	template <class InputIterator>
@@ -73,6 +75,8 @@ public:
 	{
 		this->comp = comp;
 		this->total = 0;
+		this->root = nullptr;
+		this->create_boundaries();
 		this->insert(first, last);
 	}
 
@@ -80,21 +84,31 @@ public:
 	{
 		this->comp = x.comp;
 		this->total = 0;
+		this->root = nullptr;
+		this->create_boundaries();
 		this->insert(x.begin(), x.end());
 	}
 
 	~map()
 	{
+		this->clear();
+		this->delete_boundaries();
 	}
 
-	map &operator=(const map &x);
+	map &operator=(const map &x)
+	{
+		this->clear();
+		this->comp = x.comp;
+		this->total = 0;
+		this->insert(x.begin(), x.end());
+		return (*this);
+	}
 
-	
 	iterator begin()
 	{
 		return (iterator(*this->lower->parent));
 	}
-	
+
 	const_iterator begin() const
 	{
 		return (const_iterator(*this->lower->parent));
@@ -104,46 +118,46 @@ public:
 	{
 		return (iterator(*this->upper));
 	}
-	
+
 	const_iterator end() const
 	{
 		return (const_iterator(*this->upper));
 	}
-	
+
 	reverse_iterator rbegin()
 	{
 		return (reverse_iterator(*this->upper->parent));
 	}
-	
+
 	const_reverse_iterator rbegin() const
 	{
 		return (const_reverse_iterator(*this->upper->parent));
 	}
-	
+
 	reverse_iterator rend()
 	{
-		return (reverse_iterator(*this->lower));	
+		return (reverse_iterator(*this->lower));
 	}
 
 	const_reverse_iterator rend() const
 	{
-		return (const_reverse_iterator(*this->lower));	
+		return (const_reverse_iterator(*this->lower));
 	}
 
-    bool empty() const
-    {
-        return (!this->size());
-    }
+	bool empty() const
+	{
+		return (!this->size());
+	}
 
-    size_type size() const
-    {
-        return (this->total);
-    }
+	size_type size() const
+	{
+		return (this->total);
+	}
 
 	size_type max_size() const
-    {
-        return (SIZE_T_MAX / sizeof(node));
-    }
+	{
+		return (SIZE_T_MAX / sizeof(node));
+	}
 
 	mapped_type &operator[](const key_type &k);
 
@@ -159,27 +173,27 @@ public:
 		{
 			if (traverser->data.first == val.first)
 				return (std::make_pair(iterator(*traverser), false));
-			if (value_comp()(val, traverser->data))
+			if (this->value_comp()(val, traverser->data))
 			{
 				if (traverser->left && traverser->left != this->lower)
 					traverser = traverser->left;
 				else
-					break ;
+					break;
 			}
 			else
 			{
 				if (traverser->right && traverser->right != this->upper)
 					traverser = traverser->right;
 				else
-					break ;				
+					break;
 			}
 		}
-		if (value_comp()(val, traverser->data))
+		if (this->value_comp()(val, traverser->data))
 			return (std::make_pair(iterator(*(this->insert_left(traverser, val))), true));
 		else
 			return (std::make_pair(iterator(*(this->insert_right(traverser, val))), true));
 	}
- 
+
 	iterator insert(iterator position, const value_type &val)
 	{
 		if (this->total == 0)
@@ -202,7 +216,7 @@ public:
 			first++;
 		}
 	}
-	
+
 	/*
 	void erase(iterator position);
 
@@ -223,6 +237,8 @@ public:
 	{
 		this->total = 0;
 		this->clear(this->root);
+		this->reset_boundaries();
+		this->root = nullptr;
 	}
 
 	key_compare key_comp() const
@@ -235,10 +251,35 @@ public:
 		return (value_compare(this->comp));
 	}
 
+	iterator find(const key_type &k)
+	{
+		if (this->root->data.first == k)
+			return (iterator(*this->root));
+		node *traverser = this->root;
+		while (traverser->left || traverser->right)
+		{
+			if (traverser->data.first == k)
+				return (iterator(*traverser));
+			if (this->key_comp()(k, traverser->data.first))
+			{
+				if (traverser->left && traverser->left != this->lower)
+					traverser = traverser->left;
+				else
+					break;
+			}
+			else
+			{
+				if (traverser->right && traverser->right != this->upper)
+					traverser = traverser->right;
+				else
+					break;
+			}
+		}
+		return (this->end());
+	}
+
 	/*
 	
-	iterator find(const key_type &k);
-
 	const_iterator find(const key_type &k) const;
 
 	size_type count(const key_type &k) const;
@@ -261,18 +302,29 @@ private:
 	key_compare comp;
 	size_type total;
 	node *root;
+	node *top;
 	node *lower;
 	node *upper;
-	
+
 	void create_root(value_type val = value_type())
 	{
 		this->root = new node(val);
-		this->create_boundaries();
+		this->top->left = this->root;
+		this->top->right = this->root;
+		this->root->parent = this->top;
+		this->set_boundaries();
 		this->total++;
+	}
+
+	void reset_boundaries()
+	{
+		this->delete_boundaries();
+		this->create_boundaries();
 	}
 
 	void create_boundaries()
 	{
+		this->top = new node;
 		this->lower = new node;
 		this->upper = new node;
 		this->set_boundaries();
@@ -286,25 +338,33 @@ private:
 
 	void set_boundaries()
 	{
-		node *traverser = this->root;
+		node *traverser = this->top;
 		while (traverser->left)
 			traverser = traverser->left;
 		traverser->left = this->lower;
 		this->lower->parent = traverser;
-		traverser = this->root;
+		traverser = this->top;
 		while (traverser->right)
 			traverser = traverser->right;
 		traverser->right = this->upper;
 		this->upper->parent = traverser;
 	}
 
+	void delete_boundaries()
+	{
+		delete this->top;
+		delete this->upper;
+		delete this->lower;
+	}
+
 	void clear(node *position)
 	{
 		if (!position)
-			return ;
+			return;
 		this->clear(position->left);
 		this->clear(position->right);
-		delete position;
+		if (position != this->lower && position != this->upper)
+			delete position;
 	}
 
 	node *insert_left(node *position, value_type val = value_type())
