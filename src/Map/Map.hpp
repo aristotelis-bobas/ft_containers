@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 17:40:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 18:56:05 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 20:30:15 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 #include <climits>
 #include <cstddef>
 #include <utility>
+
+// TESTING
+#include <iostream>
 
 namespace ft
 {
@@ -66,9 +69,19 @@ public:
 
 	template <class InputIterator>
 	map(InputIterator first, InputIterator last, const key_compare &comp = key_compare(),
-		typename enable_if<is_iterator<typename InputIterator::iterator_category>::value, InputIterator>::type * = nullptr);
+		typename enable_if<is_iterator<typename InputIterator::iterator_category>::value, InputIterator>::type * = nullptr)
+	{
+		this->comp = comp;
+		this->total = 0;
+		this->insert(first, last);
+	}
 
-	map(const map &x);
+	map(const map &x)
+	{
+		this->comp = x.comp;
+		this->total = 0;
+		this->insert(x.begin(), x.end());
+	}
 
 	~map()
 	{
@@ -139,14 +152,14 @@ public:
 		if (this->total == 0)
 		{
 			this->create_root(val);
-			return (std::pair<iterator, bool>(iterator(*this->root), true));
+			return (std::make_pair(iterator(*this->root), true));
 		}
 		node *traverser = this->root;
 		while (traverser->left || traverser->right)
 		{
 			if (traverser->data.first == val.first)
-				return (std::pair<iterator, bool>(iterator(*traverser), false));
-			if (value_comp()(traverser->data, val))
+				return (std::make_pair(iterator(*traverser), false));
+			if (value_comp()(val, traverser->data))
 			{
 				if (traverser->left && traverser->left != this->lower)
 					traverser = traverser->left;
@@ -161,19 +174,36 @@ public:
 					break ;				
 			}
 		}
-		if (value_comp()(traverser->data, val))
-			return (std::pair<iterator, bool>(iterator(*(this->insert_left(traverser, val))), true));
+		if (value_comp()(val, traverser->data))
+			return (std::make_pair(iterator(*(this->insert_left(traverser, val))), true));
 		else
-			return (std::pair<iterator, bool>(iterator(*(this->insert_right(traverser, val))), true));
+			return (std::make_pair(iterator(*(this->insert_right(traverser, val))), true));
+	}
+ 
+	iterator insert(iterator position, const value_type &val)
+	{
+		if (this->total == 0)
+		{
+			this->create_root(val);
+			return (iterator(*this->root));
+		}
+		if (position->first == val.first)
+			return (position);
+		return (this->insert(val).first);
 	}
 
-	/* 
-	iterator insert(iterator position, const value_type &val);
-
 	template <class InputIterator>
-	void insert(iterator position, InputIterator first, InputIterator last,
+	void insert(InputIterator first, InputIterator last,
 				typename enable_if<is_iterator<typename InputIterator::iterator_category>::value, InputIterator>::type * = nullptr)
+	{
+		while (first != last)
+		{
+			this->insert(*first);
+			first++;
+		}
+	}
 	
+	/*
 	void erase(iterator position);
 
 	size_type erase(const key_type &k);
@@ -189,7 +219,11 @@ public:
 		*this = tmp;
 	}
 
-	void clear();
+	void clear()
+	{
+		this->total = 0;
+		this->clear(this->root);
+	}
 
 	key_compare key_comp() const
 	{
@@ -207,11 +241,7 @@ public:
 
 	const_iterator find(const key_type &k) const;
 
-	*/
-
 	size_type count(const key_type &k) const;
-
-	/*
 
 	iterator lower_bound(const key_type &k);
 
@@ -266,6 +296,15 @@ private:
 			traverser = traverser->right;
 		traverser->right = this->upper;
 		this->upper->parent = traverser;
+	}
+
+	void clear(node *position)
+	{
+		if (!position)
+			return ;
+		this->clear(position->left);
+		this->clear(position->right);
+		delete position;
 	}
 
 	node *insert_left(node *position, value_type val = value_type())

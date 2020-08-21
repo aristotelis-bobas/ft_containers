@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/19 21:24:40 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 18:59:49 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 20:31:50 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,29 @@ int main()
 		MyMap.insert(std::make_pair(777, std::string("!!!!")));
 		for (MODE::map<double, std::string>::iterator it = MyMap.begin(); it != MyMap.end(); it++)
 			std::cout << it->first << " => " << it->second << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		MODE::map<int, int> Range; 
+		Range.insert(std::make_pair(1, 80));
+		Range.insert(std::make_pair(-10, 57758));
+		Range.insert(std::make_pair(89, 34));
+		MODE::map<int, int> MyMap(Range.begin(), Range.end());
+		for (MODE::map<int, int>::iterator it = MyMap.begin(); it != MyMap.end(); it++)
+			std::cout << it->first << " => " << it->second << std::endl;
+		std::cout << MyMap.size() << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		MODE::map<int, int> Range; 
+		Range.insert(std::make_pair(1, 80));
+		Range.insert(std::make_pair(-10, 57758));
+		Range.insert(std::make_pair(89, 34));
+		MODE::map<int, int> MyMap(Range.begin(), Range.end());
+		MODE::map<int, int>::iterator result = MyMap.insert(MyMap.end()--, std::make_pair(-666, 33333));
+		std::cout << result->first << " => " << result->second << std::endl;
+		for (MODE::map<int, int>::iterator it = MyMap.begin(); it != MyMap.end(); it++)
+			std::cout << it->first << " => " << it->second << std::endl;
+		std::cout << MyMap.size() << std::endl;
 	}
 }

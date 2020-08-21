@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/19 15:57:09 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 18:54:06 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 19:57:49 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ public:
 	typedef value_type &reference;
 	typedef const value_type &const_reference;
 	typedef value_type *pointer;
+	typedef const value_type *const_pointer;
 	typedef node self_type;
 
 	value_type data;
@@ -88,6 +89,16 @@ public:
 	const_reference operator*() const
 	{
 		return (this->data);
+	}
+
+	pointer operator&()
+	{
+		return (&this->data);
+	}
+
+	const_pointer operator&() const
+	{
+		return (&this->data);
 	}
 
 	self_type &operator++()
