@@ -6,27 +6,24 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/19 15:57:09 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/19 22:11:43 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 18:54:06 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAPNODE_HPP
 #define MAPNODE_HPP
 
-#include "Pair.hpp"
 #include "../includes/Algorithms.hpp"
 #include <cstddef>
 
 namespace ft
 {
 
-template <class Key, class T, class Compare = less<Key> >
+template <typename T, class Compare>
 class node
 {
 public:
-	typedef Key key_type;
-	typedef T mapped_type;
-	typedef pair<key_type, mapped_type> value_type;
+	typedef T value_type;
 	typedef Compare key_compare;
 	typedef value_type &reference;
 	typedef const value_type &const_reference;

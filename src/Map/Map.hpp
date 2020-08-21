@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 17:40:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 17:36:57 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 18:56:05 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #define MAP_HPP
 
 #include "MapNode.hpp"
-#include "Pair.hpp"
 #include "../includes/BidirectionalIterator.hpp"
 #include "../includes/Algorithms.hpp"
 #include "../includes/Traits.hpp"
 #include <climits>
 #include <cstddef>
+#include <utility>
 
 namespace ft
 {
@@ -30,14 +30,14 @@ class map
 public:
 	typedef Key key_type;
 	typedef T mapped_type;
-	typedef pair<const key_type, mapped_type> value_type;
+	typedef std::pair<key_type, mapped_type> value_type;
 	typedef Compare key_compare;
 	typedef value_type &reference;
 	typedef const value_type &const_reference;
-	typedef node<key_type, mapped_type, key_compare> node;
+	typedef node<value_type, key_compare> node;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
-	 typedef bidirectional_iterator<value_type, node> iterator;
+	typedef bidirectional_iterator<value_type, node> iterator;
     typedef bidirectional_iterator<value_type, node> const_iterator;
     typedef reverse_bidirectional_iterator<value_type, node> reverse_iterator;
     typedef reverse_bidirectional_iterator<value_type, node> const_reverse_iterator;
@@ -134,18 +134,18 @@ public:
 
 	mapped_type &operator[](const key_type &k);
 
-	pair<iterator, bool> insert(const value_type &val)
+	std::pair<iterator, bool> insert(const value_type &val)
 	{
 		if (this->total == 0)
 		{
 			this->create_root(val);
-			return (pair<iterator, bool>(iterator(*this->root), true));
+			return (std::pair<iterator, bool>(iterator(*this->root), true));
 		}
 		node *traverser = this->root;
 		while (traverser->left || traverser->right)
 		{
 			if (traverser->data.first == val.first)
-				return (pair<iterator, bool>(iterator(*traverser), false));
+				return (std::pair<iterator, bool>(iterator(*traverser), false));
 			if (value_comp()(traverser->data, val))
 			{
 				if (traverser->left && traverser->left != this->lower)
@@ -162,9 +162,9 @@ public:
 			}
 		}
 		if (value_comp()(traverser->data, val))
-			return (pair<iterator, bool>(iterator(*(this->insert_left(traverser, val))), true));
+			return (std::pair<iterator, bool>(iterator(*(this->insert_left(traverser, val))), true));
 		else
-			return (pair<iterator, bool>(iterator(*(this->insert_right(traverser, val))), true));
+			return (std::pair<iterator, bool>(iterator(*(this->insert_right(traverser, val))), true));
 	}
 
 	/* 
@@ -221,9 +221,9 @@ public:
 
 	const_iterator upper_bound(const key_type &k) const;
 
-	pair<const_iterator,const_iterator> equal_range (const key_type &k) const;
+	std::pair<const_iterator,const_iterator> equal_range (const key_type &k) const;
 	
-	pair<iterator,iterator> equal_range (const key_type &k);
+	std::pair<iterator,iterator> equal_range (const key_type &k);
 	
 	*/
 

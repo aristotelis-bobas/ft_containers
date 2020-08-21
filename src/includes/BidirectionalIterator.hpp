@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/27 20:18:21 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 17:33:54 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 18:59:03 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,21 @@ public:
 	reference operator*()
 	{
 		return (*this->element);
+	}
+
+	const_reference operator*() const
+	{
+		return (*this->element);
+	}
+
+	pointer operator->()
+	{
+		return (&this->element.data);
+	}
+
+	const_pointer operator->() const
+	{
+		return (&this->element.data);
 	}
 
 	bool operator==(self_type const &other) const
@@ -143,6 +158,21 @@ public:
 	reference operator*()
 	{
 		return (*this->element);
+	}
+
+	const_reference operator*() const
+	{
+		return (*this->element);
+	}
+
+	pointer operator->()
+	{
+		return (&this->element.data);
+	}
+
+	const_pointer operator->() const
+	{
+		return (&this->element.data);
 	}
 
 	bool operator==(self_type const &other) const
