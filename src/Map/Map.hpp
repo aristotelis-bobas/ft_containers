@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 17:40:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/19 22:28:40 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 17:36:57 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "MapNode.hpp"
 #include "Pair.hpp"
-#include "../includes/Iterator.hpp"
+#include "../includes/BidirectionalIterator.hpp"
 #include "../includes/Algorithms.hpp"
 #include "../includes/Traits.hpp"
 #include <climits>
@@ -34,13 +34,13 @@ public:
 	typedef Compare key_compare;
 	typedef value_type &reference;
 	typedef const value_type &const_reference;
-	typedef node<key_type, mapped_type, key_compare> element;
+	typedef node<key_type, mapped_type, key_compare> node;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
-	 typedef bidirectional_iterator<value_type, element, reference> iterator;
-    typedef bidirectional_iterator<value_type, element, const_reference> const_iterator;
-    typedef reverse_bidirectional_iterator<value_type, element, reference> reverse_iterator;
-    typedef reverse_bidirectional_iterator<value_type, element, const_reference> const_reverse_iterator;
+	 typedef bidirectional_iterator<value_type, node> iterator;
+    typedef bidirectional_iterator<value_type, node> const_iterator;
+    typedef reverse_bidirectional_iterator<value_type, node> reverse_iterator;
+    typedef reverse_bidirectional_iterator<value_type, node> const_reverse_iterator;
 	class value_compare : binary_function<value_type, value_type, bool>
 	{
 	public:
@@ -129,7 +129,7 @@ public:
 
 	size_type max_size() const
     {
-        return (SIZE_T_MAX / sizeof(element));
+        return (SIZE_T_MAX / sizeof(node));
     }
 
 	mapped_type &operator[](const key_type &k);
@@ -141,7 +141,7 @@ public:
 			this->create_root(val);
 			return (pair<iterator, bool>(iterator(*this->root), true));
 		}
-		element *traverser = this->root;
+		node *traverser = this->root;
 		while (traverser->left || traverser->right)
 		{
 			if (traverser->data.first == val.first)
@@ -230,21 +230,21 @@ public:
 private:
 	key_compare comp;
 	size_type total;
-	element *root;
-	element *lower;
-	element *upper;
+	node *root;
+	node *lower;
+	node *upper;
 	
 	void create_root(value_type val = value_type())
 	{
-		this->root = new element(val);
+		this->root = new node(val);
 		this->create_boundaries();
 		this->total++;
 	}
 
 	void create_boundaries()
 	{
-		this->lower = new element;
-		this->upper = new element;
+		this->lower = new node;
+		this->upper = new node;
 		this->set_boundaries();
 	}
 
@@ -256,7 +256,7 @@ private:
 
 	void set_boundaries()
 	{
-		element *traverser = this->root;
+		node *traverser = this->root;
 		while (traverser->left)
 			traverser = traverser->left;
 		traverser->left = this->lower;
@@ -268,10 +268,10 @@ private:
 		this->upper->parent = traverser;
 	}
 
-	element *insert_left(element *position, value_type val = value_type())
+	node *insert_left(node *position, value_type val = value_type())
 	{
 		this->unset_boundaries();
-		element *insert = new element(val);
+		node *insert = new node(val);
 		insert->parent = position;
 		position->left = insert;
 		this->total++;
@@ -279,10 +279,10 @@ private:
 		return (insert);
 	}
 
-	element *insert_right(element *position, value_type val = value_type())
+	node *insert_right(node *position, value_type val = value_type())
 	{
 		this->unset_boundaries();
-		element *insert = new element(val);
+		node *insert = new node(val);
 		insert->parent = position;
 		position->right = insert;
 		this->total++;
