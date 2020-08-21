@@ -6,17 +6,35 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/27 17:18:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/17 20:08:33 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 17:18:44 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TRAITS_HPP
 #define TRAITS_HPP
 
-#include "Iterator.hpp"
-
 namespace ft
 {
+
+class random_access_iterator_tag
+{
+};
+
+class bidirectional_iterator_tag
+{
+};
+
+class forward_iterator_tag
+{
+};
+
+class input_iterator_tag
+{
+};
+
+class output_iterator_tag
+{
+};
 
 template <bool B, class T = void>
 struct enable_if
@@ -68,14 +86,6 @@ struct iterator_check<input_iterator_tag>
 template <typename T>
 struct is_iterator : public iterator_check<T>
 {
-};
-
-template <class Arg1, class Arg2, class Result>
-struct binary_function
-{
-    typedef Arg1 first_argument_type;
-    typedef Arg2 second_argument_type;
-    typedef Result result_type;
 };
 
 } // namespace ft

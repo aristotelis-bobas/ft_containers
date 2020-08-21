@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   Iterator.hpp                                       :+:    :+:            */
+/*   VectorIterator.hpp                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/07/27 20:18:21 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 17:19:40 by abobas        ########   odam.nl         */
+/*   Created: 2020/08/21 17:16:35 by abobas        #+#    #+#                 */
+/*   Updated: 2020/08/21 17:22:41 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ITERATOR_HPP
-#define ITERATOR_HPP
+#ifndef VECTORITERATOR_HPP
+#define VECTORITERATOR_HPP
 
-#include "Traits.hpp"
+#include "../includes/Traits.hpp"
 #include <cstddef>
-
 
 namespace ft
 {
 
 template <typename T, typename T_pointer, typename T_reference>
-class bidirectional_iterator
+class random_access_iterator
 {
 public:
 	typedef T value_type;
@@ -29,37 +28,37 @@ public:
 	typedef T_pointer pointer;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
-	typedef bidirectional_iterator_tag iterator_category;
-	typedef bidirectional_iterator self_type;
+	typedef random_access_iterator_tag iterator_category;
+	typedef random_access_iterator self_type;
 
-	bidirectional_iterator(pointer elements)
+	random_access_iterator(pointer array)
 	{
-		this->elements = elements;
+		this->array = array;
 	}
 
-	bidirectional_iterator(self_type const &other)
+	random_access_iterator(self_type const &other)
 	{
-		this->elements = other.elements;
+		this->array = other.array;
 	}
 
-	~bidirectional_iterator()
+	~random_access_iterator()
 	{
 	}
 
-	bidirectional_iterator &operator=(self_type const &other)
+	random_access_iterator &operator=(self_type const &other)
 	{
-		this->elements = other.elements;
+		this->array = other.array;
 		return (*this);
 	}
 
 	reference operator*()
 	{
-		return (*this->elements);
+		return (*this->array);
 	}
 
 	bool operator==(self_type const &other) const
 	{
-		if (this->elements != other.elements)
+		if (this->array != other.array)
 			return (false);
 		return (true);
 	}
@@ -73,36 +72,62 @@ public:
 
 	self_type &operator++()
 	{
-		this->elements++;
+		this->array++;
 		return (*this);
 	}
 
 	self_type operator++(int)
 	{
 		self_type tmp(*this);
-		this->elements++;
+		this->array++;
 		return (tmp);
+	}
+
+	self_type operator+(difference_type n)
+	{
+		self_type tmp(*this);
+		tmp.array += n;
+		return (tmp);
+	}
+
+	self_type &operator+=(difference_type n)
+	{
+		this->array += n;
+		return (*this);
 	}
 
 	self_type &operator--()
 	{
-		this->elements--;
+		this->array--;
 		return (*this);
 	}
 
 	self_type operator--(int)
 	{
 		self_type tmp(*this);
-		this->elements--;
+		this->array--;
 		return (tmp);
+	}
+
+	self_type operator-(difference_type n)
+	{
+		self_type tmp(*this);
+		tmp.array -= n;
+		return (tmp);
+	}
+
+	self_type &operator-=(difference_type n)
+	{
+		this->array -= n;
+		return (*this);
 	}
 
 private:
-	pointer elements;
+	pointer array;
 };
 
 template <typename T, typename T_pointer, typename T_reference>
-class reverse_bidirectional_iterator
+class reverse_random_access_iterator
 {
 public:
 	typedef T value_type;
@@ -110,24 +135,24 @@ public:
 	typedef T_pointer pointer;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
-	typedef bidirectional_iterator_tag iterator_category;
-	typedef reverse_bidirectional_iterator self_type;
+	typedef random_access_iterator_tag iterator_category;
+	typedef reverse_random_access_iterator self_type;
 
-	reverse_bidirectional_iterator(pointer elements)
+	reverse_random_access_iterator(pointer elements)
 	{
 		this->elements = elements;
 	}
 
-	reverse_bidirectional_iterator(self_type const &other)
+	reverse_random_access_iterator(self_type const &other)
 	{
 		this->elements = other.elements;
 	}
 
-	~reverse_bidirectional_iterator()
+	~reverse_random_access_iterator()
 	{
 	}
 
-	reverse_bidirectional_iterator &operator=(self_type const &other)
+	reverse_random_access_iterator &operator=(self_type const &other)
 	{
 		this->elements = other.elements;
 		return (*this);
@@ -165,6 +190,19 @@ public:
 		return (tmp);
 	}
 
+	self_type operator+(difference_type n)
+	{
+		self_type tmp(*this);
+		tmp.elements -= n;
+		return (tmp);
+	}
+
+	self_type &operator+=(difference_type n)
+	{
+		this->elements -= n;
+		return (*this);
+	}
+
 	self_type &operator--()
 	{
 		this->elements++;
@@ -176,6 +214,19 @@ public:
 		self_type tmp(*this);
 		this->elements++;
 		return (tmp);
+	}
+
+	self_type operator-(difference_type n)
+	{
+		self_type tmp(*this);
+		tmp.elements += n;
+		return (tmp);
+	}
+
+	self_type &operator-=(difference_type n)
+	{
+		this->elements += n;
+		return (*this);
 	}
 
 private:

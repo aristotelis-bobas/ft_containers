@@ -6,14 +6,14 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/17 19:55:19 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 17:18:00 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-#include "../includes/Iterator.hpp"
+#include "VectorIterator.hpp"
 #include "../includes/Traits.hpp"
 #include "../includes/Algorithms.hpp"
 #include <stdexcept>

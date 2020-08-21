@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/03 14:30:06 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/19 16:08:22 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 17:15:37 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ ptrdiff_t distance(Iterator first, Iterator last,
     }
     return (n);
 }
+
+template <class Arg1, class Arg2, class Result>
+struct binary_function
+{
+    typedef Arg1 first_argument_type;
+    typedef Arg2 second_argument_type;
+    typedef Result result_type;
+};
 
 template <class T>
 struct less : binary_function<T, T, bool>
