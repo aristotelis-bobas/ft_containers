@@ -6,12 +6,13 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/17 18:53:14 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 22:40:24 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../List/List.hpp"
 #include <list>
+#include <string>
 #include <iostream>
 
 #ifndef MODE
@@ -288,10 +289,12 @@ int main()
 	}
 	std::cout << std::endl;
 	{
-		const MODE::list<int> MyList(10, 50);
+		const MODE::list<std::string> MyList(10, "hallo");
 
-		for (MODE::list<int>::const_iterator it = MyList.begin(); it != MyList.end(); ++it)
-			std::cout << *it << std::endl;
+		for (MODE::list<std::string>::const_iterator it = MyList.begin(); it != MyList.end(); ++it)
+		{
+			std::cout << it->size() << std::endl;
+		}
 		
 	}
 	std::cout << std::endl;

@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/21 17:16:35 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 17:25:43 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 22:44:29 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@
 namespace ft
 {
 
-template <typename T, typename T_pointer, typename T_reference>
+template <typename T, typename R, typename P>
 class random_access_iterator
 {
 public:
 	typedef T value_type;
-	typedef T_reference reference;
-	typedef T_pointer pointer;
+	typedef R reference;
+	typedef P pointer;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
 	typedef random_access_iterator_tag iterator_category;
@@ -54,6 +54,11 @@ public:
 	reference operator*()
 	{
 		return (*this->array);
+	}
+
+	pointer operator->()
+	{
+		return (&(*this->array));
 	}
 
 	bool operator==(self_type const &other) const
@@ -126,13 +131,13 @@ private:
 	pointer array;
 };
 
-template <typename T, typename T_pointer, typename T_reference>
+template <typename T, typename R, typename P>
 class reverse_random_access_iterator
 {
 public:
 	typedef T value_type;
-	typedef T_reference reference;
-	typedef T_pointer pointer;
+	typedef R reference;
+	typedef P pointer;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
 	typedef random_access_iterator_tag iterator_category;
@@ -161,6 +166,11 @@ public:
 	reference operator*()
 	{
 		return (*this->elements);
+	}
+
+	pointer operator->()
+	{
+		return (&(*this->array));
 	}
 
 	bool operator==(self_type const &other) const

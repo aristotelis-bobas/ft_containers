@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/19 15:57:09 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 19:57:49 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 22:38:03 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,14 @@
 namespace ft
 {
 
-template <typename T, class Compare>
+template <typename T, class C>
 class node
 {
 public:
 	typedef T value_type;
-	typedef Compare key_compare;
-	typedef value_type &reference;
-	typedef const value_type &const_reference;
-	typedef value_type *pointer;
+	typedef T &reference;
+	typedef T *pointer;
+	typedef C key_compare;
 	typedef const value_type *const_pointer;
 	typedef node self_type;
 
@@ -86,17 +85,7 @@ public:
 		return (this->data);
 	}
 
-	const_reference operator*() const
-	{
-		return (this->data);
-	}
-
 	pointer operator&()
-	{
-		return (&this->data);
-	}
-
-	const_pointer operator&() const
 	{
 		return (&this->data);
 	}

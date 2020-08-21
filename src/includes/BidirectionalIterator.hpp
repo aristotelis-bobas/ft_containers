@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/27 20:18:21 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 20:00:44 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 22:36:34 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,13 @@
 namespace ft
 {
 
-template <typename T, typename N>
+template <typename T, typename R, typename P, typename N>
 class bidirectional_iterator
 {
 public:
 	typedef T value_type;
-	typedef value_type &reference;
-	typedef const value_type &const_reference;
-	typedef value_type *pointer;
-	typedef const value_type *const_pointer;
+	typedef R reference;
+	typedef P pointer;
 	typedef N node;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
@@ -58,18 +56,8 @@ public:
 	{
 		return (*this->element);
 	}
-
-	const_reference operator*() const
-	{
-		return (*this->element);
-	}
-
+	
 	pointer operator->()
-	{
-		return (&this->element);
-	}
-
-	const_pointer operator->() const
 	{
 		return (&this->element);
 	}
@@ -118,15 +106,13 @@ private:
 	node element;
 };
 
-template <typename T, typename N>
+template <typename T, typename R, typename P, typename N>
 class reverse_bidirectional_iterator
 {
 public:
 	typedef T value_type;
-	typedef value_type &reference;
-	typedef const value_type &const_reference;
-	typedef value_type *pointer;
-	typedef const value_type *const_pointer;
+	typedef R reference;
+	typedef P pointer;
 	typedef N node;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
@@ -158,17 +144,7 @@ public:
 		return (*this->element);
 	}
 
-	const_reference operator*() const
-	{
-		return (*this->element);
-	}
-
 	pointer operator->()
-	{
-		return (&this->element);
-	}
-
-	const_pointer operator->() const
 	{
 		return (&this->element);
 	}

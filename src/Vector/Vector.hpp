@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 17:26:08 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 22:45:07 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ public:
 	typedef const value_type *const_pointer;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
-	typedef random_access_iterator<value_type, pointer, reference> iterator;
-	typedef random_access_iterator<value_type, const_pointer, const_reference> const_iterator;
-	typedef reverse_random_access_iterator<value_type, pointer, reference> reverse_iterator;
-	typedef reverse_random_access_iterator<value_type, const_pointer, const_reference> const_reverse_iterator;
+	typedef random_access_iterator<value_type, reference, pointer> iterator;
+	typedef random_access_iterator<value_type, const_reference, const_pointer> const_iterator;
+	typedef reverse_random_access_iterator<value_type, reference, pointer> reverse_iterator;
+	typedef reverse_random_access_iterator<value_type, const_reference, const_pointer> const_reverse_iterator;
 
 	explicit vector()
 	{

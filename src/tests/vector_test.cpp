@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/17 18:10:33 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 22:27:01 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -412,5 +412,11 @@ int main()
 
 		for (size_t i = 0; i < MyVector1.size(); ++i)
 			std::cout << MyVector1[i] << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		const MODE::vector<std::string> MyVector(10, "hello");
+		for (MODE::vector<std::string>::const_iterator it = MyVector.begin(); it != MyVector.end(); it++)
+			std::cout << it->size() << std::endl;
 	}
 }

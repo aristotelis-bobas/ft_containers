@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 17:40:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 21:58:01 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/21 22:39:43 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,15 @@ public:
 	typedef Compare key_compare;
 	typedef value_type &reference;
 	typedef const value_type &const_reference;
+	typedef value_type *pointer;
+	typedef const value_type *const_pointer;
 	typedef node<value_type, key_compare> node;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
-	typedef bidirectional_iterator<value_type, node> iterator;
-	typedef bidirectional_iterator<value_type, node> const_iterator;
-	typedef reverse_bidirectional_iterator<value_type, node> reverse_iterator;
-	typedef reverse_bidirectional_iterator<value_type, node> const_reverse_iterator;
+	typedef bidirectional_iterator<value_type, reference, pointer, node> iterator;
+    typedef bidirectional_iterator<value_type, const_reference, const_pointer, node> const_iterator;
+    typedef reverse_bidirectional_iterator<value_type, reference, pointer, node> reverse_iterator;
+    typedef reverse_bidirectional_iterator<value_type, const_reference, const_pointer, node> const_reverse_iterator;
 	class value_compare : binary_function<value_type, value_type, bool>
 	{
 	public:
