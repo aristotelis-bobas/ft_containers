@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/19 21:24:40 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 22:41:53 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/22 18:30:58 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,79 @@ int main()
 		std::cout << result->first << " => " << result->second << std::endl;
 		MODE::map<int, int>::iterator res2 = MyMap.find(89);
 		std::cout << res2->first << " => " << res2->second << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		MODE::map<int, int> MyMap; 
+		MyMap.insert(std::make_pair(1, 80));
+		MyMap.insert(std::make_pair(-10, 57758));
+		MyMap.insert(std::make_pair(89, 34));
+		std::cout << (MyMap.lower_bound(2))->first << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		MODE::map<int, int> MyMap; 
+		MyMap.insert(std::make_pair(1, 80));
+		MyMap.insert(std::make_pair(-10, 57758));
+		MyMap.insert(std::make_pair(89, 34));
+		std::cout << (MyMap.lower_bound(88))->first << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		MODE::map<int, int> MyMap; 
+		MyMap.insert(std::make_pair(1, 80));
+		MyMap.insert(std::make_pair(-10, 57758));
+		MyMap.insert(std::make_pair(89, 34));
+		std::cout << (MyMap.equal_range(-5)).first->first << " --- " << (MyMap.equal_range(2)).second->first << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		MODE::map<int, int> MyMap; 
+		MyMap.insert(std::make_pair(1, 80));
+		MyMap.insert(std::make_pair(10, 57758));
+		MyMap.insert(std::make_pair(100, 34));
+		MyMap.erase(MyMap.begin());
+		for (MODE::map<int, int>::iterator it = MyMap.begin(); it != MyMap.end(); it++)
+			std::cout << it->first << " => " << it->second << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		MODE::map<int, int> MyMap; 
+		MyMap.insert(std::make_pair(1, 80));
+		MyMap.insert(std::make_pair(10, 57758));
+		MyMap.insert(std::make_pair(100, 34));
+		MyMap.erase(10);
+		for (MODE::map<int, int>::iterator it = MyMap.begin(); it != MyMap.end(); it++)
+			std::cout << it->first << " => " << it->second << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		MODE::map<int, int> MyMap; 
+		MyMap.insert(std::make_pair(1, 80));
+		MyMap.insert(std::make_pair(10, 57758));
+		MyMap.insert(std::make_pair(100, 34));
+		std::cout << MyMap[10] << std::endl;
+		for (MODE::map<int, int>::iterator it = MyMap.begin(); it != MyMap.end(); it++)
+			std::cout << it->first << " => " << it->second << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		MODE::map<int, int> MyMap; 
+		MyMap.insert(std::make_pair(1, 80));
+		MyMap.insert(std::make_pair(10, 57758));
+		MyMap.insert(std::make_pair(100, 34));
+		MyMap[10] = 99;
+		for (MODE::map<int, int>::iterator it = MyMap.begin(); it != MyMap.end(); it++)
+			std::cout << it->first << " => " << it->second << std::endl;
+	}
+	std::cout << std::endl;
+	{
+		MODE::map<int, int> MyMap; 
+		MyMap.insert(std::make_pair(1, 80));
+		MyMap.insert(std::make_pair(10, 57758));
+		MyMap.insert(std::make_pair(100, 34));
+		MyMap[1000] = 99;
+		for (MODE::map<int, int>::iterator it = MyMap.begin(); it != MyMap.end(); it++)
+			std::cout << it->first << " => " << it->second << std::endl;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/03 15:03:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 22:16:30 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/22 18:21:24 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ public:
 	node *next;
 	node *previous;
 
-	node(value_type val = value_type())
+	node(const value_type &val = value_type())
 	{
 		this->next = nullptr;
 		this->previous = nullptr;

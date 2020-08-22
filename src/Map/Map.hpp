@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 17:40:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 22:39:43 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/22 18:37:55 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ public:
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
 	typedef bidirectional_iterator<value_type, reference, pointer, node> iterator;
-    typedef bidirectional_iterator<value_type, const_reference, const_pointer, node> const_iterator;
-    typedef reverse_bidirectional_iterator<value_type, reference, pointer, node> reverse_iterator;
-    typedef reverse_bidirectional_iterator<value_type, const_reference, const_pointer, node> const_reverse_iterator;
+	typedef bidirectional_iterator<value_type, const_reference, const_pointer, node> const_iterator;
+	typedef reverse_bidirectional_iterator<value_type, reference, pointer, node> reverse_iterator;
+	typedef reverse_bidirectional_iterator<value_type, const_reference, const_pointer, node> const_reverse_iterator;
 	class value_compare : binary_function<value_type, value_type, bool>
 	{
 	public:
@@ -161,7 +161,11 @@ public:
 		return (SIZE_T_MAX / sizeof(node));
 	}
 
-	mapped_type &operator[](const key_type &k);
+	// NO REFERENCE IS PASSED?
+	mapped_type &operator[](const key_type &k)
+	{
+		return ((*((this->insert(std::make_pair(k,mapped_type()))).first)).second);
+	}
 
 	std::pair<iterator, bool> insert(const value_type &val)
 	{
@@ -219,14 +223,20 @@ public:
 		}
 	}
 
-	/*
+	// ITERATOR VALIDITY
 	void erase(iterator position);
+	
+	// OK
+	size_type erase(const key_type &k)
+	{
+		size_type ret = this->count(k);
+		if (ret == 1)
+			this->erase(this->find(k));
+		return (ret);
+	}
 
-	size_type erase(const key_type &k);
-
+	// ITERATOR VALIDITY
 	void erase(iterator first, iterator last);
-
-	*/
 
 	void swap(map &x)
 	{
@@ -255,12 +265,12 @@ public:
 
 	iterator find(const key_type &k)
 	{
-		if (this->root->data.first == k)
+		if (this->equal(this->root->data.first, k))
 			return (iterator(*this->root));
 		node *traverser = this->root;
 		while (traverser->left || traverser->right)
 		{
-			if (traverser->data.first == k)
+			if (this->equal(traverser->data.first, k))
 				return (iterator(*traverser));
 			if (this->key_comp()(k, traverser->data.first))
 			{
@@ -280,25 +290,109 @@ public:
 		return (this->end());
 	}
 
-	/*
-	
-	const_iterator find(const key_type &k) const;
+	const_iterator find(const key_type &k) const
+	{
+		if (this->equal(this->root->data.first, k))
+			return (const_iterator(*this->root));
+		node *traverser = this->root;
+		while (traverser->left || traverser->right)
+		{
+			if (this->equal(traverser->data.first, k))
+				return (const_iterator(*traverser));
+			if (this->key_comp()(k, traverser->data.first))
+			{
+				if (traverser->left && traverser->left != this->lower)
+					traverser = traverser->left;
+				else
+					break;
+			}
+			else
+			{
+				if (traverser->right && traverser->right != this->upper)
+					traverser = traverser->right;
+				else
+					break;
+			}
+		}
+		return (this->end());
+	}
 
-	size_type count(const key_type &k) const;
+	size_type count(const key_type &k) const
+	{
+		if (this->equal(this->root->data.first, k))
+			return (1);
+		node *traverser = this->root;
+		while (traverser->left || traverser->right)
+		{
+			if (this->equal(traverser->data.first, k))
+				return (1);
+			if (this->key_comp()(k, traverser->data.first))
+			{
+				if (traverser->left && traverser->left != this->lower)
+					traverser = traverser->left;
+				else
+					break;
+			}
+			else
+			{
+				if (traverser->right && traverser->right != this->upper)
+					traverser = traverser->right;
+				else
+					break;
+			}
+		}
+		return (0);
+	}
 
-	iterator lower_bound(const key_type &k);
+	iterator lower_bound(const key_type &k)
+	{
+		for (iterator it = this->begin(); it != this->end(); it++)
+		{
+			if (!this->key_comp()(it->first, k))
+				return (it);
+		}
+		return (this->end());
+	}
 
-	const_iterator lower_bound(const key_type &k) const;
+	const_iterator lower_bound(const key_type &k) const
+	{
+		for (const_iterator it = this->begin(); it != this->end(); it++)
+		{
+			if (!this->key_comp()(it->first, k))
+				return (it);
+		}
+		return (this->end());
+	}
 
-	iterator upper_bound(const key_type &k);
+	iterator upper_bound(const key_type &k)
+	{
+		for (iterator it = this->begin(); it != this->end(); it++)
+		{
+			if (this->key_comp()(k, it->first))
+				return (it);
+		}
+		return (this->end());
+	}
 
-	const_iterator upper_bound(const key_type &k) const;
+	const_iterator upper_bound(const key_type &k) const
+	{
+		for (const_iterator it = this->begin(); it != this->end(); it++)
+		{
+			if (this->key_comp()(k, it->first))
+				return (it);
+		}
+		return (this->end());
+	}
 
-	std::pair<const_iterator,const_iterator> equal_range (const key_type &k) const;
-	
-	std::pair<iterator,iterator> equal_range (const key_type &k);
-	
-	*/
+	std::pair<iterator, iterator> equal_range(const key_type &k)
+	{
+		return (std::make_pair(this->lower_bound(k), this->upper_bound(k)));
+	}
+
+	std::pair<const_iterator, const_iterator> equal_range(const key_type &k) const
+	{
+		return (std::make_pair(this->lower_bound(k), this->upper_bound(k)));
+	}
 
 private:
 	key_compare comp;
@@ -332,12 +426,6 @@ private:
 		this->set_boundaries();
 	}
 
-	void unset_boundaries()
-	{
-		this->lower->parent->left = nullptr;
-		this->upper->parent->right = nullptr;
-	}
-
 	void set_boundaries()
 	{
 		node *traverser = this->top;
@@ -357,6 +445,12 @@ private:
 		delete this->top;
 		delete this->upper;
 		delete this->lower;
+	}
+
+	void unset_boundaries()
+	{
+		this->lower->parent->left = nullptr;
+		this->upper->parent->right = nullptr;
 	}
 
 	void clear(node *position)
@@ -389,6 +483,11 @@ private:
 		this->total++;
 		this->set_boundaries();
 		return (insert);
+	}
+
+	bool equal(key_type first, key_type second) const
+	{
+		return (!this->key_comp()(first, second) && !this->key_comp()(second, first));
 	}
 };
 
