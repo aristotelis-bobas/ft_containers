@@ -6,7 +6,7 @@
 #    By: abobas <abobas@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/07/13 17:19:37 by abobas        #+#    #+#                  #
-#    Updated: 2020/08/21 22:31:44 by abobas        ########   odam.nl          #
+#    Updated: 2020/08/22 22:13:39 by abobas        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,8 +39,8 @@ list:			clean
 				diff -s result_ft result_std > result_diff
 
 map:			clean
-				$(CC) $(FLAGS) $(FT) src/tests/map_test.cpp -o map_test
-				./map_test	> result_ft
+				$(CC) $(FLAGS) $(FT) src/tests/map_test.cpp -o map_test -ggdb
+				./map_test	> result_ft 
 				rm -rf map_test
 				$(CC) $(FLAGS) $(STD) src/tests/map_test.cpp -o map_test
 				./map_test	> result_std

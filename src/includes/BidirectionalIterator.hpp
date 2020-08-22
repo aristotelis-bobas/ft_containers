@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/27 20:18:21 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 22:36:34 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/22 22:04:32 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,18 @@ public:
 	typedef T value_type;
 	typedef R reference;
 	typedef P pointer;
-	typedef N node;
+	typedef N node_pointer;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
 	typedef bidirectional_iterator_tag iterator_category;
 	typedef bidirectional_iterator self_type;
 
-	bidirectional_iterator(node element)
+	bidirectional_iterator(node_pointer element) : element(element)
 	{
-		this->element = element;
 	}
 
-	bidirectional_iterator(self_type const &other)
+	bidirectional_iterator(self_type const &other) : element(other.element)
 	{
-		this->element = other.element;
 	}
 
 	~bidirectional_iterator()
@@ -54,17 +52,17 @@ public:
 
 	reference operator*()
 	{
-		return (*this->element);
+		return (this->element->data);
 	}
-	
+
 	pointer operator->()
 	{
-		return (&this->element);
+		return (&(this->element->data));
 	}
 
 	bool operator==(self_type const &other) const
 	{
-		if (this->element != other.element)
+		if (*this->element != *other.element)
 			return (false);
 		return (true);
 	}
@@ -78,32 +76,32 @@ public:
 
 	self_type &operator++()
 	{
-		this->element++;
+		this->element->next();
 		return (*this);
 	}
 
 	self_type operator++(int)
 	{
 		self_type tmp(*this);
-		this->element++;
+		this->element = this->element->next();
 		return (tmp);
 	}
 
 	self_type &operator--()
 	{
-		this->element--;
+		this->element->previous();
 		return (*this);
 	}
 
 	self_type operator--(int)
 	{
 		self_type tmp(*this);
-		this->element--;
+		this->element->previous();
 		return (tmp);
 	}
 
 private:
-	node element;
+	node_pointer element;
 };
 
 template <typename T, typename R, typename P, typename N>
@@ -113,20 +111,18 @@ public:
 	typedef T value_type;
 	typedef R reference;
 	typedef P pointer;
-	typedef N node;
+	typedef N node_pointer;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
 	typedef bidirectional_iterator_tag iterator_category;
 	typedef reverse_bidirectional_iterator self_type;
 
-	reverse_bidirectional_iterator(node element)
+	reverse_bidirectional_iterator(node_pointer element) : element(element)
 	{
-		this->element = element;
 	}
 
-	reverse_bidirectional_iterator(self_type const &other)
+	reverse_bidirectional_iterator(self_type const &other) : element(other.element)
 	{
-		this->element = other.element;
 	}
 
 	~reverse_bidirectional_iterator()
@@ -141,12 +137,12 @@ public:
 
 	reference operator*()
 	{
-		return (*this->element);
+		return (this->element->data);
 	}
 
 	pointer operator->()
 	{
-		return (&this->element);
+		return (&(this->element->data));
 	}
 
 	bool operator==(self_type const &other) const
@@ -165,32 +161,32 @@ public:
 
 	self_type &operator++()
 	{
-		this->element--;
+		this->element->previous();
 		return (*this);
 	}
 
 	self_type operator++(int)
 	{
 		self_type tmp(*this);
-		this->element--;
+		this->element->previous();
 		return (tmp);
 	}
 
 	self_type &operator--()
 	{
-		this->element++;
+		this->element->next();
 		return (*this);
 	}
 
 	self_type operator--(int)
 	{
 		self_type tmp(*this);
-		this->element++;
+		this->element->next();
 		return (tmp);
 	}
 
 private:
-	node element;
+	node_pointer element;
 };
 
 } // namespace ft

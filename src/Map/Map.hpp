@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 17:40:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/22 18:37:55 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/22 22:33:41 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,13 @@ public:
 	typedef value_type *pointer;
 	typedef const value_type *const_pointer;
 	typedef node<value_type, key_compare> node;
+	typedef node *node_pointer;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
-	typedef bidirectional_iterator<value_type, reference, pointer, node> iterator;
-	typedef bidirectional_iterator<value_type, const_reference, const_pointer, node> const_iterator;
-	typedef reverse_bidirectional_iterator<value_type, reference, pointer, node> reverse_iterator;
-	typedef reverse_bidirectional_iterator<value_type, const_reference, const_pointer, node> const_reverse_iterator;
+	typedef bidirectional_iterator<value_type, reference, pointer, node_pointer> iterator;
+	typedef bidirectional_iterator<value_type, const_reference, const_pointer, node_pointer> const_iterator;
+	typedef reverse_bidirectional_iterator<value_type, reference, pointer, node_pointer> reverse_iterator;
+	typedef reverse_bidirectional_iterator<value_type, const_reference, const_pointer, node_pointer> const_reverse_iterator;
 	class value_compare : binary_function<value_type, value_type, bool>
 	{
 	public:
@@ -108,42 +109,42 @@ public:
 
 	iterator begin()
 	{
-		return (iterator(*this->lower->parent));
+		return (iterator(this->lower->parent));
 	}
 
 	const_iterator begin() const
 	{
-		return (const_iterator(*this->lower->parent));
+		return (const_iterator(this->lower->parent));
 	}
 
 	iterator end()
 	{
-		return (iterator(*this->upper));
+		return (iterator(this->upper));
 	}
 
 	const_iterator end() const
 	{
-		return (const_iterator(*this->upper));
+		return (const_iterator(this->upper));
 	}
 
 	reverse_iterator rbegin()
 	{
-		return (reverse_iterator(*this->upper->parent));
+		return (reverse_iterator(this->upper->parent));
 	}
 
 	const_reverse_iterator rbegin() const
 	{
-		return (const_reverse_iterator(*this->upper->parent));
+		return (const_reverse_iterator(this->upper->parent));
 	}
 
 	reverse_iterator rend()
 	{
-		return (reverse_iterator(*this->lower));
+		return (reverse_iterator(this->lower));
 	}
 
 	const_reverse_iterator rend() const
 	{
-		return (const_reverse_iterator(*this->lower));
+		return (const_reverse_iterator(this->lower));
 	}
 
 	bool empty() const
@@ -172,13 +173,13 @@ public:
 		if (this->total == 0)
 		{
 			this->create_root(val);
-			return (std::make_pair(iterator(*this->root), true));
+			return (std::make_pair(iterator(this->root), true));
 		}
 		node *traverser = this->root;
 		while (traverser->left || traverser->right)
 		{
 			if (traverser->data.first == val.first)
-				return (std::make_pair(iterator(*traverser), false));
+				return (std::make_pair(iterator(traverser), false));
 			if (this->value_comp()(val, traverser->data))
 			{
 				if (traverser->left && traverser->left != this->lower)
@@ -195,9 +196,9 @@ public:
 			}
 		}
 		if (this->value_comp()(val, traverser->data))
-			return (std::make_pair(iterator(*(this->insert_left(traverser, val))), true));
+			return (std::make_pair(iterator(this->insert_left(traverser, val)), true));
 		else
-			return (std::make_pair(iterator(*(this->insert_right(traverser, val))), true));
+			return (std::make_pair(iterator(this->insert_right(traverser, val)), true));
 	}
 
 	iterator insert(iterator position, const value_type &val)
@@ -205,7 +206,7 @@ public:
 		if (this->total == 0)
 		{
 			this->create_root(val);
-			return (iterator(*this->root));
+			return (iterator(this->root));
 		}
 		if (position->first == val.first)
 			return (position);
@@ -219,10 +220,11 @@ public:
 		while (first != last)
 		{
 			this->insert(*first);
-			first++;
+			++first;
 		}
 	}
 
+	/* 
 	// ITERATOR VALIDITY
 	void erase(iterator position);
 	
@@ -237,6 +239,7 @@ public:
 
 	// ITERATOR VALIDITY
 	void erase(iterator first, iterator last);
+	*/
 
 	void swap(map &x)
 	{
@@ -266,12 +269,12 @@ public:
 	iterator find(const key_type &k)
 	{
 		if (this->equal(this->root->data.first, k))
-			return (iterator(*this->root));
+			return (iterator(this->root));
 		node *traverser = this->root;
 		while (traverser->left || traverser->right)
 		{
 			if (this->equal(traverser->data.first, k))
-				return (iterator(*traverser));
+				return (iterator(traverser));
 			if (this->key_comp()(k, traverser->data.first))
 			{
 				if (traverser->left && traverser->left != this->lower)
@@ -293,12 +296,12 @@ public:
 	const_iterator find(const key_type &k) const
 	{
 		if (this->equal(this->root->data.first, k))
-			return (const_iterator(*this->root));
+			return (const_iterator(this->root));
 		node *traverser = this->root;
 		while (traverser->left || traverser->right)
 		{
 			if (this->equal(traverser->data.first, k))
-				return (const_iterator(*traverser));
+				return (const_iterator(traverser));
 			if (this->key_comp()(k, traverser->data.first))
 			{
 				if (traverser->left && traverser->left != this->lower)

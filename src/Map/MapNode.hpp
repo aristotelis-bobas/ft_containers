@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/19 15:57:09 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/22 18:20:36 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/22 22:04:03 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,15 @@ public:
 	node *left;
 	node *right;
 
-	node(const value_type &val = value_type())
+	node(value_type const &val = value_type()) : data(val)
 	{
-		this->data = val;
 		this->parent = nullptr;
 		this->left = nullptr;
 		this->right = nullptr;
 	}
 
-	node(const node &other)
+	node(const node &other) : data(other.data)
 	{
-		this->data = other.data;
 		this->parent = other.parent;
 		this->left = other.left;
 		this->right = other.right;
@@ -80,44 +78,7 @@ public:
 		return (!(*this == other));
 	}
 
-	reference operator*()
-	{
-		return (this->data);
-	}
-
-	pointer operator&()
-	{
-		return (&this->data);
-	}
-
-	self_type &operator++()
-	{
-		this->next();
-		return (*this);
-	}
-
-	self_type operator++(int)
-	{
-		self_type tmp(*this);
-		this->next();
-		return (tmp);
-	}
-
-	self_type operator--(int)
-	{
-		self_type tmp(*this);
-		this->previous();
-		return (tmp);
-	}
-
-	self_type &operator--()
-	{
-		this->previous();
-		return (*this);
-	}
-
-private:
-	void next()
+	node *next()
 	{
 		if (this->right)
 		{
@@ -135,9 +96,10 @@ private:
 				*this = *this->parent;
 			}
 		}
+		return (&(*this));
 	}
-	
-	void previous()
+
+	node *previous()
 	{
 		if (this->left)
 		{
@@ -147,6 +109,7 @@ private:
 		}
 		else
 			*this = *this->parent;
+		return (&(*this));
 	}
 };
 
