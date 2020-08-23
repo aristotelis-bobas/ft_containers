@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/19 15:57:09 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/23 18:21:59 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/23 19:00:14 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ public:
 		return (!(*this == other));
 	}
 
-	node *next()
+	node *get_next()
 	{
 		node *traverser;
 		if (this->right)
@@ -100,7 +100,7 @@ public:
 		return (traverser);
 	}
 
-	node *previous()
+	node *get_previous()
 	{
 		node *traverser;
 		if (this->left)

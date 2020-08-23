@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/27 20:18:21 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/23 18:23:06 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/23 19:00:37 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,27 +76,27 @@ public:
 
 	self_type &operator++()
 	{
-		this->element = this->element->next();
+		this->element = this->element->get_next();
 		return (*this);
 	}
 
 	self_type operator++(int)
 	{
 		self_type tmp(*this);
-		this->element = this->element->next();
+		this->element = this->element->get_next();
 		return (tmp);
 	}
 
 	self_type &operator--()
 	{
-		this->element = this->element->previous();
+		this->element = this->element->get_previous();
 		return (*this);
 	}
 
 	self_type operator--(int)
 	{
 		self_type tmp(*this);
-		this->element = this->element->previous();
+		this->element = this->element->get_previous();
 		return (tmp);
 	}
 
@@ -161,27 +161,27 @@ public:
 
 	self_type &operator++()
 	{
-		this->element = this->element->previous();
+		this->element = this->element->get_previous();
 		return (*this);
 	}
 
 	self_type operator++(int)
 	{
 		self_type tmp(*this);
-		this->element = this->element->previous();
+		this->element = this->element->get_previous();
 		return (tmp);
 	}
 
 	self_type &operator--()
 	{
-		this->element = this->element->next();
+		this->element = this->element->get_next();
 		return (*this);
 	}
 
 	self_type operator--(int)
 	{
 		self_type tmp(*this);
-		this->element = this->element->next();
+		this->element = this->element->get_next();
 		return (tmp);
 	}
 

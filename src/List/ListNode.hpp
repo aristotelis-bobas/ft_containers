@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/03 15:03:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/22 18:21:24 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/23 19:00:01 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,41 +74,16 @@ public:
 		return (!(*this == other));
 	}
 
-	reference operator*()
+	node *get_next()
 	{
-		return (this->data);
+		return (this->next);
 	}
 
-	pointer operator&()
+	node *get_previous()
 	{
-		return (&this->data);
+		return (this->previous);
 	}
 
-	self_type &operator++()
-	{
-		*this = *this->next;
-		return (*this);
-	}
-
-	self_type operator++(int)
-	{
-		self_type tmp(*this);
-		*this = *this->next;
-		return (tmp);
-	}
-	
-	self_type operator--(int)
-	{
-		self_type tmp(*this);
-		*this = *this->previous;
-		return (tmp);
-	}
-
-	self_type &operator--()
-	{
-		*this = *this->previous;
-		return (*this);
-	}
 };
 
 } // namespace ft

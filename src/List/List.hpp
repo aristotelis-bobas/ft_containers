@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/06 17:46:00 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 22:39:01 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/23 19:03:06 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ public:
     typedef value_type *pointer;
     typedef const value_type *const_pointer;
     typedef node<value_type> node;
+    typedef node *node_pointer;
     typedef size_t size_type;
     typedef ptrdiff_t difference_type;
-    typedef bidirectional_iterator<value_type, reference, pointer, node> iterator;
-    typedef bidirectional_iterator<value_type, const_reference, const_pointer, node> const_iterator;
-    typedef reverse_bidirectional_iterator<value_type, reference, pointer, node> reverse_iterator;
-    typedef reverse_bidirectional_iterator<value_type, const_reference, const_pointer, node> const_reverse_iterator;
+    typedef bidirectional_iterator<value_type, reference, pointer, node_pointer> iterator;
+    typedef bidirectional_iterator<value_type, const_reference, const_pointer, node_pointer> const_iterator;
+    typedef reverse_bidirectional_iterator<value_type, reference, pointer, node_pointer> reverse_iterator;
+    typedef reverse_bidirectional_iterator<value_type, const_reference, const_pointer, node_pointer> const_reverse_iterator;
 
     explicit list()
     {
@@ -85,42 +86,42 @@ public:
 
     iterator begin()
     {
-        return (iterator(*this->head->next));
+        return (iterator(this->head->next));
     }
 
 	const_iterator begin() const
     {
-        return (const_iterator(*this->head->next));
+        return (const_iterator(this->head->next));
     }
 
     iterator end()
     {
-        return (iterator(*this->tail));
+        return (iterator(this->tail));
     }
 
     const_iterator end() const
     {
-        return (const_iterator(*this->tail));
+        return (const_iterator(this->tail));
     }
 
     reverse_iterator rbegin()
     {
-        return (reverse_iterator(*this->tail->previous));
+        return (reverse_iterator(this->tail->previous));
     }
 
 	const_reverse_iterator rbegin() const
     {
-        return (const_reverse_iterator(*this->tail->previous));
+        return (const_reverse_iterator(this->tail->previous));
     }
 
     reverse_iterator rend()
     {
-        return (reverse_iterator(*this->head));
+        return (reverse_iterator(this->head));
     }
 
     const_reverse_iterator rend() const
     {
-        return (const_reverse_iterator(*this->head));
+        return (const_reverse_iterator(this->head));
     }
 
     bool empty() const
