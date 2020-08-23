@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 17:40:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/23 18:02:08 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/23 22:04:50 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@
 #include <climits>
 #include <cstddef>
 #include <utility>
-
-// TESTING
-#include <iostream>
 
 namespace ft
 {
@@ -164,7 +161,7 @@ public:
 
 	mapped_type &operator[](const key_type &k)
 	{
-		return ((*((this->insert(std::make_pair(k,mapped_type()))).first)).second);
+		return ((*((this->insert(std::make_pair(k, mapped_type()))).first)).second);
 	}
 
 	std::pair<iterator, bool> insert(const value_type &val)
@@ -223,12 +220,16 @@ public:
 		}
 	}
 
-	/* 
-	// ITERATOR VALIDITY
-	void erase(iterator position);
-	
-	// OK
-	size_type erase(const key_type &k)
+	void erase(iterator position)
+	{
+		node *erase = find(position);
+		if (!erase)
+			return;
+		this->erase(erase);
+	}
+
+	size_type
+	erase(const key_type &k)
 	{
 		size_type ret = this->count(k);
 		if (ret == 1)
@@ -236,9 +237,16 @@ public:
 		return (ret);
 	}
 
-	// ITERATOR VALIDITY
-	void erase(iterator first, iterator last);
-	*/
+	void erase(iterator first, iterator last)
+	{
+		while (first != last)
+		{
+			iterator tmp(first);
+			tmp++;
+			this->erase(first);
+			first = tmp;
+		}
+	}
 
 	void swap(map &x)
 	{
@@ -267,81 +275,36 @@ public:
 
 	iterator find(const key_type &k)
 	{
-		if (this->equal(this->root->data.first, k))
-			return (iterator(this->root));
-		node *traverser = this->root;
-		while (traverser->left || traverser->right)
+		iterator it = this->begin();
+		while (it != this->end())
 		{
-			if (this->equal(traverser->data.first, k))
-				return (iterator(traverser));
-			if (this->key_comp()(k, traverser->data.first))
-			{
-				if (traverser->left && traverser->left != this->lower)
-					traverser = traverser->left;
-				else
-					break;
-			}
-			else
-			{
-				if (traverser->right && traverser->right != this->upper)
-					traverser = traverser->right;
-				else
-					break;
-			}
+			if (this->equal(it->first, k))
+				return (it);
+			it++;
 		}
-		return (this->end());
+		return (it);
 	}
 
 	const_iterator find(const key_type &k) const
 	{
-		if (this->equal(this->root->data.first, k))
-			return (const_iterator(this->root));
-		node *traverser = this->root;
-		while (traverser->left || traverser->right)
+		const_iterator it = this->begin();
+		while (it != this->end())
 		{
-			if (this->equal(traverser->data.first, k))
-				return (const_iterator(traverser));
-			if (this->key_comp()(k, traverser->data.first))
-			{
-				if (traverser->left && traverser->left != this->lower)
-					traverser = traverser->left;
-				else
-					break;
-			}
-			else
-			{
-				if (traverser->right && traverser->right != this->upper)
-					traverser = traverser->right;
-				else
-					break;
-			}
+			if (this->equal(it->first, k))
+				return (it);
+			it++;
 		}
-		return (this->end());
+		return (it);
 	}
 
 	size_type count(const key_type &k) const
 	{
-		if (this->equal(this->root->data.first, k))
-			return (1);
-		node *traverser = this->root;
-		while (traverser->left || traverser->right)
+		const_iterator it = this->begin();
+		while (it != this->end())
 		{
-			if (this->equal(traverser->data.first, k))
+			if (this->equal(it->first, k))
 				return (1);
-			if (this->key_comp()(k, traverser->data.first))
-			{
-				if (traverser->left && traverser->left != this->lower)
-					traverser = traverser->left;
-				else
-					break;
-			}
-			else
-			{
-				if (traverser->right && traverser->right != this->upper)
-					traverser = traverser->right;
-				else
-					break;
-			}
+			it++;
 		}
 		return (0);
 	}
@@ -490,6 +453,109 @@ private:
 	bool equal(key_type first, key_type second) const
 	{
 		return (!this->key_comp()(first, second) && !this->key_comp()(second, first));
+	}
+
+	node *find(iterator position)
+	{
+		key_type k = position->first;
+		if (this->equal(this->root->data.first, k))
+			return (this->root);
+		node *traverser = this->root;
+		while (traverser->left || traverser->right)
+		{
+			if (this->equal(traverser->data.first, k))
+				return (traverser);
+			if (this->key_comp()(k, traverser->data.first))
+			{
+				if (traverser->left && traverser->left != this->lower)
+					traverser = traverser->left;
+				else
+					break;
+			}
+			else
+			{
+				if (traverser->right && traverser->right != this->upper)
+					traverser = traverser->right;
+				else
+					break;
+			}
+		}
+		return (nullptr);
+	}
+
+	void erase(node *position)
+	{
+		this->unset_boundaries();
+		if (!position->left && !position->right)
+			this->erase_leaf(position);
+		else if (position->left && position->right)
+			this->erase_double(position);
+		else
+			this->erase_single(position);
+	}
+
+	void erase_leaf(node *position)
+	{
+		if (position->parent == this->top)
+		{
+			position->parent->left = nullptr;
+			position->parent->right = nullptr;
+			this->root = nullptr;
+		}
+		else if (position->parent->left == position)
+			position->parent->left = nullptr;
+		else
+			position->parent->right = nullptr;
+		delete position;
+		position = nullptr;
+		this->total--;
+		this->set_boundaries();
+	}
+
+	void erase_single(node *position)
+	{
+		if (position->left)
+		{
+			position->left->parent = position->parent;
+			if (position->parent == this->top)
+			{
+				position->parent->left = position->left;
+				position->parent->right = position->left;
+				this->root = position->left;
+			}
+			else if (position->parent->left == position)
+				position->parent->left = position->left;
+			else
+				position->parent->right = position->left;
+		}
+		else if (position->right)
+		{
+			position->right->parent = position->parent;
+			if (position->parent == this->top)
+			{
+				position->parent->left = position->right;
+				position->parent->right = position->right;
+				this->root = position->right;
+			}
+			else if (position->parent->left == position)
+				position->parent->left = position->right;
+			else
+				position->parent->right = position->right;
+		}
+		delete position;
+		this->total--;
+		this->set_boundaries();
+		return;
+	}
+
+	void erase_double(node *position)
+	{
+		node *tmp = position->right;
+		while (tmp->left)
+			tmp = tmp->left;
+		position->data = tmp->data;
+		this->set_boundaries();
+		this->erase(tmp);
 	}
 };
 

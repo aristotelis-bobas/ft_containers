@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/19 21:24:40 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/23 18:28:37 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/23 22:05:59 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,13 @@ int main()
 		for (MODE::map<int, int>::iterator it = MyMap.begin(); it != MyMap.end(); it++)
 			std::cout << it->first << " => " << it->second << std::endl;
 	}
-	/*   WORK IN PROGRESS
+	
+	std::cout << std::endl;
+	{
+		MODE::map<int, int> MyMap; 
+		MyMap.insert(std::make_pair(1, 80));
+		MyMap.erase(MyMap.begin());
+	}
 	std::cout << std::endl;
 	{
 		MODE::map<int, int> MyMap; 
@@ -131,12 +137,11 @@ int main()
 	std::cout << std::endl;
 	{
 		MODE::map<int, int> MyMap; 
-		MyMap.insert(std::make_pair(1, 80));
 		MyMap.insert(std::make_pair(10, 57758));
+		MyMap.insert(std::make_pair(1, 80));
 		MyMap.insert(std::make_pair(100, 34));
 		MyMap.erase(10);
 		for (MODE::map<int, int>::iterator it = MyMap.begin(); it != MyMap.end(); it++)
 			std::cout << it->first << " => " << it->second << std::endl;
 	}
-	 */
 }
