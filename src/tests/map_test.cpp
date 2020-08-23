@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/19 21:24:40 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/23 18:22:14 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/23 18:28:37 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int main()
 	}
 	std::cout << std::endl;
 	{
-		MODE::map<int, int> Range; 
+		MODE::map<int, int> Range;
 		Range.insert(std::make_pair(10, 99));
 		Range.insert(std::make_pair(100, 999));
 		Range.insert(std::make_pair(1000, 9999));
@@ -44,7 +44,7 @@ int main()
 	}
 	std::cout << std::endl;
 	{
-		MODE::map<int, int> Range; 
+		MODE::map<int, int> Range;
 		Range.insert(std::make_pair(1, 80));
 		Range.insert(std::make_pair(-10, 57758));
 		Range.insert(std::make_pair(89, 34));
@@ -56,7 +56,7 @@ int main()
 	}
 	std::cout << std::endl;
 	{
-		MODE::map<int, int> MyMap; 
+		MODE::map<int, int> MyMap;
 		MyMap.insert(std::make_pair(1, 80));
 		MyMap.insert(std::make_pair(-10, 57758));
 		MyMap.insert(std::make_pair(89, 34));
@@ -65,7 +65,7 @@ int main()
 	}
 	std::cout << std::endl;
 	{
-		MODE::map<int, int> MyMap; 
+		MODE::map<int, int> MyMap;
 		MyMap.insert(std::make_pair(1, 80));
 		MyMap.insert(std::make_pair(-10, 57758));
 		MyMap.insert(std::make_pair(89, 34));
@@ -73,7 +73,7 @@ int main()
 	}
 	std::cout << std::endl;
 	{
-		MODE::map<int, int> MyMap; 
+		MODE::map<int, int> MyMap;
 		MyMap.insert(std::make_pair(1, 80));
 		MyMap.insert(std::make_pair(-10, 57758));
 		MyMap.insert(std::make_pair(89, 34));
@@ -81,7 +81,7 @@ int main()
 	}
 	std::cout << std::endl;
 	{
-		MODE::map<int, int> MyMap; 
+		MODE::map<int, int> MyMap;
 		MyMap.insert(std::make_pair(1, 80));
 		MyMap.insert(std::make_pair(-10, 57758));
 		MyMap.insert(std::make_pair(89, 34));
@@ -89,7 +89,7 @@ int main()
 	}
 	std::cout << std::endl;
 	{
-		MODE::map<int, int> MyMap; 
+		MODE::map<int, int> MyMap;
 		MyMap.insert(std::make_pair(1, 80));
 		MyMap.insert(std::make_pair(10, 57758));
 		MyMap.insert(std::make_pair(100, 34));
@@ -99,7 +99,7 @@ int main()
 	}
 	std::cout << std::endl;
 	{
-		MODE::map<int, int> MyMap; 
+		MODE::map<int, int> MyMap;
 		MyMap.insert(std::make_pair(1, 80));
 		MyMap.insert(std::make_pair(10, 57758));
 		MyMap.insert(std::make_pair(100, 34));
@@ -109,7 +109,7 @@ int main()
 	}
 	std::cout << std::endl;
 	{
-		MODE::map<int, int> MyMap; 
+		MODE::map<int, int> MyMap;
 		MyMap.insert(std::make_pair(1, 80));
 		MyMap.insert(std::make_pair(10, 57758));
 		MyMap.insert(std::make_pair(100, 34));

@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/13 17:21:47 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 22:27:01 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/23 18:28:26 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int main()
 		for (size_t i = 0; i < MyVector.size(); i++)
 			std::cout << MyVector[i] << std::endl;
 	}
-	
+
 	std::cout << std::endl;
 	{
 		MODE::vector<int> test(10, 10);
@@ -320,7 +320,7 @@ int main()
 		for (size_t i = 0; i < MyVector1.size(); ++i)
 			std::cout << MyVector1[i] << std::endl;
 	}
-	
+
 	std::cout << std::endl;
 	{
 
@@ -397,7 +397,7 @@ int main()
 		for (size_t i = 0; i < MyVector1.size(); ++i)
 			std::cout << MyVector1[i] << std::endl;
 	}
-	
+
 	std::cout << std::endl;
 	{
 		MODE::vector<int> MyVector1;

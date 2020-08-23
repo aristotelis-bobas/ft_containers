@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/06 18:18:13 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/17 18:51:20 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/23 18:28:06 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,36 +25,36 @@ int main()
 		std::cout << MyQueue.empty() << std::endl;
 		std::cout << MyQueue.size() << std::endl;
 	}
-    std::cout << std::endl;
+	std::cout << std::endl;
 	{
 		MODE::queue<int> MyQueue;
-        std::cout << MyQueue.empty() << std::endl;
+		std::cout << MyQueue.empty() << std::endl;
 		MyQueue.push(88);
-        std::cout << MyQueue.back() << std::endl;
+		std::cout << MyQueue.back() << std::endl;
 		MyQueue.push(44);
-        std::cout << MyQueue.back() << std::endl;
+		std::cout << MyQueue.back() << std::endl;
 		std::cout << MyQueue.size() << std::endl;
-        MyQueue.pop();
-        std::cout << MyQueue.size() << std::endl;
-        std::cout << MyQueue.back() << std::endl;
-        MyQueue.pop();
-        std::cout << MyQueue.size() << std::endl;
-    }
-    std::cout << std::endl;
+		MyQueue.pop();
+		std::cout << MyQueue.size() << std::endl;
+		std::cout << MyQueue.back() << std::endl;
+		MyQueue.pop();
+		std::cout << MyQueue.size() << std::endl;
+	}
+	std::cout << std::endl;
 	{
 		MODE::queue<int> MyQueue;
-        std::cout << MyQueue.empty() << std::endl;
+		std::cout << MyQueue.empty() << std::endl;
 		MyQueue.push(88);
-        std::cout << MyQueue.front() << std::endl;
+		std::cout << MyQueue.front() << std::endl;
 		MyQueue.push(44);
-        std::cout << MyQueue.front() << std::endl;
+		std::cout << MyQueue.front() << std::endl;
 		std::cout << MyQueue.size() << std::endl;
-        MyQueue.pop();
-        std::cout << MyQueue.size() << std::endl;
-        std::cout << MyQueue.front() << std::endl;
-        MyQueue.pop();
-        std::cout << MyQueue.size() << std::endl;
-    }
+		MyQueue.pop();
+		std::cout << MyQueue.size() << std::endl;
+		std::cout << MyQueue.front() << std::endl;
+		MyQueue.pop();
+		std::cout << MyQueue.size() << std::endl;
+	}
 	{
 		MODE::queue<int> MyQueue1;
 		MODE::queue<int> MyQueue2;
@@ -66,7 +66,7 @@ int main()
 		MyQueue2.push(44);
 
 		if (MyQueue1 == MyQueue2)
-            std::cout << "MyQueue1 is equal to MyQueue2" << std::endl;
+			std::cout << "MyQueue1 is equal to MyQueue2" << std::endl;
 		if (MyQueue1 < MyQueue2)
 			std::cout << "MyQueue1 is smaller than MyQueue2" << std::endl;
 		if (MyQueue1 <= MyQueue2)
@@ -75,5 +75,5 @@ int main()
 			std::cout << "MyQueue1 is larger than MyQueue2" << std::endl;
 		if (MyQueue1 >= MyQueue2)
 			std::cout << "MyQueue1 is larger than or equal to MyQueue2" << std::endl;
-    }
+	}
 }
