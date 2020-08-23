@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/27 20:18:21 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/22 22:04:32 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/23 18:23:06 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ public:
 
 	self_type &operator++()
 	{
-		this->element->next();
+		this->element = this->element->next();
 		return (*this);
 	}
 
@@ -89,14 +89,14 @@ public:
 
 	self_type &operator--()
 	{
-		this->element->previous();
+		this->element = this->element->previous();
 		return (*this);
 	}
 
 	self_type operator--(int)
 	{
 		self_type tmp(*this);
-		this->element->previous();
+		this->element = this->element->previous();
 		return (tmp);
 	}
 
@@ -161,27 +161,27 @@ public:
 
 	self_type &operator++()
 	{
-		this->element->previous();
+		this->element = this->element->previous();
 		return (*this);
 	}
 
 	self_type operator++(int)
 	{
 		self_type tmp(*this);
-		this->element->previous();
+		this->element = this->element->previous();
 		return (tmp);
 	}
 
 	self_type &operator--()
 	{
-		this->element->next();
+		this->element = this->element->next();
 		return (*this);
 	}
 
 	self_type operator--(int)
 	{
 		self_type tmp(*this);
-		this->element->next();
+		this->element = this->element->next();
 		return (tmp);
 	}
 

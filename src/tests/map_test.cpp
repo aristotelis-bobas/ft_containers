@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/19 21:24:40 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/22 22:35:22 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/23 18:22:14 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,18 @@ int main()
 		MyMap.insert(std::make_pair(10, 353));
 		MyMap.insert(std::make_pair(100, 4543));
 		MyMap.insert(std::make_pair(1000, 34534));
-		for (MODE::map<int, int>::iterator it = MyMap.begin(); it != MyMap.end(); ++it)
+		for (MODE::map<int, int>::iterator it = MyMap.begin(); it != MyMap.end(); it++)
 			std::cout << it->first << " => " << it->second << std::endl;
 	}
-	/* 
 	std::cout << std::endl;
 	{
 		MODE::map<int, int> Range; 
-		Range.insert(std::make_pair(1, 80));
-		Range.insert(std::make_pair(-10, 57758));
-		Range.insert(std::make_pair(89, 34));
+		Range.insert(std::make_pair(10, 99));
+		Range.insert(std::make_pair(100, 999));
+		Range.insert(std::make_pair(1000, 9999));
 		MODE::map<int, int> MyMap(Range.begin(), Range.end());
-		for (MODE::map<int, int>::iterator it = MyMap.begin(); it != MyMap.end(); ++it)
+		for (MODE::map<int, int>::iterator it = MyMap.begin(); it != MyMap.end(); it++)
 			std::cout << it->first << " => " << it->second << std::endl;
-		std::cout << MyMap.size() << std::endl;
 	}
 	std::cout << std::endl;
 	{
@@ -55,9 +53,7 @@ int main()
 		std::cout << result->first << " => " << result->second << std::endl;
 		for (MODE::map<int, int>::iterator it = MyMap.begin(); it != MyMap.end(); it++)
 			std::cout << it->first << " => " << it->second << std::endl;
-		std::cout << MyMap.size() << std::endl;
 	}
-	*/
 	std::cout << std::endl;
 	{
 		MODE::map<int, int> MyMap; 
@@ -66,8 +62,6 @@ int main()
 		MyMap.insert(std::make_pair(89, 34));
 		MODE::map<int, int>::iterator result = MyMap.find(89);
 		std::cout << result->first << " => " << result->second << std::endl;
-		MODE::map<int, int>::iterator res2 = MyMap.find(-9);
-		std::cout << res2->first << " => " << res2->second << std::endl;
 	}
 	std::cout << std::endl;
 	{

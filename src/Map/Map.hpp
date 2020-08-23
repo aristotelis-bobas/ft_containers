@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 17:40:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/22 22:33:41 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/23 18:02:08 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ public:
 		return (SIZE_T_MAX / sizeof(node));
 	}
 
-	// NO REFERENCE IS PASSED?
 	mapped_type &operator[](const key_type &k)
 	{
 		return ((*((this->insert(std::make_pair(k,mapped_type()))).first)).second);
@@ -220,7 +219,7 @@ public:
 		while (first != last)
 		{
 			this->insert(*first);
-			++first;
+			first++;
 		}
 	}
 

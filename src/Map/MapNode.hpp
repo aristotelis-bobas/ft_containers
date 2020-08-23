@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/19 15:57:09 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/22 22:04:03 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/23 18:21:59 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,36 +80,38 @@ public:
 
 	node *next()
 	{
+		node *traverser;
 		if (this->right)
 		{
-			*this = *this->right;
-			while (this->left)
-				*this = *this->left;
+			traverser = this->right;
+			while (traverser->left)
+				traverser = traverser->left;
 		}
 		else
 		{
-			node tmp = *this;
-			*this = *this->parent;
-			while (*this->left != tmp)
+			node *tmp = &(*this);
+			traverser = this->parent;
+			while (traverser->left != tmp)
 			{
-				tmp = *this;
-				*this = *this->parent;
+				tmp = traverser;
+				traverser = traverser->parent;
 			}
 		}
-		return (&(*this));
+		return (traverser);
 	}
 
 	node *previous()
 	{
+		node *traverser;
 		if (this->left)
 		{
-			*this = *this->left;
-			while (this->right)
-				*this = *this->right;
+			traverser = this->left;
+			while (traverser->right)
+				traverser = traverser->right;
 		}
 		else
-			*this = *this->parent;
-		return (&(*this));
+			traverser = this->parent;
+		return (traverser);
 	}
 };
 
