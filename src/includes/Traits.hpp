@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/27 17:18:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 17:18:44 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/24 17:19:26 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@
 namespace ft
 {
 
-class random_access_iterator_tag
+struct random_access_iterator_tag
 {
 };
 
-class bidirectional_iterator_tag
+struct bidirectional_iterator_tag
 {
 };
 
-class forward_iterator_tag
+struct forward_iterator_tag
 {
 };
 
-class input_iterator_tag
+struct input_iterator_tag
 {
 };
 
-class output_iterator_tag
+struct output_iterator_tag
 {
 };
 

@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/19 15:57:09 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/23 19:00:14 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/24 17:17:29 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,17 @@ public:
 	node *left;
 	node *right;
 
-	node(value_type const &val = value_type()) : data(val)
+	node(value_type const &val = value_type())
 	{
+		this->data = val;
 		this->parent = nullptr;
 		this->left = nullptr;
 		this->right = nullptr;
 	}
 
-	node(const node &other) : data(other.data)
+	node(const node &other)
 	{
+		this->data = other.data;
 		this->parent = other.parent;
 		this->left = other.left;
 		this->right = other.right;

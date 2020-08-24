@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/27 20:18:21 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/23 19:00:37 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/24 17:18:02 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ public:
 	typedef bidirectional_iterator_tag iterator_category;
 	typedef bidirectional_iterator self_type;
 
-	bidirectional_iterator(node_pointer element) : element(element)
+	bidirectional_iterator(node_pointer element)
 	{
+		this->element = element;
 	}
 
-	bidirectional_iterator(self_type const &other) : element(other.element)
+	bidirectional_iterator(self_type const &other)
 	{
+		this->element = other.element;
 	}
 
 	~bidirectional_iterator()

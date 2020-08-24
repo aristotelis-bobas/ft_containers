@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/06 16:49:33 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/23 18:27:14 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/24 17:20:04 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 namespace ft
 {
 
-template <class T, class Container = list<T>>
+template <class T, class Container = list<T> >
 class stack
 {
 public:
