@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/21 22:45:07 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/24 17:24:14 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,16 +108,16 @@ public:
 		return (reverse_iterator(&(this->array[this->size() - 1])));
 	}
 
-	reverse_iterator rend()
-	{
-		return (reverse_iterator(&(this->array[SIZE_T_MAX])));
-	}
-
 	const_reverse_iterator rbegin() const
 	{
 		return (const_reverse_iterator(&(this->array[this->size() - 1])));
 	}
 
+	reverse_iterator rend()
+	{
+		return (reverse_iterator(&(this->array[SIZE_T_MAX])));
+	}
+	
 	const_reverse_iterator rend() const
 	{
 		return (const_reverse_iterator(&(this->array[SIZE_T_MAX])));
