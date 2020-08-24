@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/19 21:24:40 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/24 18:47:09 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/24 19:12:45 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,5 +175,17 @@ int main()
 			std::cout << "MyMap1 is larger than MyMap2" << std::endl;
 		if (MyMap1 >= MyMap2)
 			std::cout << "MyMap1 is larger than or equal to MyMap2" << std::endl;
+	}
+	{
+		MODE::map<int, int> MyMap; 
+		MyMap.insert(std::make_pair(10, 57758));
+		MyMap.insert(std::make_pair(1, 80));
+		MyMap.insert(std::make_pair(100, 34));
+
+		for (MODE::map<int, int>::reverse_iterator rit = MyMap.rbegin(); rit != MyMap.rend(); rit++)
+			std::cout << rit->first << " => " << rit->second << std::endl;
+
+		for (MODE::map<int, int>::reverse_iterator rit = MyMap.rbegin(); rit != MyMap.rend(); ++rit)
+			std::cout << rit->first << " => " << rit->second << std::endl;
 	}
 }
