@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/11 20:22:57 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/24 17:24:14 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/24 19:00:33 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ public:
 	{
 		return (reverse_iterator(&(this->array[SIZE_T_MAX])));
 	}
-	
+
 	const_reverse_iterator rend() const
 	{
 		return (const_reverse_iterator(&(this->array[SIZE_T_MAX])));
@@ -336,12 +336,6 @@ public:
 		this->total = 0;
 	}
 
-	template <class U>
-    friend bool operator==(const vector<U> &lhs, const vector<U> &rhs);
-
-    template <class U>
-    friend bool operator<(const vector<U> &lhs, const vector<U> &rhs);
-
 private:
 	pointer array;
 	size_type total;
@@ -359,7 +353,19 @@ void swap(vector<T> &x, vector<T> &y)
 template <typename T>
 bool operator==(const vector<T> &lhs, const vector<T> &rhs)
 {
-	return (lhs.array == rhs.array) && lhs.size() == rhs.size();
+	typename vector<T>::const_iterator rhs_it = rhs.begin();
+	typename vector<T>::const_iterator lhs_it = lhs.begin();
+
+	if (lhs.size() != rhs.size())
+		return (false);
+	while (lhs_it != lhs.end())
+	{
+		if (*lhs_it != *rhs_it)
+			return (false);
+		lhs_it++;
+		rhs_it++;
+	}
+	return (true);
 }
 
 template <typename T>
@@ -371,7 +377,19 @@ bool operator!=(const vector<T> &lhs, const vector<T> &rhs)
 template <typename T>
 bool operator<(const vector<T> &lhs, const vector<T> &rhs)
 {
-	return (lhs.array < rhs.array && lhs.size() < rhs.size());
+	typename vector<T>::const_iterator rhs_it = rhs.begin();
+	typename vector<T>::const_iterator lhs_it = lhs.begin();
+
+	if (lhs == rhs || lhs.size() > rhs.size())
+		return (false);
+	while (lhs_it != lhs.end() && rhs_it != rhs.end())
+	{
+		if (*lhs_it > *rhs_it)
+			return (false);
+		lhs_it++;
+		rhs_it++;
+	}
+	return (true);
 }
 
 template <typename T>

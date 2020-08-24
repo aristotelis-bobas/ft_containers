@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 17:40:45 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/23 22:04:50 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/24 19:00:09 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -558,6 +558,74 @@ private:
 		this->erase(tmp);
 	}
 };
+
+template <class Key, class T, class Compare>
+void swap(map<Key, T, Compare> &x, map<Key, T, Compare> &y)
+{
+	map<Key, T, Compare> tmp(y);
+	y = x;
+	x = tmp;
+}
+
+template <class Key, class T, class Compare>
+bool operator==(const map<Key, T, Compare> &lhs, const map<Key, T, Compare> &rhs)
+{
+	typename map<Key, T, Compare>::const_iterator rhs_it = rhs.begin();
+	typename map<Key, T, Compare>::const_iterator lhs_it = lhs.begin();
+
+	if (lhs.size() != rhs.size())
+		return (false);
+	while (lhs_it != lhs.end())
+	{
+		if (*lhs_it != *rhs_it)
+			return (false);
+		lhs_it++;
+		rhs_it++;
+	}
+	return (true);
+}
+
+template <class Key, class T, class Compare>
+bool operator!=(const map<Key, T, Compare> &lhs, const map<Key, T, Compare> &rhs)
+{
+	return (!(lhs == rhs));
+}
+
+template <class Key, class T, class Compare>
+bool operator<(const map<Key, T, Compare> &lhs, const map<Key, T, Compare> &rhs)
+{
+	typename map<Key, T, Compare>::const_iterator rhs_it = rhs.begin();
+	typename map<Key, T, Compare>::const_iterator lhs_it = lhs.begin();
+
+	if (lhs == rhs || lhs.size() > rhs.size())
+		return (false);
+	while (lhs_it != lhs.end() && rhs_it != rhs.end())
+	{
+		if (*lhs_it > *rhs_it)
+			return (false);
+		lhs_it++;
+		rhs_it++;
+	}
+	return (true);
+}
+
+template <class Key, class T, class Compare>
+bool operator<=(const map<Key, T, Compare> &lhs, const map<Key, T, Compare> &rhs)
+{
+	return (!(rhs < lhs));
+}
+
+template <class Key, class T, class Compare>
+bool operator>(const map<Key, T, Compare> &lhs, const map<Key, T, Compare> &rhs)
+{
+	return (rhs < lhs);
+}
+
+template <class Key, class T, class Compare>
+bool operator>=(const map<Key, T, Compare> &lhs, const map<Key, T, Compare> &rhs)
+{
+	return (!(lhs < rhs));
+}
 
 } // namespace ft
 

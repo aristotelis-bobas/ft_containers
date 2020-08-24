@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/19 21:24:40 by abobas        #+#    #+#                 */
-/*   Updated: 2020/08/23 22:05:59 by abobas        ########   odam.nl         */
+/*   Updated: 2020/08/24 18:47:09 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,5 +143,37 @@ int main()
 		MyMap.erase(10);
 		for (MODE::map<int, int>::iterator it = MyMap.begin(); it != MyMap.end(); it++)
 			std::cout << it->first << " => " << it->second << std::endl;
+	}
+	{
+		MODE::map<int, int> MyMap1; 
+		MyMap1.insert(std::make_pair(10, 57758));
+		MyMap1.insert(std::make_pair(1, 80));
+		MyMap1.insert(std::make_pair(100, 34));
+
+		
+		MODE::map<int, int> MyMap2; 
+		MyMap2.insert(std::make_pair(10, 57758));
+		MyMap2.insert(std::make_pair(1, 80));
+		MyMap2.insert(std::make_pair(100, 34));
+
+		if (MyMap1 == MyMap2)
+			std::cout << "MyMap1 is equal to MyMap2" << std::endl;
+		if (MyMap1 < MyMap2)
+			std::cout << "MyMap1 is smaller than MyMap2" << std::endl;
+		if (MyMap1 <= MyMap2)
+			std::cout << "MyMap1 is smaller than or equal to MyMap2" << std::endl;
+		if (MyMap1 > MyMap2)
+			std::cout << "MyMap1 is larger than MyMap2" << std::endl;
+		if (MyMap1 >= MyMap2)
+			std::cout << "MyMap1 is larger than or equal to MyMap2" << std::endl;
+		MyMap1.swap(MyMap2);
+		if (MyMap1 < MyMap2)
+			std::cout << "MyMap1 is smaller than MyMap2" << std::endl;
+		if (MyMap1 <= MyMap2)
+			std::cout << "MyMap1 is smaller than or equal to MyMap2" << std::endl;
+		if (MyMap1 > MyMap2)
+			std::cout << "MyMap1 is larger than MyMap2" << std::endl;
+		if (MyMap1 >= MyMap2)
+			std::cout << "MyMap1 is larger than or equal to MyMap2" << std::endl;
 	}
 }
