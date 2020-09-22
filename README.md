@@ -1,9 +1,16 @@
 # ft_containers
 
-Project for Codam (42 Network)
+## Project
 
-- Assignment: reimplementing the containers added to C++ in the Standard Template Library
-- Notes: Vector, Map, List, Stack, Queue (C++ '98)
-- Notes: iterators are reimplemented as well if applicable
-- Grade: 100%
-- Date: 26 August 2020
+This is a project for Codam (42 Network). <br>
+The assignment consisted of reimplementing the following containers added to C++ in the Standard Template Library:
+- Vector
+- Map
+- List
+- Queue
+- Stack
+
+Iterators are reimplemented as well (if applicable). <br>
+Template specialization is implemented for <InputIterator> templates, like in the source code.
+
+I finished the project on 26/8/2020 with a grade of 100%.
