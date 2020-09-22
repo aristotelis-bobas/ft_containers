@@ -11,6 +11,6 @@ The assignment consisted of reimplementing the following containers added to C++
 - Stack
 
 Iterators are reimplemented as well (if applicable). <br>
-Template specialization is implemented for <InputIterator> templates, like in the source code.
+Template specialization is implemented for `<InputIterator>` templates, like in the source code.
 
 I finished the project on 26/8/2020 with a grade of 100%.
