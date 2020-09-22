@@ -3,7 +3,7 @@
 ## Project
 
 This is a project for Codam (42 Network). <br>
-The assignment consisted of reimplementing the following containers added to C++ in the Standard Template Library:
+The assignment consisted of reimplementing the following containers added to C++ in the STL:
 - Vector
 - Map
 - List
