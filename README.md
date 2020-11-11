@@ -1,7 +1,7 @@
 # ft_containers
 
 This is a project for Codam (42 Network). <br>
-The assignment consisted of reimplementing the following containers added to C++ in the STL:
+The assignment consisted of reimplementing the following STL containers:
 - Vector
 - Map
 - List
